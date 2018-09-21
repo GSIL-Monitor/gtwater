@@ -1,0 +1,318 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.account.repository.WtBranchesAccountStatementDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtBranchesAccountStatement" id="wtBranchesAccountStatement">
+		<result property="id" column="id" jdbcType="BIGINT" />
+		<result property="branchesAccountId" column="branches_account_id" jdbcType="INTEGER" />
+		<result property="userType" column="user_type" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="money" column="money" jdbcType="INTEGER" />
+		<result property="type" column="type" jdbcType="INTEGER" />
+		<result property="payTime" column="pay_time" jdbcType="INTEGER" />
+		<result property="transactionNumber" column="transaction_number" jdbcType="VARCHAR" />
+		<result property="payStatus" column="pay_status" jdbcType="INTEGER" />
+		<result property="failMes" column="fail_mes" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入钱包操作记录表-->
+	<insert id="insert" parameterType="wtBranchesAccountStatement" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_branches_account_statement(id,branches_account_id,user_type,branches_id,user_id,money,type,pay_time,transaction_number,pay_status,fail_mes,create_id,create_time,update_id,update_time,del_state) VALUES(#{id},#{branchesAccountId},#{userType},#{branchesId},#{userId},#{money},#{type},#{payTime},#{transactionNumber},#{payStatus},#{failMes},#{createId},#{createTime},#{updateId},#{updateTime},#{delState})
+	</insert>
+	<insert id="insertSelective" parameterType="wtBranchesAccountStatement" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_branches_account_statement
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<!-- 更新 -->
+			<if test="branchesAccountId!=null">
+				branches_account_id,
+			</if>
+			<!-- 更新用户类型[1平台、2城市机构、3水站、4合伙人] -->
+			<if test="userType!=null">
+				user_type,
+			</if>
+			<!-- 更新充值/提现机构id -->
+			<if test="branchesId!=null">
+				branches_id,
+			</if>
+			<!-- 更新充值/提现合伙人id -->
+			<if test="userId!=null">
+				user_id,
+			</if>
+			<!-- 更新金额 -->
+			<if test="money!=null">
+				money,
+			</if>
+			<!-- 更新操作类型1分佣，2提现 -->
+			<if test="type!=null">
+				type,
+			</if>
+			<!-- 更新到账/打款时间 -->
+			<if test="payTime!=null">
+				pay_time,
+			</if>
+			<!-- 更新 -->
+			<if test="transactionNumber!=null and transactionNumber!=''">
+				transaction_number,
+			</if>
+			<!-- 更新交易状态[1成功，-1 失败] -->
+			<if test="payStatus!=null">
+				pay_status,
+			</if>
+			<!-- 更新失败原因 -->
+			<if test="failMes!=null and failMes!=''">
+				fail_mes,
+			</if>
+			<!-- 更新 -->
+			<if test="createId!=null">
+				create_id,
+			</if>
+			<!-- 更新 -->
+			<if test="createTime!=null">
+				create_time,
+			</if>
+			<!-- 更新 -->
+			<if test="updateId!=null">
+				update_id,
+			</if>
+			<!-- 更新 -->
+			<if test="updateTime!=null">
+				update_time,
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<!-- 更新 -->
+			<if test="branchesAccountId!=null">
+				#{branchesAccountId},
+			</if>
+			<!-- 更新用户类型[1平台、2城市机构、3水站、4合伙人] -->
+			<if test="userType!=null">
+				#{userType},
+			</if>
+			<!-- 更新充值/提现机构id -->
+			<if test="branchesId!=null">
+				#{branchesId},
+			</if>
+			<!-- 更新充值/提现合伙人id -->
+			<if test="userId!=null">
+				#{userId},
+			</if>
+			<!-- 更新金额 -->
+			<if test="money!=null">
+				#{money},
+			</if>
+			<!-- 更新操作类型1分佣，2提现 -->
+			<if test="type!=null">
+				#{type},
+			</if>
+			<!-- 更新到账/打款时间 -->
+			<if test="payTime!=null">
+				#{payTime},
+			</if>
+			<!-- 更新 -->
+			<if test="transactionNumber!=null and transactionNumber!=''">
+				#{transactionNumber},
+			</if>
+			<!-- 更新交易状态[1成功，-1 失败] -->
+			<if test="payStatus!=null">
+				#{payStatus},
+			</if>
+			<!-- 更新失败原因 -->
+			<if test="failMes!=null and failMes!=''">
+				#{failMes},
+			</if>
+			<!-- 更新 -->
+			<if test="createId!=null">
+				#{createId},
+			</if>
+			<!-- 更新 -->
+			<if test="createTime!=null">
+				#{createTime},
+			</if>
+			<!-- 更新 -->
+			<if test="updateId!=null">
+				#{updateId},
+			</if>
+			<!-- 更新 -->
+			<if test="updateTime!=null">
+				#{updateTime},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				#{delState},
+			</if>
+		</trim>
+	</insert>
+
+	<!--删除钱包操作记录表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_branches_account_statement WHERE id=#{0}
+	</delete>
+
+	<!--更新钱包操作记录表-->
+	<update id="update" parameterType="wtBranchesAccountStatement">
+		UPDATE t_wt_branches_account_statement
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新 -->
+			<if test="branchesAccountId!=null">
+				branches_account_id=#{branchesAccountId},
+			</if>
+			<!-- 更新用户类型[1平台、2城市机构、3水站、4合伙人] -->
+			<if test="userType!=null">
+				user_type=#{userType},
+			</if>
+			<!-- 更新充值/提现机构id -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新充值/提现合伙人id -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新金额 -->
+			<if test="money!=null">
+				money=#{money},
+			</if>
+			<!-- 更新操作类型1分佣，2提现 -->
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<!-- 更新到账/打款时间 -->
+			<if test="payTime!=null">
+				pay_time=#{payTime},
+			</if>
+			<!-- 更新 -->
+			<if test="transactionNumber!=null and transactionNumber!=''">
+				transaction_number=#{transactionNumber},
+			</if>
+			<!-- 更新交易状态[1成功，-1 失败] -->
+			<if test="payStatus!=null">
+				pay_status=#{payStatus},
+			</if>
+			<!-- 更新失败原因 -->
+			<if test="failMes!=null and failMes!=''">
+				fail_mes=#{failMes},
+			</if>
+			<!-- 更新 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询钱包操作记录表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtBranchesAccountStatement">
+		SELECT id,branches_account_id,user_type,branches_id,user_id,money,type,pay_time,transaction_number,pay_status,fail_mes,create_id,create_time,update_id,update_time,del_state FROM t_wt_branches_account_statement WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询钱包操作记录表列表-->
+	<select id="selectList" parameterType="wtBranchesAccountStatement" resultMap="wtBranchesAccountStatement">
+		SELECT id,branches_account_id,user_type,branches_id,user_id,money,type,pay_time,transaction_number,pay_status,fail_mes,create_id,create_time,update_id,update_time,del_state FROM t_wt_branches_account_statement
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据查询 -->
+			<if test="branchesAccountId!=null">
+				AND branches_account_id=#{branchesAccountId}
+			</if>
+			<!-- 根据用户类型[1平台、2城市机构、3水站、4合伙人]查询 -->
+			<if test="userType!=null">
+				AND user_type=#{userType}
+			</if>
+			<!-- 根据充值/提现机构id查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据充值/提现合伙人id查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据金额查询 -->
+			<if test="money!=null">
+				AND money=#{money}
+			</if>
+			<!-- 根据操作类型1分佣，2提现查询 -->
+			<if test="type!=null">
+				AND type=#{type}
+			</if>
+			<!-- 根据到账/打款时间查询 -->
+			<if test="payTime!=null">
+				AND pay_time=#{payTime}
+			</if>
+			<!-- 根据查询 -->
+			<if test="transactionNumber!=null and transactionNumber!=''">
+				AND transaction_number=#{transactionNumber}
+			</if>
+			<!-- 根据交易状态[1成功，-1 失败]查询 -->
+			<if test="payStatus!=null">
+				AND pay_status=#{payStatus}
+			</if>
+			<!-- 根据失败原因查询 -->
+			<if test="failMes!=null and failMes!=''">
+				AND fail_mes=#{failMes}
+			</if>
+			<!-- 根据查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+		  	<!-- 根据开始结束时间查询记录 -->
+			<if test="startTime != null">
+				AND create_time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND create_time &lt;= #{endTime}
+			</if>
+			<!-- 根据查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+		order by pay_time desc
+	</select>
+
+</mapper>

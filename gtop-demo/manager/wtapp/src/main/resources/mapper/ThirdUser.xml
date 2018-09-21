@@ -1,0 +1,147 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.account.repository.ThirdUserDAO">
+	<!--查询结果Map-->
+	<resultMap type="thirdUser" id="thirdUser">
+		<result property="id" column="id" jdbcType="BIGINT" />
+		<result property="thirdName" column="third_name" jdbcType="VARCHAR" />
+		<result property="thirdType" column="third_type" jdbcType="TINYINT" />
+		<result property="openId" column="open_id" jdbcType="VARCHAR" />
+		<result property="unionId" column="union_id" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="icon" column="icon" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP" />
+		<result property="nickname" column="nickname" jdbcType="VARCHAR" />
+		<result property="appCode" column="app_code" jdbcType="VARCHAR" />
+		<result property="appName" column="app_name" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--插入(杂货铺)第三方鉴权对照表-->
+	<insert id="insert" parameterType="thirdUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_third_user(id,third_name,third_type,open_id,union_id,user_id,icon,create_time,update_time,nickname,app_code,app_name) VALUES(#{id},#{thirdName},#{thirdType},#{openId},#{unionId},#{userId},#{icon},#{createTime},#{updateTime},#{nickname},#{appCode},#{appName})
+	</insert>
+
+	<!--删除(杂货铺)第三方鉴权对照表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_third_user WHERE id=#{0}
+	</delete>
+
+	<!--更新(杂货铺)第三方鉴权对照表-->
+	<update id="update" parameterType="thirdUser">
+		UPDATE t_third_user
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新第三方名称 -->
+			<if test="thirdName!=null and thirdName!=''">
+				third_name=#{thirdName},
+			</if>
+			<!-- 更新第三方类型 1微信 2QQ -->
+			<if test="thirdType!=null and thirdType!=''">
+				third_type=#{thirdType},
+			</if>
+			<!-- 更新第三方唯一id -->
+			<if test="openId!=null and openId!=''">
+				open_id=#{openId},
+			</if>
+			<!-- 更新系统唯一id -->
+			<if test="unionId!=null and unionId!=''">
+				union_id=#{unionId},
+			</if>
+			<!-- 更新 -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新头像url -->
+			<if test="icon!=null and icon!=''">
+				icon=#{icon},
+			</if>
+			<!-- 更新建立时间 -->
+			<if test="createTime!=null and createTime!=''">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新更新时间 -->
+			<if test="updateTime!=null and updateTime!=''">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新昵称 -->
+			<if test="nickname!=null and nickname!=''">
+				nickname=#{nickname},
+			</if>
+			<!-- 更新接入的应用编号【1为杂货铺 2为水管家】 -->
+			<if test="appCode!=null and appCode!=''">
+				app_code=#{appCode},
+			</if>
+			<!-- 更新接入的app名称 -->
+			<if test="appName!=null and appName!=''">
+				app_name=#{appName},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询(杂货铺)第三方鉴权对照表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="thirdUser">
+		SELECT id,third_name,third_type,open_id,union_id,user_id,icon,create_time,update_time,nickname,app_code,app_name FROM t_third_user WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询(杂货铺)第三方鉴权对照表列表-->
+	<select id="selectList" parameterType="thirdUser" resultMap="thirdUser">
+		SELECT id,third_name,third_type,open_id,union_id,user_id,icon,create_time,update_time,nickname,app_code,app_name FROM t_third_user
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据第三方名称查询 -->
+			<if test="thirdName!=null and thirdName!=''">
+				AND third_name=#{thirdName}
+			</if>
+			<!-- 根据第三方类型 1微信 2QQ查询 -->
+			<if test="thirdType!=null and thirdType!=''">
+				AND third_type=#{thirdType}
+			</if>
+			<!-- 根据第三方唯一id查询 -->
+			<if test="openId!=null and openId!=''">
+				AND open_id=#{openId}
+			</if>
+			<!-- 根据系统唯一id查询 -->
+			<if test="unionId!=null and unionId!=''">
+				AND union_id=#{unionId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据头像url查询 -->
+			<if test="icon!=null and icon!=''">
+				AND icon=#{icon}
+			</if>
+			<!-- 根据建立时间查询 -->
+			<if test="createTime!=null and createTime!=''">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据更新时间查询 -->
+			<if test="updateTime!=null and updateTime!=''">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据昵称查询 -->
+			<if test="nickname!=null and nickname!=''">
+				AND nickname=#{nickname}
+			</if>
+			<!-- 根据接入的应用编号【1为杂货铺 2为水管家】查询 -->
+			<if test="appCode!=null and appCode!=''">
+				AND app_code=#{appCode}
+			</if>
+			<!-- 根据接入的app名称查询 -->
+			<if test="appName!=null and appName!=''">
+				AND app_name=#{appName}
+			</if>
+		</where>
+	</select>
+
+</mapper>

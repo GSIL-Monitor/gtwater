@@ -1,0 +1,153 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.merchant.repository.WtSendMesDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtSendMes" id="wtSendMes">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="sendCode" column="send_code" jdbcType="VARCHAR" />
+		<result property="sendMesCode" column="send_mes_code" jdbcType="VARCHAR" />
+		<result property="orderMesCode" column="order_mes_code" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="deliveryNum" column="delivery_num" jdbcType="INTEGER" />
+		<result property="type" column="type" jdbcType="INTEGER" />
+		<result property="sequence" column="sequence" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="goodsSpec" column="goods_spec" jdbcType="INTEGER" />
+		<result property="brandName" column="brand_name" jdbcType="VARCHAR" />
+		<result property="sendMesMoney" column="send_mes_money" jdbcType="BIGINT" />
+
+	</resultMap>
+
+	<!--插入派送详情-->
+	<insert id="insert" parameterType="wtSendMes" useGeneratedKeys="true" keyProperty="null">
+		INSERT INTO t_wt_send_mes(id,send_code,send_mes_code,sku_code,sku_name,num,type,sequence,create_time,create_id,del_state) VALUES(#{id},#{sendCode},#{sendMesCode},#{skuCode},#{skuName},#{num},#{type},#{sequence},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除派送详情-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_send_mes WHERE null=#{0}
+	</delete>
+
+	<!--更新派送详情-->
+	<update id="update" parameterType="wtSendMes">
+		UPDATE t_wt_send_mes
+		<set>
+			<!-- 更新详情ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新派送单编号 -->
+			<if test="sendCode!=null and sendCode!=''">
+				send_code=#{sendCode},
+			</if>
+			<!-- 更新派送单详情编号 -->
+			<if test="sendMesCode!=null and sendMesCode!=''">
+				send_mes_code=#{sendMesCode},
+			</if>
+			<!-- 更新SKU编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新SKU名称 -->
+			<if test="skuName!=null and skuName!=''">
+				sku_name=#{skuName},
+			</if>
+			<!-- 更新数量 -->
+			<if test="num!=null">
+				num=#{num},
+			</if>
+			<!-- 更新实际送达数量 -->
+			<if test="deliveryNum!=null">
+				delivery_num=#{deliveryNum},
+			</if>
+			<!-- 更新1水票|| 2桶水 -->
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<!-- 更新商品序列 -->
+			<if test="sequence!=null and sequence!=''">
+				sequence=#{sequence},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询派送详情-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtSendMes">
+		SELECT id,send_code,send_mes_code,sku_code,sku_name,num,type,sequence,create_time,create_id,del_state FROM t_wt_send_mes WHERE id=#{0}
+	</select>
+
+	<!--根据派单编号查询派送详情列表-->
+	<select id="selectBySendCode" parameterType="java.lang.String" resultMap="wtSendMes">
+		SELECT id,send_code,send_mes_code,order_mes_code,sku_code,sku_name,num,delivery_num,type,sequence,create_time,create_id,del_state,goods_spec,brand_name,send_mes_money FROM t_wt_send_mes WHERE send_code=#{0}
+	</select>
+
+	<!--根据条件查询派送详情列表-->
+	<select id="selectList" parameterType="wtSendMes" resultMap="wtSendMes">
+		SELECT id,send_code,send_mes_code,sku_code,sku_name,num,delivery_num,type,sequence,create_time,create_id,del_state FROM t_wt_send_mes
+		<where>
+			1=1
+			<!-- 根据详情ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据派送单编号查询 -->
+			<if test="sendCode!=null and sendCode!=''">
+				AND send_code=#{sendCode}
+			</if>
+			<!-- 根据派送单详情编号查询 -->
+			<if test="sendMesCode!=null and sendMesCode!=''">
+				AND send_mes_code=#{sendMesCode}
+			</if>
+			<!-- 根据SKU编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据SKU名称查询 -->
+			<if test="skuName!=null and skuName!=''">
+				AND sku_name=#{skuName}
+			</if>
+			<!-- 根据数量查询 -->
+			<if test="num!=null">
+				AND num=#{num}
+			</if>
+			<!-- 根据1水票|| 2桶水查询 -->
+			<if test="type!=null">
+				AND type=#{type}
+			</if>
+			<!-- 根据商品序列查询 -->
+			<if test="sequence!=null and sequence!=''">
+				AND sequence=#{sequence}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

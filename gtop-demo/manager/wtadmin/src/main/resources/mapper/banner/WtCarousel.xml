@@ -1,0 +1,139 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.banner.repository.WtCarouselDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtCarousel" id="wtCarousel">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="accessUrl" column="access_url" jdbcType="VARCHAR" />
+		<result property="carouselPic" column="carousel_pic" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateBy" column="update_by" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入水站轮播图-->
+	<insert id="insert" parameterType="wtCarousel" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_carousel(id,waterstore_id,access_url,carousel_pic,create_id,create_time,update_by,update_time,del_state,version) VALUES(#{id},#{waterstoreId},#{accessUrl},#{carouselPic},#{createId},#{createTime},#{updateBy},#{updateTime},#{delState},#{version})
+	</insert>
+
+	<!--删除水站轮播图-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_carousel WHERE id=#{0}
+	</delete>
+
+	<!--更新水站轮播图-->
+	<update id="update" parameterType="wtCarousel">
+		UPDATE t_wt_carousel
+		<set>
+			<!-- 更新主键 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新 -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新访问地址 -->
+			<if test="accessUrl!=null and accessUrl!=''">
+				access_url=#{accessUrl},
+			</if>
+			<!-- 更新轮播图片 -->
+			<if test="carouselPic!=null and carouselPic!=''">
+				carousel_pic=#{carouselPic},
+			</if>
+			<!-- 更新创建者 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新修改者 -->
+			<if test="updateBy!=null">
+				update_by=#{updateBy},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除标记 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+			<!-- 更新数据版本 -->
+			<if test="version!=null">
+				version=#{version},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询水站轮播图-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtCarousel">
+		SELECT id,waterstore_id,access_url,carousel_pic,create_id,create_time,update_by,update_time,del_state,version FROM t_wt_carousel WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询水站轮播图列表-->
+	<select id="selectList" parameterType="wtCarousel" resultMap="wtCarousel">
+		SELECT id,waterstore_id,access_url,carousel_pic,create_id,create_time,update_by,update_time,del_state,version FROM t_wt_carousel
+		<where>
+			1=1
+			<!-- 根据主键查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据访问地址查询 -->
+			<if test="accessUrl!=null and accessUrl!=''">
+				AND access_url=#{accessUrl}
+			</if>
+			<!-- 根据轮播图片查询 -->
+			<if test="carouselPic!=null and carouselPic!=''">
+				AND carousel_pic=#{carouselPic}
+			</if>
+			<!-- 根据创建者查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据修改者查询 -->
+			<if test="updateBy!=null">
+				AND update_by=#{updateBy}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除标记查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+			<!-- 根据数据版本查询 -->
+			<if test="version!=null">
+				AND version=#{version}
+			</if>
+		</where>
+	</select>
+
+
+	<!--查询所有水站轮播图-->
+	<select id="selectAllList"  resultMap="wtCarousel">
+		SELECT id,waterstore_id,access_url,carousel_pic,
+		create_id,create_time,update_by,update_time,
+		del_state,version
+		FROM t_wt_carousel
+		WHERE del_state=1
+	</select>
+
+</mapper>

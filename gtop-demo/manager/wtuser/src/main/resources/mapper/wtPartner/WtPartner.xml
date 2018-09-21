@@ -1,0 +1,322 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.wtPartner.WtPartnerDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtPartner.WtPartner" id="wtPartner">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="openId" column="open_id" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="userName" column="user_name" jdbcType="VARCHAR" />
+		<result property="idcard" column="idcard" jdbcType="VARCHAR" />
+		<result property="cardFront" column="card_front" jdbcType="VARCHAR" />
+		<result property="cardBack" column="card_back" jdbcType="VARCHAR" />
+		<result property="nickname" column="nickname" jdbcType="VARCHAR" />
+		<result property="sex" column="sex" jdbcType="INTEGER" />
+		<result property="country" column="country" jdbcType="VARCHAR" />
+		<result property="provinceId" column="province_id" jdbcType="VARCHAR" />
+		<result property="province" column="province" jdbcType="VARCHAR" />
+		<result property="cityId" column="city_id" jdbcType="VARCHAR" />
+		<result property="city" column="city" jdbcType="VARCHAR" />
+		<result property="areaId" column="area_Id" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="language" column="language" jdbcType="VARCHAR" />
+		<result property="registerDate" column="register_date" jdbcType="INTEGER" />
+		<result property="incomeMoney" column="income_money" jdbcType="INTEGER" />
+		<result property="totalMoney" column="total_money" jdbcType="INTEGER" />
+		<result property="extractMoney" column="extract_money" jdbcType="INTEGER" />
+		<result property="customerNum" column="customer_num" jdbcType="INTEGER" />
+		<result property="qrCode" column="qr_code" jdbcType="VARCHAR" />
+		<result property="portrait" column="portrait" jdbcType="VARCHAR" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="qrCodeId" column="qr_code_id" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入合伙人表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtPartner.WtPartner" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_partner(id,user_id,open_id,phone,user_name,idcard,card_front,card_back,nickname,sex,country,province_id,province,city_id,city,area_Id,area,address,language,register_date,income_money,total_money,extract_money,customer_num,qr_code,portrait,update_time,remark,create_time,create_id,del_state,qr_code_id) VALUES(#{id},#{userId},#{openId},#{phone},#{userName},#{idcard},#{cardFront},#{cardBack},#{nickname},#{sex},#{country},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{address},#{language},#{registerDate},#{incomeMoney},#{totalMoney},#{extractMoney},#{customerNum},#{qrCode},#{portrait},#{updateTime},#{remark},#{createTime},#{createId},#{delState},#{qrCodeId})
+	</insert>
+
+	<!--删除合伙人表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_partner WHERE id=#{0}
+	</delete>
+
+	<!--更新合伙人表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtPartner.WtPartner">
+		UPDATE t_wt_partner
+		<set>
+			<!-- 更新partner_id -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新开放平台用户ID -->
+			<if test="openId!=null">
+				open_id=#{openId},
+			</if>
+			<!-- 更新电话号码 -->
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<!-- 更新用户名 -->
+			<if test="userName!=null and userName!=''">
+				user_name=#{userName},
+			</if>
+			<!-- 更新身份证号 -->
+			<if test="idcard!=null and idcard!=''">
+				idcard=#{idcard},
+			</if>
+			<!-- 更新身份证正面照 -->
+			<if test="cardFront!=null and cardFront!=''">
+				card_front=#{cardFront},
+			</if>
+			<!-- 更新身份证反面照 -->
+			<if test="cardBack!=null and cardBack!=''">
+				card_back=#{cardBack},
+			</if>
+			<!-- 更新昵称 -->
+			<if test="nickname!=null and nickname!=''">
+				nickname=#{nickname},
+			</if>
+			<!-- 更新性别(1男、0女) -->
+			<if test="sex!=null">
+				sex=#{sex},
+			</if>
+			<!-- 更新国家 -->
+			<if test="country!=null and country!=''">
+				country=#{country},
+			</if>
+			<!-- 更新省ID -->
+			<if test="provinceId!=null and provinceId!=''">
+				province_id=#{provinceId},
+			</if>
+			<!-- 更新省 -->
+			<if test="province!=null and province!=''">
+				province=#{province},
+			</if>
+			<!-- 更新市ID -->
+			<if test="cityId!=null and cityId!=''">
+				city_id=#{cityId},
+			</if>
+			<!-- 更新市 -->
+			<if test="city!=null and city!=''">
+				city=#{city},
+			</if>
+			<!-- 更新区ID -->
+			<if test="areaId!=null and areaId!=''">
+				area_Id=#{areaId},
+			</if>
+			<!-- 更新区 -->
+			<if test="area!=null and area!=''">
+				area=#{area},
+			</if>
+			<!-- 更新详细地址 -->
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<!-- 更新语言 -->
+			<if test="language!=null and language!=''">
+				language=#{language},
+			</if>
+			<!-- 更新注册时间 -->
+			<if test="registerDate!=null">
+				register_date=#{registerDate},
+			</if>
+			<!-- 更新累计收入 -->
+			<if test="incomeMoney!=null">
+				income_money=#{incomeMoney},
+			</if>
+			<!-- 更新总金额 -->
+			<if test="totalMoney!=null">
+				total_money=#{totalMoney},
+			</if>
+			<!-- 更新提现金额 -->
+			<if test="extractMoney!=null">
+				extract_money=#{extractMoney},
+			</if>
+			<!-- 更新客户数量 -->
+			<if test="customerNum!=null">
+				customer_num=#{customerNum},
+			</if>
+			<!-- 更新二维码 -->
+			<if test="qrCode!=null and qrCode!=''">
+				qr_code=#{qrCode},
+			</if>
+			<!-- 更新用户头像 -->
+			<if test="portrait!=null and portrait!=''">
+				portrait=#{portrait},
+			</if>
+			<!-- 更新更新时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新备注 -->
+			<if test="remark!=null and remark!=''">
+				remark=#{remark},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+			<if test="qrCodeId!=null">
+				qr_code_id=#{qrCodeId},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询合伙人表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtPartner">
+		SELECT id,user_id,open_id,phone,user_name,idcard,card_front,card_back,nickname,sex,country,province_id,province,city_id,city,area_Id,area,address,language,register_date,income_money,total_money,extract_money,customer_num,qr_code,portrait,update_time,remark,create_time,create_id,del_state,qr_code_id FROM t_wt_partner WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询合伙人表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtPartner.WtPartner" resultMap="wtPartner">
+		SELECT id,user_id,open_id,phone,user_name,idcard,card_front,card_back,nickname,sex,country,province_id,province,city_id,city,area_Id,area,address,language,register_date,income_money,total_money,extract_money,customer_num,qr_code,portrait,update_time,remark,create_time,create_id,del_state,qr_code_id FROM t_wt_partner
+		<where>
+			1=1
+			<!-- 根据partner_id查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据开放平台用户ID查询 -->
+			<if test="openId!=null">
+				AND open_id=#{openId}
+			</if>
+			<!-- 根据电话号码查询 -->
+			<if test="phone!=null and phone!=''">
+				AND phone=#{phone}
+			</if>
+			<!-- 根据用户名查询 -->
+			<if test="userName!=null and userName!=''">
+				AND user_name=#{userName}
+			</if>
+			<!-- 根据身份证号查询 -->
+			<if test="idcard!=null and idcard!=''">
+				AND idcard=#{idcard}
+			</if>
+			<!-- 根据身份证正面照查询 -->
+			<if test="cardFront!=null and cardFront!=''">
+				AND card_front=#{cardFront}
+			</if>
+			<!-- 根据身份证反面照查询 -->
+			<if test="cardBack!=null and cardBack!=''">
+				AND card_back=#{cardBack}
+			</if>
+			<!-- 根据昵称查询 -->
+			<if test="nickname!=null and nickname!=''">
+				AND nickname=#{nickname}
+			</if>
+			<!-- 根据性别(1男、0女)查询 -->
+			<if test="sex!=null">
+				AND sex=#{sex}
+			</if>
+			<!-- 根据国家查询 -->
+			<if test="country!=null and country!=''">
+				AND country=#{country}
+			</if>
+			<!-- 根据省ID查询 -->
+			<if test="provinceId!=null and provinceId!=''">
+				AND province_id=#{provinceId}
+			</if>
+			<!-- 根据省查询 -->
+			<if test="province!=null and province!=''">
+				AND province=#{province}
+			</if>
+			<!-- 根据市ID查询 -->
+			<if test="cityId!=null and cityId!=''">
+				AND city_id=#{cityId}
+			</if>
+			<!-- 根据市查询 -->
+			<if test="city!=null and city!=''">
+				AND city=#{city}
+			</if>
+			<!-- 根据区ID查询 -->
+			<if test="areaId!=null and areaId!=''">
+				AND area_Id=#{areaId}
+			</if>
+			<!-- 根据区查询 -->
+			<if test="area!=null and area!=''">
+				AND area=#{area}
+			</if>
+			<!-- 根据详细地址查询 -->
+			<if test="address!=null and address!=''">
+				AND address=#{address}
+			</if>
+			<!-- 根据语言查询 -->
+			<if test="language!=null and language!=''">
+				AND language=#{language}
+			</if>
+			<!-- 根据注册时间查询 -->
+			<if test="registerDate!=null">
+				AND register_date=#{registerDate}
+			</if>
+			<!-- 根据累计收入查询 -->
+			<if test="incomeMoney!=null">
+				AND income_money=#{incomeMoney}
+			</if>
+			<!-- 根据总金额查询 -->
+			<if test="totalMoney!=null">
+				AND total_money=#{totalMoney}
+			</if>
+			<!-- 根据提现金额查询 -->
+			<if test="extractMoney!=null">
+				AND extract_money=#{extractMoney}
+			</if>
+			<!-- 根据客户数量查询 -->
+			<if test="customerNum!=null">
+				AND customer_num=#{customerNum}
+			</if>
+			<!-- 根据二维码查询 -->
+			<if test="qrCode!=null and qrCode!=''">
+				AND qr_code=#{qrCode}
+			</if>
+			<!-- 根据用户头像查询 -->
+			<if test="portrait!=null and portrait!=''">
+				AND portrait=#{portrait}
+			</if>
+			<!-- 根据更新时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据备注查询 -->
+			<if test="remark!=null and remark!=''">
+				AND remark=#{remark}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

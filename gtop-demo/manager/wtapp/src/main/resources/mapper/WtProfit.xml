@@ -1,0 +1,231 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.merchant.repository.WtProfitDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtProfit" id="wtProfit">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="sendNo" column="send_no" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="partnerId" column="partner_id" jdbcType="INTEGER" />
+		<result property="sendNum" column="send_num" jdbcType="INTEGER" />
+		<result property="profitMoney" column="profit_money" jdbcType="INTEGER" />
+		<result property="paymentTime" column="payment_time" jdbcType="INTEGER" />
+		<result property="sendTime" column="send_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="com.gt.manager.merchant.entity.response.WaterstoreSaleReport" id="waterstoreSaleReport">
+		<result property="sendNo" column="sendNo" jdbcType="VARCHAR" />
+		<result property="contacts" column="contactsAndPhone" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="orderMoney" column="orderMoney" jdbcType="INTEGER" />
+		<result property="sendNum" column="sendNum" jdbcType="INTEGER" />
+		<result property="brandName" column="brandName" jdbcType="VARCHAR" />
+		<result property="proportion" column="proportion" jdbcType="INTEGER" />
+		<result property="profitMoney" column="profitMoney" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入分佣表-->
+	<insert id="insert" parameterType="wtProfit" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_profit(send_no,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time) VALUES(#{sendNo},#{userId},#{waterstoreId},#{partnerId},#{sendNum},#{profitMoney},#{paymentTime},#{sendTime},#{createTime})
+	</insert>
+
+	<!--删除分佣表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_profit WHERE id=#{0}
+	</delete>
+
+	<!--更新分佣表-->
+	<update id="update" parameterType="wtProfit">
+		UPDATE t_wt_profit
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新派送编号 -->
+			<if test="sendNo!=null">
+				send_no=#{sendNo},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新水站ID -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id=#{partnerId},
+			</if>
+			<!-- 更新派送总量 -->
+			<if test="sendNum!=null">
+				send_num=#{sendNum},
+			</if>
+			<!-- 更新派单金额 -->
+			<if test="profitMoney!=null">
+				profit_money=#{profitMoney},
+			</if>
+			<!-- 更新付款时间 -->
+			<if test="paymentTime!=null">
+				payment_time=#{paymentTime},
+			</if>
+			<!-- 更新派送时间 -->
+			<if test="sendTime!=null">
+				send_time=#{sendTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询分佣表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtProfit">
+		SELECT id,send_no,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time FROM t_wt_profit WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询分佣表列表-->
+	<select id="selectList" parameterType="wtProfit" resultMap="wtProfit">
+		SELECT id,send_id,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time FROM t_wt_profit
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据派送编号查询 -->
+			<if test="sendNo!=null">
+				AND send_no=#{sendNo}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据水站ID查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id=#{partnerId}
+			</if>
+			<!-- 根据派送总量查询 -->
+			<if test="sendNum!=null">
+				AND send_num=#{sendNum}
+			</if>
+			<!-- 根据派单金额查询 -->
+			<if test="profitMoney!=null">
+				AND profit_money=#{profitMoney}
+			</if>
+			<!-- 根据付款时间查询 -->
+			<if test="paymentTime!=null">
+				AND payment_time=#{paymentTime}
+			</if>
+			<!-- 根据派送时间查询 -->
+			<if test="sendTime!=null">
+				AND send_time=#{sendTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+		</where>
+	</select>
+
+	<!-- 根据用户扫码记录表，扫码表得到合伙人id-->
+	<select id="selectByUserId" resultType="java.lang.Long">
+		select t.partner_id
+		from t_wt_extensioncode t,t_wt_user_extensioncode e
+		where t.id=e.code_id and e.user_id=#{0}
+	</select>
+	<!--水站当天的分佣金额与派送数量-->
+	<select id="getWaterstoreProfitByDay" resultType="map">
+
+		  SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0) profit FROM t_wt_profit_waterstore
+		  WHERE branches_id=#{branchesId}  AND TO_DAYS(FROM_UNIXTIME(create_time/1000)) = TO_DAYS(NOW())
+	</select>
+
+	<!--水站本周的分佣金额与派送数量-->
+	<select id="getWaterstoreProfitByWeek" resultType="map">
+	 	 SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0) profit FROM t_wt_profit_waterstore
+	WHERE branches_id=#{branchesId}  AND YEARWEEK(FROM_UNIXTIME(create_time/1000-3600*24)) = YEARWEEK(NOW())
+	</select>
+
+	<!--水站本月的分佣金额与派送数量-->
+	<select id="getWaterstoreProfitByMonth" resultType="map">
+		 SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0) profit FROM t_wt_profit_waterstore
+	WHERE branches_id=#{branchesId}  AND DATE_FORMAT(FROM_UNIXTIME(create_time/1000),'%Y%m') = DATE_FORMAT( CURDATE( ) ,'%Y%m' )
+	</select>
+
+
+
+	<!--城市总当天的分佣金额与派送数量-->
+	<select id="getCityProfitByDay" resultType="map">
+		 SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0)profit FROM t_wt_profit_city
+		WHERE branches_id=#{branchesId}  AND TO_DAYS(FROM_UNIXTIME(create_time/1000)) = TO_DAYS(NOW())
+	</select>
+
+	<!--城市总本周的分佣金额与派送数量-->
+	<select id="getCityProfitByWeek" resultType="map">
+		 SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0)profit FROM t_wt_profit_city
+		WHERE branches_id=#{branchesId}  AND YEARWEEK(FROM_UNIXTIME(create_time/1000-3600*24)) = YEARWEEK(NOW())
+	</select>
+
+	<!--城市总本月的分佣金额与派送数量-->
+	<select id="getCityProfitByMonth" resultType="map">
+		 SELECT COALESCE( SUM(order_num),0) num,COALESCE(SUM(profit_money),0)profit FROM t_wt_profit_city
+		WHERE branches_id=#{branchesId}  AND DATE_FORMAT(FROM_UNIXTIME(create_time/1000),'%Y%m') = DATE_FORMAT( CURDATE( ) ,'%Y%m' )
+	</select>
+
+	<!--获取所有水站的时间段内的流水及分佣记录-->
+	<select id="getCityProfitDetailByBranchesId" resultType="map">
+		SELECT waterstore_id waterstoreId,w.water_name waterName,COALESCE(SUM(c.profit_money),0) profitMoney,COALESCE(SUM(c.`order_num`*c.`unit_price`),0) totalMoney
+		FROM t_wt_profit p
+		LEFT JOIN t_wt_profit_city c ON p.id=c.`profit_id` LEFT JOIN t_wt_waterstore w ON p.`waterstore_id`=w.id
+		WHERE waterstore_id IN
+		<foreach collection="list" separator="," open="(" close=")" item="id">
+			#{id}
+		</foreach>
+		<if test="startTime!=null and startTime!=''">
+			AND c.create_time <![CDATA[ >= ]]> #{startTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			AND c.create_time <![CDATA[ <= ]]> #{endTime}
+		</if>
+		<if test="startTime==null and endTime==null">
+			AND TO_DAYS(FROM_UNIXTIME(c.create_time/1000)) = TO_DAYS(NOW())
+		</if>
+		 GROUP BY waterstore_id,water_name
+	</select>
+
+	<!--根据水站id得到水站下派单销售报表-->
+	<select id="getWaterstoreSaleReport" resultMap="waterstoreSaleReport">
+
+		SELECT s.send_no sendNo,CONCAT_WS('  ',contacts,phone) contactsAndPhone,CONCAT(IF(province in('北京市','上海市','天津市','重庆市'),"",IFNULL(province,'')),IFNULL(city,''),IFNULL(area,''),IFNULL(address,'')) address,
+		IFNULL(p.profit_money,0) orderMoney,IFNULL(p.send_num,0) sendNum,GROUP_CONCAT(DISTINCT m.brand_name SEPARATOR',') brandName,IFNULL(proportion,0) proportion,IFNULL(TRUNCATE(p.profit_money*proportion/10000,0),0) profitMoney FROM t_wt_send s
+		LEFT JOIN t_wt_send_mes m ON s.send_no=m.send_code LEFT JOIN t_wt_profit p ON s.send_no=p.send_no
+		LEFT JOIN (SELECT  DISTINCT profit_id,proportion FROM  t_wt_profit_waterstore WHERE waterstore_id=#{waterstoreId} ) pw ON p.id=pw.profit_id
+		WHERE s.waterstore_id=#{waterstoreId} AND s.status=5
+		<if test="startTime!=null and startTime!=''">
+			AND s.send_time <![CDATA[ >= ]]> #{startTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			AND s.send_time <![CDATA[ <= ]]> #{endTime}
+		</if>
+		GROUP BY s.send_no,contactsAndPhone,profit_money,p.send_num,proportion,pw.profit_id
+		<if test="brandName!=null and brandName!=''">
+			HAVING (brandName LIKE CONCAT('%','${brandName}','%') or contactsAndPhone LIKE CONCAT('%','${brandName}','%')) and IFNULL(profitMoney,0)>0
+		</if>
+		<if test="brandName==null or brandName==''">
+			HAVING IFNULL(profitMoney,0)>0
+		</if>
+		ORDER BY s.send_time DESC
+
+	</select>
+
+</mapper>

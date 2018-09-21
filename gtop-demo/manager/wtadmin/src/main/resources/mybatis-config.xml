@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置sql语句显示 -->
+	<settings>
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--配置返回map时无value是否返回字段名-true:返回字段名；false:不返回字段名-->
+        <setting name="callSettersOnNulls" value="true"/>
+	</settings>
+    <typeAliases>
+        <package name="com.gt.manager.entity"/>
+    </typeAliases>
+    <mappers>
+        <!---GT品牌-->
+        <mapper resource="mapper/product/GtopBrand.xml"/>
+        <!---GTproduct-->
+        <mapper resource="mapper/product/GtopProduct.xml"/>
+        <!---GTsku-->
+        <mapper resource="mapper/product/GtopSku.xml"/>
+        <!---GTcategory-->
+        <mapper resource="mapper/product/GtopGoodsCategory.xml"/>
+        <!---WT商品-->
+        <mapper resource="mapper/product/WtProduct.xml"/>
+        <!---WT品牌-->
+        <mapper resource="mapper/product/WtBrand.xml"/>
+        <!---WTsku-->
+        <mapper resource="mapper/product/WtSku.xml"/>
+        <!-- 二维码 -->
+        <mapper resource="mapper/qrcode/WtExtensioncode.xml"/>
+        <!---WTCategory-->
+        <mapper resource="mapper/product/ProductCategory.xml"/>
+        <!---WTWaterstoreSku-->
+        <mapper resource="mapper/product/WtWaterstoreSku.xml"/>
+        <!---WtBranchesProduct-->
+        <mapper resource="mapper/product/WtBranchesProduct.xml"/>
+        <!---banner-->
+        <mapper resource="mapper/banner/WtCarousel.xml"/>
+        <!---总开关-->
+        <mapper resource="mapper/function/WtFunction.xml"/>
+        <!---订单-->
+        <mapper resource="mapper/order/WtOrder.xml"/>
+        <!---订单详情-->
+        <mapper resource="mapper/order/WtOrderMes.xml"/>
+        <!---派送单-->
+        <mapper resource="mapper/order/WtSend.xml"/>
+        <!---派送单详情-->
+        <mapper resource="mapper/order/WtSendMes.xml"/>
+        <!---水站-->
+        <mapper resource="mapper/order/WtWaterstore.xml"/>
+        <!---套餐-->
+        <mapper resource="mapper/setmeal/WtOrgSetmeal.xml"/>
+        <!---套餐赠品-->
+        <mapper resource="mapper/setmeal/WtGift.xml"/>
+        <!---水站套餐-->
+        <mapper resource="mapper/setmeal/WtWaterstopSetmeal.xml"/>
+        <!---水票日志-->
+        <mapper resource="mapper/ticket/WtTicketLog.xml"/>
+        <!---水票-->
+        <mapper resource="mapper/ticket/WtUserTicket.xml"/>
+        <!---用户扫码记录-->
+        <mapper resource="mapper/ticket/WtUserExtensioncode.xml"/>
+        <!---收货地址-->
+        <mapper resource="mapper/ticket/ReceiveAddress.xml"/>
+        <!---区域信息-->
+        <mapper resource="mapper/ticket/SysRegion.xml"/>
+        <!---用户-->
+        <mapper resource="mapper/user/User.xml"/>
+    </mappers>
+
+</configuration>

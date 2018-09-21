@@ -1,0 +1,167 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtWaterstoreSku.WtWaterstoreSkuDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtWaterstoreSku.WtWaterstoreSku" id="wtWaterstoreSku">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="skuId" column="sku_id" jdbcType="INTEGER" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="shelfOnTime" column="shelf_on_time" jdbcType="INTEGER" />
+		<result property="shellOffReason" column="shell_off_reason" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入水站商品sku表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtWaterstoreSku.WtWaterstoreSku" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_waterstore_sku(id,sku_id,sku_code,branches_id,waterstore_id,status,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version) VALUES(#{id},#{skuId},#{skuCode},#{branchesId},#{waterstoreId},#{status},#{shelfOnTime},#{shellOffReason},#{createId},#{createTime},#{updateId},#{updateTime},#{delState},#{version})
+	</insert>
+
+	<!--删除水站商品sku表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_waterstore_sku WHERE id=#{0}
+	</delete>
+
+	<!--更新水站商品sku表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtWaterstoreSku.WtWaterstoreSku">
+		UPDATE t_wt_waterstore_sku
+		<set>
+			<!-- 更新主键 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新城市商品ID(sku表中的ID) -->
+			<if test="skuId!=null">
+				sku_id=#{skuId},
+			</if>
+			<!-- 更新sku编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新机构(水站)ID -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新水站id -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新状态[1销售中（上架），2下架] -->
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<!-- 更新上架时间 -->
+			<if test="shelfOnTime!=null">
+				shelf_on_time=#{shelfOnTime},
+			</if>
+			<!-- 更新下架原因 -->
+			<if test="shellOffReason!=null and shellOffReason!=''">
+				shell_off_reason=#{shellOffReason},
+			</if>
+			<!-- 更新创建者 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新修改者 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除状态【1正常，0删除】 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+			<!-- 更新数据版本 -->
+			<if test="version!=null">
+				version=#{version},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询水站商品sku表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtWaterstoreSku">
+		SELECT id,sku_id,sku_code,branches_id,waterstore_id,status,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version FROM t_wt_waterstore_sku WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询水站商品sku表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtWaterstoreSku.WtWaterstoreSku" resultMap="wtWaterstoreSku">
+		SELECT id,sku_id,sku_code,branches_id,waterstore_id,status,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version FROM t_wt_waterstore_sku
+		<where>
+			1=1
+			<!-- 根据主键查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据城市商品ID(sku表中的ID)查询 -->
+			<if test="skuId!=null">
+				AND sku_id=#{skuId}
+			</if>
+			<!-- 根据sku编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据机构(水站)ID查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据水站id查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据状态[1销售中（上架），2下架]查询 -->
+			<if test="status!=null">
+				AND status=#{status}
+			</if>
+			<!-- 根据上架时间查询 -->
+			<if test="shelfOnTime!=null">
+				AND shelf_on_time=#{shelfOnTime}
+			</if>
+			<!-- 根据下架原因查询 -->
+			<if test="shellOffReason!=null and shellOffReason!=''">
+				AND shell_off_reason=#{shellOffReason}
+			</if>
+			<!-- 根据创建者查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据修改者查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除状态【1正常，0删除】查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+			<!-- 根据数据版本查询 -->
+			<if test="version!=null">
+				AND version=#{version}
+			</if>
+		</where>
+	</select>
+	
+
+
+</mapper>

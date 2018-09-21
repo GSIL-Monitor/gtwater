@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<partners>
+    <!--ceshi   -->
+    <partner name="management"  appKey="201820012121" appSecret="661ee319dff061d4fb6532787f7b6wgl"></partner>
+    <!-- 小兵  -->
+    <partner name="xiaobing"  appKey="18091015365098" appSecret="341ee319dff051d4fb653rh78f7c6"></partner>
+    <!-- dounikaixin  -->
+    <partner name="dounikaixin"  appKey="18092016511939" appSecret="de31661fe071d9a8f05ee79549a2058f"></partner>
+
+</partners>

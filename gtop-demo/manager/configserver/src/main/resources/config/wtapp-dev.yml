@@ -1,0 +1,72 @@
+spring:
+  activemq:
+    broker-url: tcp://192.168.40.231:61616
+    user: gtop
+    password: gtop
+
+  # 数据源
+  datasource:
+      username: root
+      password: 123
+      driverClassName: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://192.168.40.231:3306/gtwater?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&transformedBitIsBoolean=true&useSSL=false&serverTimezone=UTC
+
+#  redis:
+#    cluster:
+#      nodes:
+#        - 192.168.0.108:7000
+#        - 192.168.0.108:7001
+#        - 192.168.0.108:7002
+#        - 192.168.0.108:7003
+#        - 192.168.0.108:7004
+#        - 192.168.0.108:7005
+#      max-redirects: 10
+#      timeout: 5000
+#      max-total: 300
+#      max-idle: 20
+#      max-wait-millis: 1000
+#      test-on-borrow: true
+#      test-on-return: true
+##      db-index: 1
+  redis:
+    database: 13
+    host: 192.168.40.232
+    port: 6379
+    password:
+    max-total: 5
+    max-idle: 8
+    min-idle: 2
+    max-active: 300
+    max-wait: -1
+    max-wait-millis: 1000
+    test-on-borrow: true
+    test-on-return: true
+  custom:
+    test: a
+  dubbo:
+    registry:
+#      address: zookeeper://192.168.1.100:2181
+      address: zookeeper://192.168.40.231:2181
+    protocol:
+      name: dubbo
+      port: 20882
+    application:
+      id: 3
+      name: wtapp
+    base-package: com.gt.manager
+encrypt:
+  globalKey: 661ee319dff061d4fb6532787f7b6927
+  passSalt: w1fsd2DurO0
+keyencode:
+  DESede: 68EC34C420E6CDA1511A2A40CE94897FA2089EAD6E15D62C
+
+sessionVr:
+  duration: 12 #表示小时数
+tokenVr:
+  duration:  168 #7*24表示天数
+webchat:
+  h5NetworkUrl: http://127.0.0.1
+  tixian:
+    account: gt_test
+    Password: admin

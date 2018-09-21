@@ -1,0 +1,132 @@
+server:
+  port: 10000
+  tomcat:
+    accept-count: 1000
+    max-threads: 1000
+    max-connections: 2000
+
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: gateway
+  jackson:
+    serialization:
+      indent_output: true
+  cloud:
+    config:
+      profile: ${spring.profiles.active}
+      uri: http://@eurekaHost@:@eurekaPort@
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: CONFIG
+#endpoints:
+#    restart:
+#        enabled: true
+#    shutdown:
+#        enabled: true
+#    health:
+#        sensitive: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 6000
+  ConnectTimeout: 5000
+  maxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  OkToRetryOnAllOperations: true
+  restclient:
+    enabled: true
+##############################################################getway###################################################
+#http://blog.csdn.net/qq_25353539/article/details/52102167
+#zuul.routes.api-a-url.path=/api-a-url/**
+#zuul.routes.api-a-url.url=http://localhost:2222/
+#该配置，定义了，所有到Zuul的中规则为：/api-a-url/**的访问都映射到http://localhost:2222/上，访问地址为http://localhost:10000/serviceId
+#也就是说当我们访问http://localhost:5555/api-a-url/add?a=1&b=2的时候，Zuul会将该请求路由到：http://localhost:2222/add?a=1&b=2上。
+zuul:
+  ignore: service,interface-push,wtapp #serviceId 逗号分隔，比如 gtpush,push,gtop-api
+  routes:
+    gtpush-service:
+      path: /gtpush/**
+      serviceId: gtpush
+      sensitiveHeaders: Cookie,Set-Cookie
+    gtop-api-service:
+      path: /gtop/api/**
+      serviceId: gtop-api
+      sensitiveHeaders: Cookie,Set-Cookie
+    oauthserver:
+      path: /oauthserver/**
+      serviceId: oauthserver
+      sensitiveHeaders: Cookie,Set-Cookie
+    api-service:
+      path: /service/**
+      serviceId: service
+      sensitiveHeaders: Cookie,Set-Cookie
+    api-push:
+      path: /push/**
+      serviceId: interface-push
+    api-wtuser:
+      path: /wtuser/**
+      serviceId: wtuser
+      sensitiveHeaders: Cookie,Set-Cookie
+    api-wtorder:
+      path: /wtorder/**
+      serviceId: wtorder
+      sensitiveHeaders: Cookie,Set-Cookie
+    api-wtwx:
+      path: /wtwx/**
+      serviceId: wtwx
+      sensitiveHeaders: Cookie,Set-Cookie
+
+
+    water-app:
+      path: /app/**
+      serviceId: wtapp
+
+  host:
+    max-per-route-connections: 1000
+    max-total-connections: 2000
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+
+
+##############################################################getway###################################################
+
+eureka:
+  instance:
+#    hostname: gateway
+    preferIpAddress: true
+    non-secure-port: ${server.port:10000}
+    metadata-map:
+      instanceId: ${spring.application.name}:${random.value}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    enabled: true
+    serviceUrl:
+      defaultZone: http://${eureka.host}:${eureka.port}/eureka/
+  host: @eurekaHost@
+  port: @eurekaPort@
+
+sidecar:
+    port: 9999
+    #health-uri: http://localhost:8000/health.json
+
+endpoints:
+  enabled: true
+  shutdown:
+    enabled: true
+  info:
+    enabled: true
+  health:
+    enabled: true
+  metrics:
+    enabled: true
+

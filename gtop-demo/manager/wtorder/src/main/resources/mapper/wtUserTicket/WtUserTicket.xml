@@ -1,0 +1,250 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtUserTicket.WtUserTicketDAO">
+	<!--查询用户水票结果Map-->
+	<resultMap type="com.gt.manager.entity.wtUserTicket.WtUserTicket" id="wtUserTicket">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="surplusNum" column="surplus_num" jdbcType="INTEGER" />
+		<result property="ticketPrice" column="ticket_price" jdbcType="INTEGER" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+		<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="ticketPrice" column="ticket_price" jdbcType="BIGINT" />
+	</resultMap>
+	<!--查询水票日志结果Map-->
+	<resultMap type="com.gt.manager.entity.wtTicketLog.WtTicketLog" id="wtTicketLog">
+		<result property="id" column="id" jdbcType="INTEGER" /><!--记录ID-->
+		<result property="ticketId" column="ticket_id" jdbcType="INTEGER" /><!--水票ID-->
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" /><!--SKU名称（商品名称+规格）-->
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" /><!--SKU编号-->
+		<result property="num" column="num" jdbcType="INTEGER" /><!--数量-->
+		<result property="ticketPrice" column="ticket_price" jdbcType="INTEGER" />
+		<result property="operation" column="operation" jdbcType="INTEGER" /><!--增/减 【1增、-1减】-->
+		<result property="type" column="type" jdbcType="INTEGER" /><!--订单/派送单-->
+		<result property="userId" column="user_id" jdbcType="INTEGER" /><!--用户(客户)ID-->
+		<result property="userName" column="user_name" jdbcType="VARCHAR" /><!--用户（客户）名称-->
+		<result property="address" column="address" jdbcType="VARCHAR" /><!--地址-->
+		<result property="sendMesCode" column="send_mes_code" jdbcType="VARCHAR" /><!--派送单明细code-->
+		<result property="orderMesCode" column="order_mes_code" jdbcType="VARCHAR" /><!--订单明细code-->
+		<result property="logTime" column="log_time" jdbcType="INTEGER" /><!--消费时间-->
+		<result property="createTime" column="create_time" jdbcType="INTEGER" /><!--创建时间-->
+		<result property="createId" column="create_id" jdbcType="INTEGER" /><!--创建人-->
+		<result property="delState" column="del_state" jdbcType="INTEGER" /><!--删除状态 1正常、0删除-->
+	</resultMap>
+
+
+	<!--<resultMap type="com.gt.manager.order.entity.send.MyTicket" id="myTicket" extends="wtUserTicket">-->
+		<!--<result property="goodsName" />-->
+		<!--<result property="goodsSpec" />-->
+		<!--<result property="skuId"/>-->
+	<!--</resultMap>-->
+	<!--插入用户水票表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_user_ticket(id,user_id,num,surplus_num,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,ticket_price) VALUES(#{id},#{userId},#{num},#{surplusNum},#{skuCode},#{orderCode},#{orderTime},#{updateTime},#{createTime},#{createId},#{delState},#{ticketPrice}})
+	</insert>
+	<!--插入用户水票日志-->
+	<insert id="insertLog" parameterType="com.gt.manager.entity.wtTicketLog.WtTicketLog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_ticket_log(
+		id,ticket_id,sku_name,sku_code,num,operation,type,user_id,user_name,send_mes_code,order_mes_code,log_time,address,create_time,create_id,del_state
+		) VALUES(#{id},#{ticketId},#{skuName},#{skuCode},#{num},#{operation},#{type},#{userId},#{userName},#{sendMesCode},#{orderMesCode},#{logTime},#{address},#{createTime},#{createId},#{delState})
+	</insert>
+	<!--删除用户水票表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_user_ticket WHERE id=#{0}
+	</delete>
+
+	<!--更新用户水票表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket">
+		UPDATE t_wt_user_ticket
+		<set>
+			<!-- 更新用户水票ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新水票数量 -->
+			<if test="num!=null">
+				num=#{num},
+			</if>
+			<!-- 更新水票余量 -->
+			<if test="surplusNum!=null">
+				surplus_num=#{surplusNum},
+			</if>
+			<!-- 更新商品ID -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新订单编号 -->
+			<if test="orderCode!=null and orderCode!=''">
+				order_code=#{orderCode},
+			</if>
+			<!-- 更新订单时间 -->
+			<if test="orderTime!=null">
+				order_time=#{orderTime},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询用户水票表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtUserTicket">
+		SELECT id,user_id,num,surplus_num,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,ticket_price FROM t_wt_user_ticket WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询用户水票表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket" resultMap="wtUserTicket">
+		SELECT id,user_id,num,surplus_num,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,ticket_price FROM t_wt_user_ticket
+		<where>
+			1=1
+			<!-- 根据用户水票ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据水票数量查询 -->
+			<if test="num!=null">
+				AND num=#{num}
+			</if>
+			<!-- 根据水票余量查询 -->
+			<if test="surplusNum!=null">
+				AND surplus_num=#{surplusNum}
+			</if>
+			<!-- 根据商品ID查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据订单编号查询 -->
+			<if test="orderCode!=null and orderCode!=''">
+				AND order_code=#{orderCode}
+			</if>
+			<!-- 根据订单时间查询 -->
+			<if test="orderTime!=null">
+				AND order_time=#{orderTime}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectMyTicket" parameterType="java.util.HashMap" resultType="java.util.Map">
+		SELECT t1.id,t1.user_id,sum(t1.num) as num,sum(t1.surplus_num) as surplus_num,t1.ticket_price,t1.sku_code,t1.order_code,t1.order_time,t1.update_time,t1.create_time,
+		t1.create_id,t1.del_state,t1.branches_id,t3.sku_name,t3.goods_spec,t2.sku_id
+		FROM t_wt_user_ticket t1 LEFT JOIN t_wt_waterstore_sku t2 on t1.sku_code = t2.sku_code LEFT JOIN t_wt_sku t3 ON t2.sku_id = t3.id
+		where t1.user_id=#{userId} and t2.waterstore_id = #{waterstoreId} and t2.status=1 and t3.status=1 and t1.del_state=1
+		group by t1.sku_code,t1.branches_id having surplus_num>0
+</select>
+
+	<select id="selectByUseridAndSkuCodeAsc" parameterType="java.util.HashMap" resultMap="wtUserTicket">
+		SELECT id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,branches_id
+		FROM t_wt_user_ticket WHERE user_id = #{userId} and sku_code = #{skuCode} and branches_id =#{branchesId} and surplus_num>0
+		order by create_time asc
+	</select>
+
+	<select id="selectByUseridAndSkuCodeDesc" parameterType="java.util.HashMap" resultMap="wtUserTicket">
+		SELECT
+			id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,branches_id
+		FROM(
+		SELECT
+			t.id,
+			t.user_id,
+			t.num,
+			t.surplus_num,
+			t.ticket_price,
+			t.sku_code,
+			t.order_code,
+			t.order_time,
+			t.update_time,
+			t.create_time,
+			t.create_id,
+			t.del_state,
+			t.branches_id
+		FROM
+			t_wt_user_ticket t
+		LEFT JOIN
+		t_wt_waterstore t1
+		ON t.branches_id = t1.city_branches_id
+		WHERE 1=1
+		and	t.user_id = #{userId}
+		and t.sku_code = #{skuCode}
+		and t1.id = #{waterstoreId}
+		AND t.surplus_num != 0
+		ORDER BY
+			t.create_time DESC,
+			t.ticket_price DESC
+		)s
+	</select>
+	<!--更新用户水票表-->
+	<update id="updateUserTick" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket">
+		UPDATE t_wt_user_ticket
+		<set>
+			<!-- 水票余量-->
+			<if test="surplusNum!=null">
+				surplus_num=#{surplusNum},
+			</if>
+			<!-- 更新时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<update id="updateMinusById" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket">
+		UPDATE t_wt_user_ticket
+	    SET surplus_num=surplus_num-#{surplusNum},update_time=#{updateTime}
+		WHERE id=#{id}
+	</update>
+
+	<update id="updateAddById" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket">
+		UPDATE t_wt_user_ticket
+		SET surplus_num=surplus_num+#{surplusNum},update_time=#{updateTime}
+		WHERE id=#{id}
+	</update>
+
+
+
+</mapper>

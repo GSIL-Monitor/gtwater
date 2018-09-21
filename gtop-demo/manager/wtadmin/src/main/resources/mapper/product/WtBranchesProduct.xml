@@ -1,0 +1,86 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.product.repository.WtBranchesProductDAO">
+
+
+    <select id="getWtBranchesProdeuctCountNumList"
+            resultType="com.gt.manager.entity.wtadmin.WtBranchesProductEntity">
+
+
+        SELECT p.id id,p.gtop_goods_id gtopGoodsId,
+        p.spu_code spuCode,
+        p.brand_id brandId,p.type_code typeCode,
+        p.goods_name goodsName,
+        p.goods_photos goodsPhotos,p.goods_source goodsSource,
+        p.goods_profile,p.create_id,
+        p.create_time,p.update_id,p.update_time,
+        s.status,
+        p.version,
+        b.name,
+
+        c1.category_id categoryId,
+        c1.category_type categoryType,
+        c1.category_name categoryName,
+        c1.parent_category_id parentCategoryId,
+        c2.category_name parentCategoryName,
+        s.branches_id branchesId,
+        s.create_time createTime,
+        s.sku_code skuCode,
+        s.goods_spec goodsSpec,
+        s.update_time updateTime,
+        s.update_name updateName,
+
+        s.cost_price costPrice,
+        s.price price,
+        s.del_state delState,
+
+
+        count(*) count
+
+        FROM t_wt_sku s
+        LEFT JOIN t_wt_product p
+        ON s.p_id=p.id
+        LEFT JOIN t_wt_brand b ON s.brand_id=b.id
+        LEFT JOIN t_wt_category c1 ON s.type_code=c1.category_code
+        LEFT JOIN t_wt_category c2 ON c1.parent_category_id=c2.category_id
+        <where>
+            1=1
+            and s.del_state=1
+            and c1.category_level=2
+            <!-- 根据商品分类id查询 -->
+
+            <if test="categoryId!=null">
+                AND c1.category_id=#{categoryId}
+            </if>
+
+            <!-- 根据商品名称查询 -->
+            <if test="productName!=null and productName!=''">
+                AND p.goods_name LIKE CONCAT("%",#{productName},"%")
+            </if>
+
+            <!-- 根据商品来源（1：平台商品，2：店铺自定义商品）查询 -->
+            <if test="goodsSource!=null">
+                AND p.goods_source=#{goodsSource}
+            </if>
+            <!-- 根据商品状态查询 -->
+            <if test="status!=null">
+                AND s.status=#{status}
+            </if>
+
+            <!-- 根据创建时间查询 -->
+            <if test="startTime!=null">
+                AND s.create_time &gt; #{startTime}
+            </if>
+            <!-- 根据创建时间查询 -->
+            <if test="endTime!=null">
+                AND s.create_time
+                <![CDATA[ < ]]>#{endTime}
+            </if>
+
+
+        </where>
+        group by s.sku_code
+        order by s.create_time desc
+    </select>
+
+</mapper>

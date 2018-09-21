@@ -1,0 +1,333 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.wtProductDAO.WtProductDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtProduct.WtProduct" id="wtProduct">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="gtopGoodsId" column="gtop_goods_id" jdbcType="INTEGER" />
+		<result property="spuCode" column="spu_code" jdbcType="VARCHAR" />
+		<result property="brandId" column="brand_id" jdbcType="INTEGER" />
+		<result property="typeCode" column="type_code" jdbcType="VARCHAR" />
+		<result property="goodsName" column="goods_name" jdbcType="VARCHAR" />
+		<result property="goodsPhotos" column="goods_photos" jdbcType="VARCHAR" />
+		<result property="goodsPic" column="goods_pic" jdbcType="VARCHAR" />
+		<result property="goodsSource" column="goods_source" jdbcType="INTEGER" />
+		<result property="goodsProfile" column="goods_profile" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 根据水站ID和状态来查询商品信息-->
+	<select id="selectByIds" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+			t2.waterstore_id AS waterstoreId,
+			t3.goods_spec AS goodsSpec,
+			t3.sku_name AS skuName,
+			t3.sku_code AS skuCode,
+			t3.goods_bar AS goodsBar,
+			t3.goods_weight AS goodsWeight,
+			t3.goods_util AS goodsUtil,
+			t3.goods_size AS goodsSize,
+			t3.goods_color AS goodsColor,
+			t3.cost_price AS costPrice,
+			t3.price,
+			t3.on_sales AS onSales,
+			t3.sell_price AS sellPrice,
+			t3.shelf_on_time AS shelfOnTime,
+			t1.goods_profile AS goodsProfile,
+			t1.id AS gtopGoodsId,
+			t3.goods_code AS goodsCode,
+			t1.goods_name AS goodsName,
+			t1.goods_photos AS goodsPhotos,
+			t3.goods_pic AS goodsPic,
+			t1.goods_source AS goodsSource,
+			t1.brand_id AS brandId,
+			t2.status,
+			t4. NAME
+		FROM
+		t_wt_waterstore_sku t2
+		LEFT JOIN  t_wt_sku t3 ON t2.sku_id = t3.id
+		LEFT JOIN t_wt_product t1 ON t1.id = t3.p_id
+		LEFT JOIN t_wt_brand t4 ON t3.brand_id = t4.id
+		LEFT JOIN t_wt_category t5 ON t3.type_code = t5.category_code
+		WHERE	1 = 1
+			AND t3.status=1
+			AND t2.waterstore_id =  #{id}
+			AND t2. STATUS = 1
+			AND t1.del_state = 1
+			AND t2.del_state = 1
+			AND t3.del_state = 1
+			AND t4.del_state = 1
+			<!-- 根据品牌名称查询 -->
+			<if test="brandName!=null and brandName!=''">
+				AND t4.name=#{brandName}
+			</if>
+			<!-- 根据类别名称查询 -->
+			<if test="categoryName!=null and categoryName!=''">
+				AND t5.category_name=#{categoryName}
+			</if>
+		ORDER  BY skuCode ASC,sellPrice ASC
+	</select>
+	<!-- 根据水站ID和状态来查询套餐信息-->
+	<select id="selectSetmeal" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+		t1.brand_id AS brandId,
+		t1.sku_code AS skuCode,
+		t1.setmeal_code AS setmealCode,
+		t1.series_sku_code AS seriesSkuCode,
+		t1.name ,
+		t1.type_code AS typeCode,
+		t1.series_name AS seriesName,
+		t1.setmeal_img AS  setmealImg,
+		t1.shopcart_img AS shopcartImg,
+		t1.goods_profile AS goodsProfile,
+		t1.num,
+		t1.introduce ,
+		t1.price ,
+		t1.is_gift AS isGift,
+		t1.remark,
+		t1.goods_spec AS goodsSpec,
+		t2.setmeal_id AS setmealId,
+		t2.branches_id AS branchesId,
+		t2.waterstore_id AS waterstoreId
+		FROM t_wt_waterstop_setmeal t2
+		LEFT JOIN t_wt_org_setmeal t1
+		ON	t1.id = t2.setmeal_id
+		LEFT JOIN t_wt_brand t3
+		ON t1.brand_id = t3.id
+		LEFT JOIN t_wt_category t4
+		ON t1.type_code = t4.category_code
+		WHERE 1=1
+		AND t1.onshelf_state=1
+		AND t2.onshelf_state=1
+		AND t1.del_state = 1
+		AND t2.del_state = 1
+		AND t3.del_state = 1
+		AND t2.waterstore_id= #{id}
+		<!-- 根据品牌名称查询 -->
+		<if test="brandName!=null and brandName!=''">
+			AND t3.name=#{brandName}
+		</if>
+		<!-- 根据类别名称查询 -->
+		<if test="categoryName!=null and categoryName!=''">
+			AND t4.category_name=#{categoryName}
+		</if>
+		ORDER BY  t1.sku_code ASC ,t1.price ASC
+	</select>
+
+	<!-- 根据水站ID查询水站banner图-->
+	<select id="selectBanner" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+			id ,
+			waterstore_id  AS waterstoreId,
+			access_url AS accessUrl,
+			carousel_pic AS carouselPic,
+			create_id AS createId,
+			create_time AS createTime,
+			update_by  AS updateBy,
+			update_time AS updateTime,
+			del_state AS delState,
+			version
+		FROM
+		t_wt_carousel
+		WHERE del_state = 1
+	</select>
+
+	<!-- 根据用户id 查找用户头像和昵称 -->
+	<select id="selectUserNickNameIcon" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+			id,
+			login_time,
+			login_source,
+			nickname,
+			icon
+		FROM
+			t_user
+		WHERE 1=1
+			<!-- 根据用户ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+	</select>
+	<update id="updateUserNickNameIcon" parameterType="java.util.Map">
+		UPDATE t_user
+		<set>
+			nickname = #{nickname},
+			icon = #{icon}
+		</set>
+		WHERE id = #{id}
+
+	</update>
+
+	<!-- 查询用户默认地址 -->
+	<select id="selectUserAddress" parameterType="java.util.HashMap"   resultType="java.util.Map">
+		SELECT
+			id,
+			user_id,
+			title,
+			address,
+			province_id,
+			province,
+			city_id,
+			city,
+			area_Id,
+			area,
+			remark
+		FROM
+		t_wt_user_address
+		WHERE 1=1
+			AND user_id=#{userId}
+			AND is_default = 1
+			AND del_state = 1
+	</select>
+	<!-- 修改用户默认地址 -->
+	<update id="updateUserAddress" parameterType="java.util.HashMap">
+		UPDATE t_wt_user_address
+		<set>
+			is_default = 0
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+	<!-- 添加用户默认地址 -->
+	<insert id="saveUserAddress"  parameterType="java.util.HashMap">
+		INSERT INTO t_wt_user_address(user_id,title,address,is_default,province_id,province,city_id,city,area_Id,area,remark,create_time,create_id,del_state)
+		VALUES(#{userId},#{title},#{address},#{isDefault},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{remark},#{createTime},#{createId},#{delState})
+	</insert>
+	<!-- 查找品牌 -->
+	<select id="queryCategory"    resultType="java.util.Map" parameterType="java.util.HashMap">
+		SELECT DISTINCT a.name AS categoryName FROM (
+			SELECT
+				k3.name
+			FROM
+				t_wt_waterstore_sku k1
+			LEFT JOIN
+				t_wt_sku k2
+			ON k1.sku_id = k2.id
+			LEFT JOIN
+				t_wt_brand k3
+			ON k2.brand_id = k3.id
+			WHERE k1.status = 1
+			AND k1.waterstore_id = #{waterstoreId}
+		  ) a
+	</select>
+	<!-- 查找类目 -->
+	<select id="queryBrand"    resultType="java.util.Map" parameterType="java.util.HashMap">
+		SELECT DISTINCT a.categoryName FROM(
+			SELECT
+				k3.category_name AS categoryName
+			FROM
+				t_wt_waterstore_sku k1
+			LEFT JOIN
+				t_wt_sku k2
+			ON k1.sku_id = k2.id
+			LEFT JOIN
+				t_wt_category k3
+			ON  k2.type_code = k3.category_code
+			where k1.status = 1
+			AND k1.waterstore_id = #{waterstoreId}
+		)a
+	</select>
+
+	<!-- 查找水站ID -->
+	<select id="queryWaterstoreId"    resultType="java.util.Map" parameterType="java.util.HashMap">
+		SELECT
+			ID AS waterstoreId
+		FROM
+			t_wt_waterstore
+		WHERE
+			branches_id = #{branchesId}
+
+	</select>
+
+	<!-- 通过套系编号查找赠品 -->
+	<select id="queryGift"    resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			t1.id,
+			t1.product_id AS productId,
+			t1.series_sku_code AS seriesSkuCode,
+			t1.sku_code AS skuCode,
+			t1.pick,
+			t1.num,
+			t1.mes,
+			t1.type,
+			t2.goods_pic AS goodsPic,
+			t2.sku_name AS skuName
+			FROM
+			t_wt_gift t1
+			LEFT JOIN
+			t_wt_sku t2
+			on t1.sku_code = t2.sku_code
+			where 1=1
+			AND t1.series_sku_code = #{seriesSkuCode}
+			AND t1.del_state = 1
+			AND t2.del_state = 1
+			GROUP BY t1.id
+	</select>
+
+	<!-- 通过skucode和水站ID 查找商品详情 -->
+	<select id="queryProductMes"    resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+		  t.p_id AS pId,
+		  t.goods_code AS goodsCode,
+		  t.brand_id AS brandId,
+		  t.sku_name AS skuName,
+		  t.sku_code AS skuCode,
+		  t.goods_bar AS goodsBar,
+		  t.type_code AS typeCode,
+		  t.goods_pic AS goodsPic,
+		  t.goods_spec AS goodsSpec,
+		  t.goods_weight AS goodsWeight,
+		  t.goods_util AS goodsUtil,
+		  t.goods_size AS goodsSize,
+		  t.goods_color AS goodsColor,
+		  t.status ,
+		  t.cost_price AS costPrice,
+		  t.price,
+		  t.on_sales AS onSales,
+		  t.sell_price AS sellPrice,
+		  t.shelf_on_time AS shelfOnTime,
+		  t.shell_off_reason AS shellOffReason,
+		  t.create_id AS createId,
+		  t.create_time AS createTime,
+		  t.update_id AS updateId
+		FROM
+			t_wt_waterstore_sku  s
+		LEFT JOIN
+			t_wt_sku  t
+		ON s.sku_id = t.id
+		WHERE 1=1
+		AND s.waterstore_id = #{waterstoreId}
+		AND s.sku_code = #{skuCode}
+		AND s.status = 1
+		AND t.status = 1
+		AND s.del_state = 1
+		AND t.del_state = 1
+
+	</select>
+
+	<!-- 查询商品信息生成商品序列 -->
+	<select id="selectProducts" parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+		t1.id,t1.branches_id,t1.p_id,goods_code,t1.brand_id,t1.sku_name,t1.sku_code,t1.goods_bar,t1.type_code,
+		t1.goods_spec,t1.goods_weight,t1.goods_util,t1.goods_size,t1.goods_color,t1.status,t1.cost_price,t1.price,
+		t1.on_sales,t1.sell_price,t1.shelf_on_time,t1.shell_off_reason,t1.create_id,t1.create_time,t1.update_id,
+		t1.update_time,t1.del_state,t1.version,t2.goods_name,t1.goods_pic, t3.name
+		FROM
+		t_wt_waterstore_sku s1
+		LEFT JOIN
+		t_wt_sku t1 ON s1.sku_id = t1.id
+		LEFT JOIN
+		t_wt_product t2 ON t1.p_id = t2.id
+		LEFT JOIN t_wt_brand t3 ON t1.brand_id = t3.id
+		WHERE s1.waterstore_id=#{waterstoreId}
+		AND t1.sku_code = #{skuCode}
+		AND  t1.del_state=1
+		AND t2.del_state = 1
+	</select>
+
+</mapper>

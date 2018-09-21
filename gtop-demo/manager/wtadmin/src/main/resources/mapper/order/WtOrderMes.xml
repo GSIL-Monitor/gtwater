@@ -1,0 +1,170 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.WtOrderMesDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtOrderMes" id="wtOrderMes">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="orderNo" column="order_no" jdbcType="VARCHAR" />
+		<result property="orderMesNo" column="order_mes_no" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" />
+		<result property="type" column="type" jdbcType="INTEGER" />
+		<result property="pType" column="p_type" jdbcType="INTEGER" />
+		<result property="price" column="price" jdbcType="INTEGER" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="totalPrice" column="total_price" jdbcType="INTEGER" />
+		<result property="sequence" column="sequence" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入订单详情-->
+	<insert id="insert" parameterType="wtOrderMes" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_order_mes(id,order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state) VALUES(#{id},#{orderNo},#{orderMesNo},#{skuCode},#{skuName},#{type},#{pType},#{price},#{num},#{totalPrice},#{sequence},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除订单详情-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_order_mes WHERE id=#{0}
+	</delete>
+
+	<!--更新订单详情-->
+	<update id="update" parameterType="wtOrderMes">
+		UPDATE t_wt_order_mes
+		<set>
+			<!-- 更新详情ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新订单编号 -->
+			<if test="orderNo!=null and orderNo!=''">
+				order_no=#{orderNo},
+			</if>
+			<!-- 更新 -->
+			<if test="orderMesNo!=null and orderMesNo!=''">
+				order_mes_no=#{orderMesNo},
+			</if>
+			<!-- 更新SKU编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新SKU名称（商品名称+规格） -->
+			<if test="skuName!=null and skuName!=''">
+				sku_name=#{skuName},
+			</if>
+			<!-- 更新支付类型（1水票|| 2现金 ） -->
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<!-- 更新商品类型（1水票|| 2桶水） -->
+			<if test="pType!=null">
+				p_type=#{pType},
+			</if>
+			<!-- 更新售价 -->
+			<if test="price!=null">
+				price=#{price},
+			</if>
+			<!-- 更新数量 -->
+			<if test="num!=null">
+				num=#{num},
+			</if>
+			<!-- 更新 -->
+			<if test="totalPrice!=null">
+				total_price=#{totalPrice},
+			</if>
+			<!-- 更新商品序列 -->
+			<if test="sequence!=null and sequence!=''">
+				sequence=#{sequence},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询订单详情-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtOrderMes">
+		SELECT id,order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state FROM t_wt_order_mes WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询订单详情列表-->
+	<select id="selectList" parameterType="wtOrderMes" resultMap="wtOrderMes">
+		SELECT id,order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state FROM t_wt_order_mes
+		<where>
+			1=1
+			<!-- 根据详情ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据订单编号查询 -->
+			<if test="orderNo!=null and orderNo!=''">
+				AND order_no=#{orderNo}
+			</if>
+			<!-- 根据查询 -->
+			<if test="orderMesNo!=null and orderMesNo!=''">
+				AND order_mes_no=#{orderMesNo}
+			</if>
+			<!-- 根据SKU编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据SKU名称（商品名称+规格）查询 -->
+			<if test="skuName!=null and skuName!=''">
+				AND sku_name=#{skuName}
+			</if>
+			<!-- 根据支付类型（1水票|| 2现金 ）查询 -->
+			<if test="type!=null">
+				AND type=#{type}
+			</if>
+			<!-- 根据商品类型（1水票|| 2桶水）查询 -->
+			<if test="pType!=null">
+				AND p_type=#{pType}
+			</if>
+			<!-- 根据售价查询 -->
+			<if test="price!=null">
+				AND price=#{price}
+			</if>
+			<!-- 根据数量查询 -->
+			<if test="num!=null">
+				AND num=#{num}
+			</if>
+			<!-- 根据查询 -->
+			<if test="totalPrice!=null">
+				AND total_price=#{totalPrice}
+			</if>
+			<!-- 根据商品序列查询 -->
+			<if test="sequence!=null and sequence!=''">
+				AND sequence=#{sequence}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+	<!--订单编号查询订单详情-->
+	<select id="selectByOrderCode" parameterType="java.lang.String" resultMap="wtOrderMes">
+		SELECT order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence FROM t_wt_order_mes WHERE order_no=#{orderCode}
+	</select>
+
+</mapper>

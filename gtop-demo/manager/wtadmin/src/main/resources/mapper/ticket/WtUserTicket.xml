@@ -1,0 +1,621 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.ticket.repository.WtUserTicketDAO">
+    <!--查询结果Map-->
+    <resultMap type="wtUserTicket" id="wtUserTicket">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="branchesId" column="branches_id" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="surplusNum" column="surplus_num" jdbcType="INTEGER"/>
+        <result property="ticketPrice" column="ticket_price" jdbcType="INTEGER"/>
+        <result property="skuCode" column="sku_code" jdbcType="VARCHAR"/>
+        <result property="orderCode" column="order_code" jdbcType="VARCHAR"/>
+        <result property="orderTime" column="order_time" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="INTEGER"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="delState" column="del_state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--插入用户水票表-->
+    <insert id="insert" parameterType="wtUserTicket" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_wt_user_ticket (id, user_id, num, surplus_num, ticket_price, sku_code, order_code, order_time, update_time, create_time, create_id, del_state, branches_id)
+        VALUES (#{id}, #{userId}, #{num}, #{surplusNum}, #{ticketPrice}, #{skuCode}, #{orderCode}, #{orderTime},
+                       #{updateTime}, #{createTime}, #{createId}, #{delState}, #{branchesId})
+    </insert>
+
+    <!--删除用户水票表-->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM t_wt_user_ticket
+        WHERE id = #{0}
+    </delete>
+
+    <!--更新用户水票表-->
+    <update id="update" parameterType="wtUserTicket">
+        UPDATE t_wt_user_ticket
+        <set>
+            <!-- 更新用户水票ID -->
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <!-- 更新用户ID -->
+            <if test="userId!=null">
+                user_id=#{userId},
+            </if>
+            <!-- 更新水票数量 -->
+            <if test="num!=null">
+                num=#{num},
+            </if>
+            <!-- 更新水票余量 -->
+            <if test="surplusNum!=null">
+                surplus_num=#{surplusNum},
+            </if>
+            <!-- 更新水票单价 -->
+            <if test="ticketPrice!=null">
+                ticket_price=#{ticketPrice},
+            </if>
+            <!-- 更新sku编号 -->
+            <if test="skuCode!=null and skuCode!=''">
+                sku_code=#{skuCode},
+            </if>
+            <!-- 更新订单编号 -->
+            <if test="orderCode!=null and orderCode!=''">
+                order_code=#{orderCode},
+            </if>
+            <!-- 更新下单时间 -->
+            <if test="orderTime!=null">
+                order_time=#{orderTime},
+            </if>
+            <!-- 更新修改时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新创建时间 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新创建人 -->
+            <if test="createId!=null">
+                create_id=#{createId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--主键查询用户水票表-->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="wtUserTicket">
+        SELECT
+            id,
+            user_id,
+            num,
+            surplus_num,
+            ticket_price,
+            sku_code,
+            order_code,
+            order_time,
+            update_time,
+            create_time,
+            create_id,
+            del_state
+        FROM t_wt_user_ticket
+        WHERE id = #{0}
+    </select>
+
+    <!--根据条件查询用户水票表列表-->
+    <select id="selectList" parameterType="wtUserTicket" resultMap="wtUserTicket">
+        SELECT
+        id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state
+        FROM t_wt_user_ticket
+        <where>
+            1=1
+            <!-- 根据用户水票ID查询 -->
+            <if test="id!=null">
+                AND id=#{id}
+            </if>
+            <!-- 根据用户ID查询 -->
+            <if test="userId!=null">
+                AND user_id=#{userId}
+            </if>
+            <!-- 根据水票数量查询 -->
+            <if test="num!=null">
+                AND num=#{num}
+            </if>
+            <!-- 根据水票余量查询 -->
+            <if test="surplusNum!=null">
+                AND surplus_num=#{surplusNum}
+            </if>
+            <!-- 根据水票单价查询 -->
+            <if test="ticketPrice!=null">
+                AND ticket_price=#{ticketPrice}
+            </if>
+            <!-- 根据sku编号查询 -->
+            <if test="skuCode!=null and skuCode!=''">
+                AND sku_code=#{skuCode}
+            </if>
+            <!-- 根据订单编号查询 -->
+            <if test="orderCode!=null and orderCode!=''">
+                AND order_code=#{orderCode}
+            </if>
+            <!-- 根据下单时间查询 -->
+            <if test="orderTime!=null">
+                AND order_time=#{orderTime}
+            </if>
+            <!-- 根据修改时间查询 -->
+            <if test="updateTime!=null">
+                AND update_time=#{updateTime}
+            </if>
+            <!-- 根据创建时间查询 -->
+            <if test="createTime!=null">
+                AND create_time=#{createTime}
+            </if>
+            <!-- 根据创建人查询 -->
+            <if test="createId!=null">
+                AND create_id=#{createId}
+            </if>
+            <!-- 根据删除状态 1正常、0删除查询 -->
+            <if test="delState!=null">
+                AND del_state=#{delState}
+            </if>
+        </where>
+    </select>
+
+    <!--根据电话获取用户简单信息-->
+    <select id="getUserSimpleByPhone" parameterType="java.lang.String"
+            resultType="com.gt.manager.entity.wtadmin.UserSimpleEntity">
+        SELECT
+            id       userId,
+            phone,
+            username userName
+        FROM t_user
+        WHERE phone = #{phone}
+    </select>
+
+
+    <!--根据用户ID查询用户水票简单信息-->
+
+    <select id="getWtTicketSimpleByuserId" parameterType="java.lang.Long"
+            resultType="com.gt.manager.entity.wtadmin.WtTicketSimple">
+        SELECT
+            p1.userId,
+            p1.productName,
+            p1.goodsSpec,
+            p1.productSkuCode,
+            SUM(surplus_num) surplusNum
+        FROM
+            (
+                SELECT DISTINCT
+                    (t.id),
+                    t.user_id    userId,
+                    p.goods_name productName,
+                    s.goods_spec goodsSpec,
+                    t.sku_code   productSkuCode,
+                    t.surplus_num
+                FROM
+                    t_wt_user_ticket t
+                    LEFT JOIN t_wt_sku s ON t.sku_code = s.sku_code
+                    LEFT JOIN t_wt_product p ON s.p_id = p.id
+                WHERE
+                    t.user_id = #{userId}
+                GROUP BY
+                    t.id
+            ) p1
+        GROUP BY
+            p1.productSkuCode;
+    </select>
+
+
+    <!--主键查询用户水票表--><!---->
+    <select id="getWtUserTicketListByUserIdSkuCode" resultMap="wtUserTicket">
+        SELECT
+            id,
+            user_id,
+            num,
+            surplus_num,
+            ticket_price,
+            sku_code,
+            order_code,
+            order_time,
+            update_time,
+            create_time,
+            create_id,
+            del_state
+        FROM t_wt_user_ticket
+        WHERE user_id = #{userId}
+              and sku_code = #{skuCode}
+              and surplus_num > 0
+        order by create_time
+    </select>
+
+    <!--更新水票余量-->
+    <update id="updateTicketSurplusNum" parameterType="wtUserTicket">
+        UPDATE t_wt_user_ticket
+        <set>
+
+
+            <!-- 更新水票余量 -->
+            <if test="surplusNum!=null">
+                surplus_num=#{surplusNum},
+            </if>
+
+            <!-- 更新修改时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--根据条件查询水票消费信息-->
+
+    <select id="getTicketRecordList" parameterType="java.util.Map"
+            resultType="com.gt.manager.entity.wtadmin.TicketRecordEntity">
+
+
+        SELECT
+        p1.address,
+        p1.user_id userId,
+        concat(p1.user_id,'') userIdString,
+        p1.city cityName,
+        p1.contacts userName,
+        p1.money,
+        p1.order_no orderCode,
+        p1.phone userPhone,
+        p1.create_time orderTime,
+        p1.sum productCount,
+        p1.is_setmeal isSetmeal,
+        p2.send_time newSendTime,
+        p3.messages qrCode,
+        p3.phone partnerPhone,
+        p4.orderCount purchaseTimes,
+        p5.surplusNum,
+        p6.create_time newIncomeTime
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        concat(IF(o.province in('北京市','上海市','天津市','重庆市'),"",o.province),o.city,o.area,o.address) address,
+        o.user_id,
+        o.city,
+        o.city_id,
+        o.contacts,
+        o.money,
+        o.order_no,
+        o.payment_type,
+        o.phone,
+        o.is_setmeal,
+        o.create_time,
+        SUM(om.num) `sum`
+        FROM
+        t_wt_order o
+        LEFT JOIN t_wt_order_mes om ON o.order_no = om.order_no
+        GROUP BY
+        o.id
+        ORDER BY
+        o.create_time DESC
+        ) v1
+        GROUP BY
+        v1.user_id
+        ) p1
+        LEFT JOIN
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        s.user_id,
+        s.send_time
+        FROM
+        t_wt_send s
+        ORDER BY
+        s.send_time DESC
+        ) v2
+        GROUP BY
+        v2.user_id
+        ) p2 ON p1.user_id = p2.user_id
+        LEFT JOIN
+        (
+        SELECT
+        u.id,
+        e.messages,
+        p.phone
+        FROM
+        t_user u
+        LEFT JOIN t_wt_user_extensioncode ue ON u.id = ue.user_id
+        LEFT JOIN t_wt_extensioncode e ON ue.code_id = e.id
+        LEFT JOIN t_wt_partner p ON e.partner_id = p.id
+        GROUP BY
+        u.id
+        ) p3 ON p1.user_id = p3.id
+        LEFT JOIN
+        (
+        SELECT
+        COUNT(id) orderCount,
+        user_id
+        FROM
+        t_wt_order
+        GROUP BY
+        user_id
+        ) p4 ON p1.user_id = p4.user_id
+        LEFT JOIN
+        (
+        SELECT
+        SUM(t.surplus_num) surplusNum,
+        user_id
+        FROM
+        t_wt_user_ticket t
+        GROUP BY
+        t.user_id
+        ) p5 ON p1.user_id = p5.user_id
+        LEFT JOIN (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        o.user_id,
+        o.create_time
+        FROM
+        t_wt_order o
+        WHERE
+        o.is_setmeal = 1
+        ORDER BY
+        o.create_time DESC
+        ) vv
+        GROUP BY
+        vv.user_id
+        ) p6 ON p1.user_id = p6.user_id
+
+
+        <where>
+            1=1
+            <!-- 根据用户名称ID查询 -->
+            <if test="userName!=null and userName!=''">
+                AND p1.contacts like CONCAT("%",#{userName},"%")
+            </if>
+            <!-- 根据用户电话查询 -->
+            <if test="userPhone!=null and userPhone!=''">
+                AND p1.phone like concat("%",#{userPhone},"%")
+            </if>
+            <!-- 根据水票数量查询 -->
+            <if test="cityId!=null and cityId!=''">
+                AND p1.city_id=#{cityId}
+            </if>
+
+            <!-- 根据二维码查询 -->
+            <if test="qrCode!=null and qrCode!=''">
+                AND p3.messages =#{qrCode}
+            </if>
+            <!-- 根据水票余量查询 -->
+            <if test="minTicketNum != null">
+                AND p5.surplusNum &gt; #{minTicketNum}
+            </if>
+            <!-- 根据水票余量查询 -->
+            <if test="maxTicketNum!=null">
+                AND p5.surplusNum &lt; #{maxTicketNum}
+            </if>
+
+
+            <!-- 根据最近充值时间查询 -->
+            <if test="fromRechargeTime!=null">
+                AND p6.create_time>#{fromRechargeTime}
+            </if>
+            <!-- 根据最近充值时间查询 -->
+            <if test="toRechargeTime!=null">
+                AND p6.create_time <![CDATA[ < ]]>#{toRechargeTime}
+            </if>
+
+        </where>
+
+        GROUP BY
+        p1.user_id
+        order by p6.create_time desc
+    </select>
+
+
+    <!--根据条件导出水票消费信息-->
+    <select id="exportTicketRecordList" parameterType="java.util.Map"
+            resultType="com.gt.manager.entity.wtadmin.TicketRecordEntity">
+
+        SELECT
+        p1.address,
+        p1.user_id userId,
+        p1.city cityName,
+        p1.contacts userName,
+        p1.money,
+        p1.order_no orderCode,
+
+        p1.phone userPhone,
+        p1.create_time orderTime,
+        p1.sum productCount,
+        p2.send_time newSendTime,
+        p3.messages qrCode,
+        p3.phone partnerPhone,
+        p4.orderCount purchaseTimes,
+        p5.surpplusNum,
+        p6.create_time newIncomeTime,
+        (
+        SELECT
+        group_concat(cc.sku_name) setmealName
+        FROM
+        (
+        SELECT
+        oo.order_no,
+        oo.sku_name
+        FROM
+        t_wt_order_mes oo
+        WHERE
+        oo.p_type = 1
+        ) cc
+        WHERE
+        cc.order_no = p1.order_no
+        ) setmealName,
+        (
+        SELECT
+        group_concat(cc.sku_name) skuName
+        FROM
+        (
+        SELECT
+        oo.order_no,
+        oo.sku_name
+        FROM
+        t_wt_order_mes oo
+        WHERE
+        oo.p_type = 2
+        ) cc
+        WHERE
+        cc.order_no = p1.order_no
+        ) skuName
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        o.address,
+        o.user_id,
+        o.city,
+        o.city_id,
+        o.contacts,
+        o.money,
+        o.order_no,
+        o.payment_type,
+        o.phone,
+        o.create_time,
+        SUM(om.num) `sum`
+        FROM
+        t_wt_order o
+        LEFT JOIN t_wt_order_mes om ON o.order_no = om.order_no
+        GROUP BY
+        o.id
+        ORDER BY
+        o.create_time DESC
+        ) v1
+        GROUP BY
+        v1.user_id
+        ) p1
+        LEFT JOIN
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        o.user_id,
+        o.create_time
+        FROM
+        t_wt_order o
+        WHERE
+        o.is_setmeal = 1
+        ORDER BY
+        o.create_time DESC
+        ) vv
+        GROUP BY
+        vv.user_id
+        ) p6
+        ON p1.user_id = p6.user_id
+        LEFT JOIN (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        s.user_id,
+        s.send_time
+        FROM
+        t_wt_send s
+        ORDER BY
+        s.send_time DESC
+        ) v2
+        GROUP BY
+        v2.user_id
+        ) p2 ON p1.user_id = p2.user_id
+        LEFT JOIN
+        (
+        SELECT
+        u.id,
+        e.messages,
+        u2.phone
+        FROM
+        t_user u
+        LEFT JOIN t_wt_user_extensioncode ue ON u.id = ue.user_id
+        LEFT JOIN t_wt_extensioncode e ON ue.code_id = e.id
+        LEFT JOIN t_user u2 ON e.partner_id = u2.id
+        GROUP BY
+        u.id
+        ) p3 ON p1.user_id = p3.id
+        LEFT JOIN
+        (
+        SELECT
+        COUNT(id) orderCount,
+        user_id
+        FROM
+        t_wt_order
+        GROUP BY
+        user_id
+        ) p4 ON p1.user_id = p4.user_id
+        LEFT JOIN
+        (
+        SELECT
+        SUM(t.surplus_num) surpplusNum,
+        user_id
+        FROM
+        t_wt_user_ticket t
+        GROUP BY
+        t.user_id
+        ) p5 ON p1.user_id = p5.user_id
+
+        <where>
+            1=1
+            <!-- 根据用户名称ID查询 -->
+            <if test="userName!=null and userName!=''">
+                AND p1.contacts like CONCAT("%",#{userName},"%")
+            </if>
+            <!-- 根据用户电话查询 -->
+            <if test="userPhone!=null and userPhone!=''">
+                AND p1.phone like concat("%",#{userPhone},"%")
+            </if>
+            <!-- 根据水票数量查询 -->
+            <if test="cityId!=null and cityId!=''">
+                AND p1.city_id=#{cityId}
+            </if>
+
+            <!-- 根据二维码查询 -->
+            <if test="qrCode!=null and qrCode!=''">
+                AND p3.message =#{qrCode}
+            </if>
+            <!-- 根据水票余量查询 -->
+            <if test="minTichetNum!=null">
+                AND p5.surplusNum>#{minTichetNum}
+            </if>
+            <!-- 根据水票余量查询 -->
+            <if test="maxTichetNum!=null">
+                AND p5.surplusNum <![CDATA[ < ]]> #{maxTichetNum}
+            </if>
+
+
+            <!-- 根据最近充值时间查询 -->
+            <if test="fromRechargeTime!=null">
+                AND p6.create_time>#{fromRechargeTime}
+            </if>
+            <!-- 根据最近充值时间查询 -->
+            <if test="toRechargeTime!=null">
+                AND p6.create_time <![CDATA[ < ]]>#{toRechargeTime}
+            </if>
+
+        </where>
+
+        GROUP BY
+        p1.user_id
+    </select>
+</mapper>

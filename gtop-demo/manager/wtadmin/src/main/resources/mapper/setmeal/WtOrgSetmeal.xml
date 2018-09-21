@@ -1,0 +1,810 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.setmeal.repository.WtOrgSetmealDAO">
+    <!--查询结果Map-->
+    <resultMap type="wtOrgSetmeal" id="wtOrgSetmeal">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="branchesId" column="branches_id" jdbcType="INTEGER"/>
+        <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
+        <result property="skuCode" column="sku_code" jdbcType="VARCHAR"/>
+        <result property="setmealCode" column="setmeal_code" jdbcType="VARCHAR"/>
+        <result property="seriesSkuCode" column="series_sku_code" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="typeCode" column="type_code" jdbcType="VARCHAR"/>
+        <result property="seriesName" column="series_name" jdbcType="VARCHAR"/>
+        <result property="setmealImg" column="setmeal_img" jdbcType="VARCHAR"/>
+        <result property="shopcartImg" column="shopcart_img" jdbcType="VARCHAR"/>
+        <result property="goodsProfile" column="goods_profile" jdbcType="LONGVARCHAR"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="introduce" column="introduce" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="INTEGER"/>
+        <result property="isGift" column="is_gift" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="goodsSpec" column="goods_spec" jdbcType="VARCHAR"/>
+        <result property="onshelfState" column="onshelf_state" jdbcType="INTEGER"/>
+        <result property="onshelfTime" column="onshelf_time" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="INTEGER"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="updateId" column="update_Id" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="INTEGER"/>
+        <result property="delState" column="del_state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--插入机构套餐-->
+    <insert id="insert" parameterType="wtOrgSetmeal" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_wt_org_setmeal (id, branches_id, brand_id, sku_code,
+                                      setmeal_code, series_sku_code, name, type_code,
+                                      series_name, setmeal_img, shopcart_img, goods_profile, num,
+                                      introduce, price, is_gift, remark, onshelf_state, onshelf_time,
+                                      create_time, create_id)
+        VALUES (#{id}, #{branchesId}, #{brandId}, #{skuCode}, #{setmealCode},
+            #{seriesSkuCode}, #{name}, #{typeCode}, #{seriesName}, #{setmealImg},
+            #{shopcartImg}, #{goodsProfile}, #{num}, #{introduce}, #{price},
+            #{isGift}, #{remark}, #{onshelfState}, #{onshelfTime},
+            #{createTime}, #{createId})
+    </insert>
+
+    <!--删除机构套餐-->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM t_wt_org_setmeal
+        WHERE id = #{0}
+    </delete>
+
+    <!--更新机构套餐-->
+    <update id="update" parameterType="wtOrgSetmeal">
+        UPDATE t_wt_org_setmeal
+        <set>
+            <!-- 更新主键 -->
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <!-- 更新机构(城市)ID -->
+            <if test="branchesId!=null">
+                branches_id=#{branchesId},
+            </if>
+            <!-- 更新品牌 -->
+            <if test="brandId!=null">
+                brand_id=#{brandId},
+            </if>
+            <!-- 更新商品SKU code -->
+            <if test="skuCode!=null and skuCode!=''">
+                sku_code=#{skuCode},
+            </if>
+            <!-- 更新套餐编号 -->
+            <if test="setmealCode!=null and setmealCode!=''">
+                setmeal_code=#{setmealCode},
+            </if>
+            <!-- 更新套系编号（sku） -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                series_sku_code=#{seriesSkuCode},
+            </if>
+            <!-- 更新套餐名称 -->
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <!-- 更新类别编号 -->
+            <if test="typeCode!=null and typeCode!=''">
+                type_code=#{typeCode},
+            </if>
+            <!-- 更新 -->
+            <if test="seriesName!=null and seriesName!=''">
+                series_name=#{seriesName},
+            </if>
+            <!-- 更新套餐宣传图片 -->
+            <if test="setmealImg!=null and setmealImg!=''">
+                setmeal_img=#{setmealImg},
+            </if>
+            <!-- 更新购物车图片 -->
+            <if test="shopcartImg!=null and shopcartImg!=''">
+                shopcart_img=#{shopcartImg},
+            </if>
+            <!-- 更新商品图文 -->
+            <if test="goodsProfile!=null and goodsProfile!=''">
+                goods_profile=#{goodsProfile},
+            </if>
+            <!-- 更新数量 -->
+            <if test="num!=null">
+                num=#{num},
+            </if>
+            <!-- 更新套餐介绍 -->
+            <if test="introduce!=null and introduce!=''">
+                introduce=#{introduce},
+            </if>
+            <!-- 更新套餐价格 -->
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <!-- 更新是否有赠品【1有，0无】 -->
+            <if test="isGift!=null">
+                is_gift=#{isGift},
+            </if>
+            <!-- 更新备注 -->
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="onshelfState!=null">
+                onshelf_state=#{onshelfState},
+            </if>
+            <!-- 更新上架时间 -->
+            <if test="onshelfTime!=null">
+                onshelf_time=#{onshelfTime},
+            </if>
+            <!-- 更新创建时间 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新创建人 -->
+            <if test="createId!=null">
+                create_id=#{createId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--主键查询机构套餐-->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="wtOrgSetmeal">
+        SELECT
+            id,
+            branches_id,
+            brand_id,
+            sku_code,
+            setmeal_code,
+            series_sku_code,
+            name,
+            type_code,
+            series_name,
+            setmeal_img,
+            shopcart_img,
+            goods_profile,
+            num,
+            introduce,
+            price,
+            is_gift,
+            remark,
+            onshelf_state,
+            onshelf_time,
+            create_time,
+            create_id,
+            del_state
+        FROM t_wt_org_setmeal
+        WHERE id = #{0}
+    </select>
+
+    <!--根据条件查询机构套餐列表-->
+    <select id="selectList" parameterType="wtOrgSetmeal" resultMap="wtOrgSetmeal">
+        SELECT
+        id,branches_id,brand_id,sku_code,setmeal_code,series_sku_code,name,type_code,series_name,setmeal_img,shopcart_img,goods_profile,num,introduce,price,is_gift,remark,onshelf_state,onshelf_time,create_time,create_id,del_state
+        FROM t_wt_org_setmeal
+        <where>
+            1=1
+            <!-- 根据主键查询 -->
+            <if test="id!=null">
+                AND id=#{id}
+            </if>
+            <!-- 根据机构(城市)ID查询 -->
+            <if test="branchesId!=null">
+                AND branches_id=#{branchesId}
+            </if>
+            <!-- 根据品牌查询 -->
+            <if test="brandId!=null">
+                AND brand_id=#{brandId}
+            </if>
+            <!-- 根据商品SKU code查询 -->
+            <if test="skuCode!=null and skuCode!=''">
+                AND sku_code=#{skuCode}
+            </if>
+            <!-- 根据套餐编号查询 -->
+            <if test="setmealCode!=null and setmealCode!=''">
+                AND setmeal_code=#{setmealCode}
+            </if>
+            <!-- 根据套系编号（sku）查询 -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                AND series_sku_code=#{seriesSkuCode}
+            </if>
+            <!-- 根据套餐名称查询 -->
+            <if test="name!=null and name!=''">
+                AND name=#{name}
+            </if>
+            <!-- 根据类别编号查询 -->
+            <if test="typeCode!=null and typeCode!=''">
+                AND type_code=#{typeCode}
+            </if>
+            <!-- 根据查询 -->
+            <if test="seriesName!=null and seriesName!=''">
+                AND series_name=#{seriesName}
+            </if>
+            <!-- 根据套餐宣传图片查询 -->
+            <if test="setmealImg!=null and setmealImg!=''">
+                AND setmeal_img=#{setmealImg}
+            </if>
+            <!-- 根据购物车图片查询 -->
+            <if test="shopcartImg!=null and shopcartImg!=''">
+                AND shopcart_img=#{shopcartImg}
+            </if>
+            <!-- 根据商品图文查询 -->
+            <if test="goodsProfile!=null and goodsProfile!=''">
+                AND goods_profile=#{goodsProfile}
+            </if>
+            <!-- 根据数量查询 -->
+            <if test="num!=null">
+                AND num=#{num}
+            </if>
+            <!-- 根据套餐介绍查询 -->
+            <if test="introduce!=null and introduce!=''">
+                AND introduce=#{introduce}
+            </if>
+            <!-- 根据套餐价格查询 -->
+            <if test="price!=null">
+                AND price=#{price}
+            </if>
+            <!-- 根据是否有赠品【1有，0无】查询 -->
+            <if test="isGift!=null">
+                AND is_gift=#{isGift}
+            </if>
+            <!-- 根据备注查询 -->
+            <if test="remark!=null and remark!=''">
+                AND remark=#{remark}
+            </if>
+            <!-- 根据上架状态【1上架、0下架】查询 -->
+            <if test="onshelfState!=null">
+                AND onshelf_state=#{onshelfState}
+            </if>
+            <!-- 根据上架时间查询 -->
+            <if test="onshelfTime!=null">
+                AND onshelf_time=#{onshelfTime}
+            </if>
+            <!-- 根据创建时间查询 -->
+            <if test="createTime!=null">
+                AND create_time=#{createTime}
+            </if>
+            <!-- 根据创建人查询 -->
+            <if test="createId!=null">
+                AND create_id=#{createId}
+            </if>
+            <!-- 根据删除状态 1正常、0删除查询 -->
+            <if test="delState!=null">
+                AND del_state=#{delState}
+            </if>
+        </where>
+    </select>
+
+
+    <!--主键查询机构套餐-->
+    <select id="getSeriesBranchesListBySetmealNameSeriesName"
+            resultType="com.gt.manager.entity.wtadmin.SeriesBranchesEntity">
+        SELECT
+            branches_id     branchesId,
+            setmeal_code    setmealCode,
+            series_sku_code seriesSkuCode,
+            name            setmealName,
+            series_name     seriesName,
+            price,
+            id              seriesId
+        FROM t_wt_org_setmeal
+        WHERE del_state = 1
+              and name = #{setmealName}
+              and series_name = #{seriesName}
+    </select>
+
+
+    <!--根据套餐名称和状态查询机构套餐-->
+    <select id="getSeriesViewlistByStatusSetmealName" resultType="com.gt.manager.entity.wtadmin.SeriesViewEntity">
+        SELECT series_sku_code seriesSkuCode,name setmealName,series_name seriesName,
+        sku_code productSkuCode,onshelf_state status,is_gift isGift
+        FROM t_wt_org_setmeal
+        <where>
+            1=1
+            <!-- 根据套餐名称查询 -->
+            <if test="setmealName!=null and setmealName!=''">
+                AND name like CONCAT('%',#{setmealName},'%')
+            </if>
+            <!-- 根据上架状态【1上架、0下架】查询 -->
+            <if test="status!=null">
+                AND onshelf_state=#{status}
+            </if>
+            and del_state=1
+        </where>
+        group by series_sku_code
+        order by create_time desc
+    </select>
+
+
+    <!--更新机构套餐上下架状态-->
+    <update id="updateStatusBySeriesSkuCode">
+        UPDATE t_wt_org_setmeal
+        <set>
+
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+            <!-- 更新上架时间 -->
+            <if test="status==1">
+                onshelf_time=#{updateTime},
+            </if>
+            <!-- 更新下架时间 -->
+            <if test="status==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+
+        </set>
+        WHERE del_state=1 and
+        series_sku_code=#{seriesSkuCode}
+    </update>
+
+    <!--更新机构套餐删除状态-->
+    <update id="updateDelStatusBySeriesSkuCode">
+        UPDATE t_wt_org_setmeal
+        <set>
+
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+            <!-- 更新上架时间 -->
+            <if test="status==1">
+                onshelf_time=#{updateTime},
+            </if>
+            <!-- 更新下架时间 -->
+            <if test="delStatus==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+
+        </set>
+        <where>
+            1=1
+            <!-- 根据套系编号（sku）查询 -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                AND series_sku_code=#{seriesSkuCode}
+            </if>
+            <!-- 根据机构(城市)ID查询 -->
+            <if test="branchesId!=null">
+                AND branches_id=#{branchesId}
+            </if>
+        </where>
+
+    </update>
+
+
+    <!--更新水站套餐上下架状态-->
+    <update id="updateWaterStorStatusBySeriesSkuCode">
+        UPDATE t_wt_waterstop_setmeal
+        <set>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+
+            <!-- 更新下架时间 -->
+            <if test="status==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+
+        </set>
+        WHERE series_sku_code=#{seriesSkuCode}
+    </update>
+
+
+    <!--更新水站套餐删除状态-->
+    <update id="updateWaterStorDelStatusBySeriesSkuCode">
+        UPDATE t_wt_waterstop_setmeal
+        <set>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <!--<if test="status!=null">
+                onshelf_state=#{status},
+            </if>-->
+            <!-- 更新下架时间 -->
+
+            <if test="delState==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+            onshelf_state=0
+
+        </set>
+
+        <where>
+            1=1
+            <!-- 根据套系编号（sku）查询 -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                AND series_sku_code=#{seriesSkuCode}
+            </if>
+            <!-- 根据机构(城市)ID查询 -->
+            <if test="branchesId!=null">
+                AND branches_id=#{branchesId}
+            </if>
+        </where>
+    </update>
+
+
+    <!--更新水站套餐删除状态-->
+    <update id="updateWaterStorDelStatusBySeriesIdList">
+        UPDATE t_wt_waterstop_setmeal
+        <set>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <!--<if test="status!=null">
+                onshelf_state=#{status},
+            </if>-->
+            <!-- 更新下架时间 -->
+
+            <if test="delState==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+            onshelf_state=0
+
+        </set>
+        where setmeal_id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+
+
+
+    </update>
+
+
+    <!--批量更新水站套餐删除状态-->
+    <update id="updateWaterStorDelStatusBySeriesSkuCodeBranchesList">
+        UPDATE t_wt_waterstop_setmeal
+        <set>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <!--<if test="status!=null">
+                onshelf_state=#{status},
+            </if>-->
+            <!-- 更新下架时间 -->
+
+            <if test="delState==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+            onshelf_state=0
+
+        </set>
+
+        where
+        series_sku_code=#{seriesSkuCode} and
+        branches_id in
+        <foreach collection="branchesList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <!--更新水站套餐删除状态sku+branchesId-->
+    <update id="updateWaterStorDelStatusBySeriesSkuCodeBranchesId" parameterType="java.util.Map">
+        UPDATE t_wt_waterstop_setmeal
+        <set>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+
+            <!-- 更新下架时间 -->
+            <if test="delStatus==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+
+        </set>
+        WHERE series_sku_code=#{seriesSkuCode}
+        and branches_id=#{branchesId}
+    </update>
+
+
+    <!--批量更新套餐删除状态-->
+    <update id="updateDelStatusBySeriesSkuCodeBrandchesList" parameterType="java.util.Map">
+        UPDATE t_wt_org_setmeal
+        <set>
+
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+            <!-- 更新上架时间 -->
+            <if test="status==1">
+                onshelf_time=#{updateTime},
+            </if>
+            <!-- 更新下架时间 -->
+            <if test="delStatus==0">
+                downshelf_time=#{updateTime},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="loginId!=null">
+                update_id=#{loginId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+
+        </set>
+        where
+        series_sku_code=#{seriesSkuCode}
+        and branches_id in
+        <foreach collection="branchesList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+
+
+    </update>
+
+    <!--批量增加套系-->
+    <!--插入机构套餐-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO t_wt_org_setmeal(id,branches_id,brand_id,sku_code,
+        setmeal_code,series_sku_code,name,type_code,
+        series_name,setmeal_img,shopcart_img,
+        goods_profile,num,introduce,price,is_gift,
+        remark,onshelf_state,onshelf_time,create_time,
+        create_id,goods_spec)
+        VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.id},#{item.branchesId},#{item.brandId},#{item.skuCode},#{item.setmealCode},
+            #{item.seriesSkuCode},
+            #{item.name},#{item.typeCode},#{item.seriesName},#{item.setmealImg},#{item.shopcartImg},
+            #{item.goodsProfile},#{item.num},#{item.introduce},#{item.price},#{item.isGift},
+            #{item.remark},#{item.onshelfState},#{item.onshelfTime},#{item.createTime},
+            #{item.createId},#{item.goodsSpec})
+        </foreach>
+    </insert>
+
+
+    <!--主键查询机构套餐-->
+    <select id="getSeriesBranchesListBySeriesSkuCode" resultType="com.gt.manager.entity.wtadmin.SeriesBranchesEntity">
+        SELECT
+            branches_id     branchesId,
+            setmeal_code    setmealCode,
+            series_sku_code seriesSkuCode,
+            name            setmealName,
+            series_name     seriesName,
+            price           price
+        FROM t_wt_org_setmeal
+        WHERE del_state = 1
+              and series_sku_code = #{seriesSkuCode}
+
+    </select>
+
+
+    <!--根据套系sku查询机构套餐-->
+    <select id="getWtOrgSetmealListBySeriesSkuCode" parameterType="java.lang.String" resultMap="wtOrgSetmeal">
+        SELECT
+            id,
+            branches_id,
+            brand_id,
+            sku_code,
+            setmeal_code,
+            series_sku_code,
+            name,
+            type_code,
+            series_name,
+            setmeal_img,
+            shopcart_img,
+            goods_profile,
+            num,
+            introduce,
+            price,
+            is_gift,
+            remark,
+            onshelf_state,
+            onshelf_time,
+            create_time,
+            create_id,
+            del_state
+        FROM t_wt_org_setmeal
+        WHERE series_sku_code = #{seriesSkuCode}
+    </select>
+
+
+    <!--更新机构套餐-->
+    <update id="updateSeriesByBranchesIdSeriesSkuCode" parameterType="java.util.Map">
+        UPDATE t_wt_org_setmeal
+        <set>
+
+
+            <!-- 更新套餐宣传图片 -->
+            <if test="setmealImg!=null and setmealImg!=''">
+                setmeal_img=#{setmealImg},
+            </if>
+            <!-- 更新购物车图片 -->
+            <if test="shopcartImg!=null and shopcartImg!=''">
+                shopcart_img=#{shopcartImg},
+            </if>
+            <!-- 更新商品图文 -->
+            <if test="goodsProfile!=null and goodsProfile!=''">
+                goods_profile=#{goodsProfile},
+            </if>
+
+            <!-- 更新套餐介绍 -->
+            <if test="introduce!=null and introduce!=''">
+                introduce=#{introduce},
+            </if>
+            <!-- 更新套餐价格 -->
+            <if test="price!=null">
+                price=#{price},
+            </if>
+
+            <!-- 更新备注 -->
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <!-- 更新上架状态【1上架、0下架】 -->
+            <if test="status!=null">
+                onshelf_state=#{status},
+            </if>
+            <!-- 更新最新操作时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新操作者 -->
+            <if test="updateId!=null">
+                update_id=#{updateId},
+            </if>
+
+        </set>
+        WHERE series_sku_code=#{seriesSkuCode}
+        and branches_id=#{branchesId}
+    </update>
+
+
+    <!--根据套系sku查询机构套餐-->
+    <select id="getSetmealListByOrderCode" parameterType="java.lang.String" resultMap="wtOrgSetmeal">
+        SELECT
+            s.id,
+            s.branches_id,
+            s.brand_id,
+            s.sku_code,
+            s.setmeal_code,
+            s.series_sku_code,
+            s.name,
+            s.type_code,
+            s.series_name,
+            s.setmeal_img,
+            s.shopcart_img,
+            s.goods_profile,
+            s.num,
+            s.introduce,
+            s.price,
+            s.is_gift,
+            s.remark,
+            s.onshelf_state,
+            s.onshelf_time,
+            s.create_time,
+            s.create_id,
+            s.del_state
+        FROM t_wt_org_setmeal s, t_wt_order_mes om
+        WHERE om.p_type = 1
+              and s.del_state = 1
+              and s.series_sku_code = om.sku_code
+              and om.order_no = #{orderCode}
+    </select>
+
+
+    <!--套系编号查询主商品信息-->
+    <select id="getMainProductMsgBySeriesSkuCode" parameterType="java.lang.String"
+            resultType="com.gt.manager.entity.wtadmin.ProductMsgEntity">
+        SELECT
+            b.name         brandName,
+            p.goods_name   productName,
+            p.goods_photos productPic,
+            s.goods_spec   productSpec,
+            s.sell_price   price,
+            om.num         `count`
+        FROM t_wt_org_setmeal om, t_wt_sku s, t_wt_product p, t_wt_brand b
+        WHERE
+            om.sku_code = s.sku_code
+            and s.brand_id = b.id
+            and s.p_id = p.id
+            and om.series_sku_code = #{seriesSkuCode}
+        group by om.sku_code
+    </select>
+
+
+    <!--根据套系编号查询套系区域价格-->
+    <select id="getSeriesBranchesListBySeriesCode"
+            resultType="com.gt.manager.entity.wtadmin.SeriesBranchesEntity">
+        SELECT
+            branches_id     branchesId,
+            setmeal_code    setmealCode,
+            series_sku_code seriesSkuCode,
+            name            setmealName,
+            series_name     seriesName,
+            price,
+            id              seriesId
+        FROM t_wt_org_setmeal
+        WHERE del_state = 1
+              and series_sku_code = #{seriesCode}
+
+    </select>
+
+    <!--根据套系编号查询套系IDList-->
+    <select id="selectIdBySeriesCode" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT id
+
+        FROM t_wt_org_setmeal
+        WHERE del_state = 1 and
+              series_sku_code = #{seriesSkuCode}
+
+    </select>
+</mapper>

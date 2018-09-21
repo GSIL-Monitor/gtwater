@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    name:
+      CONFIG
+    config:
+      server:
+        native:
+          search-locations: /opt/gtop/config
+#        search-locations: D:/work/gtop/manager-gtop/manager/configserver/src/main/resources/config
+#  rabbitmq:
+#    host: 192.168.0.232
+#    port: 5672
+#    password: test
+#    username: test
+#    virtual-host: test
+#    requested-heartbeat: 5
+#    listener:
+#      concurrency: 2
+#      max-concurrency: 5
+#      acknowledge-mode: manual
+#logging:
+#  level:
+#    com.netflix.discovery: 'OFF'
+#    org.springframework.cloud: 'DEBUG'

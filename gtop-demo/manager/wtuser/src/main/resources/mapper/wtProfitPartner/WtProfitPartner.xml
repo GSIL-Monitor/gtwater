@@ -1,0 +1,171 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.wtProfitPartner.WtProfitPartnerDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtProfitPartner.WtProfitPartner" id="wtProfitPartner">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="profitId" column="profit_id" jdbcType="INTEGER" />
+		<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+		<result property="orderNum" column="order_num" jdbcType="INTEGER" />
+		<result property="unitPrice" column="unit_price" jdbcType="INTEGER" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="profitMoney" column="profit_money" jdbcType="INTEGER" />
+		<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+		<result property="proportion" column="proportion" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="partnerId" column="partner_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delStatus" column="del_status" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<!--插入分佣(合伙人)表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtProfitPartner.WtProfitPartner" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_profit_partner(id,profit_id,order_code,order_num,unit_price,sku_code,profit_money,order_time,proportion,branches_id,partner_id,create_time,create_id,del_status) VALUES(#{id},#{profitId},#{orderCode},#{orderNum},#{unitPrice},#{skuCode},#{profitMoney},#{orderTime},#{proportion},#{branchesId},#{partnerId},#{createTime},#{createId},#{delStatus})
+	</insert>
+
+	<!--删除分佣(合伙人)表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_profit_partner WHERE id=#{0}
+	</delete>
+
+	<!--更新分佣(合伙人)表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtProfitPartner.WtProfitPartner">
+		UPDATE t_wt_profit_partner
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新分佣ID -->
+			<if test="profitId!=null">
+				profit_id=#{profitId},
+			</if>
+			<!-- 更新订单明细编号 -->
+			<if test="orderCode!=null and orderCode!=''">
+				order_code=#{orderCode},
+			</if>
+			<!-- 更新订单数量 -->
+			<if test="orderNum!=null">
+				order_num=#{orderNum},
+			</if>
+			<!-- 更新商品单价 -->
+			<if test="unitPrice!=null">
+				unit_price=#{unitPrice},
+			</if>
+			<!-- 更新SKU编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新分佣金额 -->
+			<if test="profitMoney!=null">
+				profit_money=#{profitMoney},
+			</if>
+			<!-- 更新下单时间 -->
+			<if test="orderTime!=null">
+				order_time=#{orderTime},
+			</if>
+			<!-- 更新分佣比例 -->
+			<if test="proportion!=null">
+				proportion=#{proportion},
+			</if>
+			<!-- 更新机构ID -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id=#{partnerId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 -->
+			<if test="delStatus!=null">
+				del_status=#{delStatus},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询分佣(合伙人)表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtProfitPartner">
+		SELECT id,profit_id,order_code,order_num,unit_price,sku_code,profit_money,order_time,proportion,branches_id,partner_id,create_time,create_id,del_status FROM t_wt_profit_partner WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询分佣(合伙人)表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtProfitPartner.WtProfitPartner" resultMap="wtProfitPartner">
+		SELECT id,profit_id,order_code,order_num,unit_price,sku_code,profit_money,order_time,proportion,branches_id,partner_id,create_time,create_id,del_status FROM t_wt_profit_partner
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据分佣ID查询 -->
+			<if test="profitId!=null">
+				AND profit_id=#{profitId}
+			</if>
+			<!-- 根据订单明细编号查询 -->
+			<if test="orderCode!=null and orderCode!=''">
+				AND order_code=#{orderCode}
+			</if>
+			<!-- 根据订单数量查询 -->
+			<if test="orderNum!=null">
+				AND order_num=#{orderNum}
+			</if>
+			<!-- 根据商品单价查询 -->
+			<if test="unitPrice!=null">
+				AND unit_price=#{unitPrice}
+			</if>
+			<!-- 根据SKU编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据分佣金额查询 -->
+			<if test="profitMoney!=null">
+				AND profit_money=#{profitMoney}
+			</if>
+			<!-- 根据下单时间查询 -->
+			<if test="orderTime!=null">
+				AND order_time=#{orderTime}
+			</if>
+			<!-- 根据分佣比例查询 -->
+			<if test="proportion!=null">
+				AND proportion=#{proportion}
+			</if>
+			<!-- 根据机构ID查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id=#{partnerId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态查询 -->
+			<if test="delStatus!=null">
+				AND del_status=#{delStatus}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectListByProfitId" parameterType="java.lang.Long" resultMap="wtProfitPartner">
+		SELECT id,profit_id,order_code,order_num,unit_price,sku_code,profit_money,order_time,proportion,branches_id,partner_id,create_time,create_id,del_status FROM t_wt_profit_partner
+		where profit_id=#{profitId}
+	</select>
+
+</mapper>

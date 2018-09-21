@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: gt:api:1.01-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/gt/api/1.01-SNAPSHOT/api-1.01-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/gt/api/1.01-SNAPSHOT/api-1.01-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/gt/api/1.01-SNAPSHOT/api-1.01-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

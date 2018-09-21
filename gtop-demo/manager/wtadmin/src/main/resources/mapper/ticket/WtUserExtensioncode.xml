@@ -1,0 +1,111 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.ticket.repository.WtUserExtensioncodeDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtUserExtensioncode" id="wtUserExtensioncode">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="codeId" column="code_id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="userName" column="user_name" jdbcType="VARCHAR" />
+		<result property="regeditTime" column="regedit_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入用户扫码记录表-->
+	<insert id="insert" parameterType="wtUserExtensioncode" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_user_extensioncode(id,code_id,user_id,user_name,regedit_time,create_time,create_id,del_state) VALUES(#{id},#{codeId},#{userId},#{userName},#{regeditTime},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除用户扫码记录表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_user_extensioncode WHERE id=#{0}
+	</delete>
+
+	<!--更新用户扫码记录表-->
+	<update id="update" parameterType="wtUserExtensioncode">
+		UPDATE t_wt_user_extensioncode
+		<set>
+			<!-- 更新记录ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新二维码ID -->
+			<if test="codeId!=null">
+				code_id=#{codeId},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新用户名称 -->
+			<if test="userName!=null and userName!=''">
+				user_name=#{userName},
+			</if>
+			<!-- 更新扫码时间 -->
+			<if test="regeditTime!=null">
+				regedit_time=#{regeditTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询用户扫码记录表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtUserExtensioncode">
+		SELECT id,code_id,user_id,user_name,regedit_time,create_time,create_id,del_state FROM t_wt_user_extensioncode WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询用户扫码记录表列表-->
+	<select id="selectList" parameterType="wtUserExtensioncode" resultMap="wtUserExtensioncode">
+		SELECT id,code_id,user_id,user_name,regedit_time,create_time,create_id,del_state FROM t_wt_user_extensioncode
+		<where>
+			1=1
+			<!-- 根据记录ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据二维码ID查询 -->
+			<if test="codeId!=null">
+				AND code_id=#{codeId}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据用户名称查询 -->
+			<if test="userName!=null and userName!=''">
+				AND user_name=#{userName}
+			</if>
+			<!-- 根据扫码时间查询 -->
+			<if test="regeditTime!=null">
+				AND regedit_time=#{regeditTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

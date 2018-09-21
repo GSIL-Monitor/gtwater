@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    name:
+      CONFIG
+    config:
+      server:
+        native:
+#          search-locations: classpath:/config
+#          search-locations: /Users/zhangjiming/IdeaProjects/immerex/configserver/src/main/resources/config
+#           search-locations: D:/work/gtop/manager-gtop/manager/configserver/src/main/resources/config
+           search-locations: D:/water/gtop-demo/manager/configserver/src/main/resources/config
+#           search-locations: D:/test/water/gtop-demo/manager/configserver/src/main/resources/config
+#  rabbitmq:
+#    host: 192.168.0.108
+#    port: 5672
+#    password: zhouhe
+#    username: zhouhe
+#    virtual-host: zhouhe
+#    requested-heartbeat: 5
+#    listener:
+#      concurrency: 2
+#      max-concurrency: 5
+#      acknowledge-mode: manual
+
+#logging:
+#  level:
+#    com.netflix.discovery: 'OFF'
+#    org.springframework.cloud: 'DEBUG'    

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="${dubbo.application.name}" />
+
+    <!-- 注册中心暴露服务地址 -->
+    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
+
+    <!-- 暴露服务 -->
+    <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+
+    <!--================提供服务===========================-->
+
+    <!--店铺订单-->
+    <!--<dubbo:service interface="com.gt.manager.rpc.StoreOrderRpcService"-->
+                   <!--ref="storeOrderRpcService" retries="0" timeout="6000" version="3.0.0"/>-->
+
+    <!--<dubbo:service interface="com.gt.manager.rpc.StoreOrderProfitRpcService"-->
+                   <!--ref="storeOrderProfitRpcService" retries="0" timeout="6000" version="3.0.0"/>-->
+
+
+
+    <!--================消费服务================-->
+    <!--<dubbo:reference id="gtPayService" interface="com.gt.gtpay.service.GtPayService" check="false" timeout="30000"/>-->
+    
+    <!-- 获取分成规则信息 -->
+    <!--<dubbo:reference id="fingertipGroceryStoreDubboAPIService" interface="com.gt.gtop.service.dubbo.grocery.IFingertipGroceryStoreDubboAPIService" check="false" timeout="30000"/>-->
+	<!--&lt;!&ndash; 获取组织机构对应信息 &ndash;&gt;-->
+	<!--<dubbo:reference id="branchesDubboService" interface="com.gt.gtop.service.dubbo.branches.IBranchesDubboService" check="false" timeout="30000"/>-->
+	<!--&lt;!&ndash; 获取组织机构对应信息 &ndash;&gt;-->
+	<!--<dubbo:reference id="userAccountDoubleAPIService" interface="com.gt.gtop.service.dubbo.user.IUserAccountDoubleAPIService" check="false" timeout="30000"/>-->
+	<dubbo:reference id="branchesDubboService" interface="com.gt.gtop.service.dubbo.branches.IBranchesDubboService" check="false" timeout="30000"/>
+
+
+</beans>

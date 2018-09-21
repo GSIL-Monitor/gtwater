@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/configserver/configserver.iml" filepath="$PROJECT_DIR$/manager/configserver/configserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/discovery/discovery.iml" filepath="$PROJECT_DIR$/manager/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/gateway/gateway.iml" filepath="$PROJECT_DIR$/manager/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gtwt.iml" filepath="$PROJECT_DIR$/.idea/gtwt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/manager.iml" filepath="$PROJECT_DIR$/manager/manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/wtadmin/wtadmin.iml" filepath="$PROJECT_DIR$/manager/wtadmin/wtadmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/wtapp/wtapp.iml" filepath="$PROJECT_DIR$/manager/wtapp/wtapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/wtorder/wtorder.iml" filepath="$PROJECT_DIR$/manager/wtorder/wtorder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/wtuser/wtuser.iml" filepath="$PROJECT_DIR$/manager/wtuser/wtuser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manager/wtwx/wtwx.iml" filepath="$PROJECT_DIR$/manager/wtwx/wtwx.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,158 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.wtProfit.WtProfitDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtProfit.WtProfit" id="wtProfit">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="sendNo" column="send_no" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="partnerId" column="partner_id" jdbcType="INTEGER" />
+		<result property="sendNum" column="send_num" jdbcType="INTEGER" />
+		<result property="profitMoney" column="profit_money" jdbcType="INTEGER" />
+		<result property="paymentTime" column="payment_time" jdbcType="INTEGER" />
+		<result property="sendTime" column="send_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--<resultMap id="profitDetails" type="com.gt.manager.user.entity.profit.ProfitDetail">-->
+		<!--<result property="sendNo"/>-->
+		<!--<result property="goodsName"/>-->
+		<!--<result property="arriveTime"/>-->
+		<!--<result property="arriveNum"/>-->
+		<!--<result property="money"/>-->
+		<!--<result property="proportion"/>-->
+	<!--</resultMap>-->
+
+	<!--插入分佣表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtProfit.WtProfit" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_profit(id,send_no,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time) VALUES(#{id},#{sendNo},#{userId},#{waterstoreId},#{partnerId},#{sendNum},#{profitMoney},#{paymentTime},#{sendTime},#{createTime})
+	</insert>
+
+	<!--删除分佣表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_profit WHERE null=#{0}
+	</delete>
+
+	<!--更新分佣表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtProfit.WtProfit">
+		UPDATE t_wt_profit
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新派送编号 -->
+			<if test="sendNo!=null">
+				send_no=#{sendNo},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新水站ID -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id=#{partnerId},
+			</if>
+			<!-- 更新派送总量 -->
+			<if test="sendNum!=null">
+				send_num=#{sendNum},
+			</if>
+			<!-- 更新派单金额 -->
+			<if test="profitMoney!=null">
+				profit_money=#{profitMoney},
+			</if>
+			<!-- 更新付款时间 -->
+			<if test="paymentTime!=null">
+				payment_time=#{paymentTime},
+			</if>
+			<!-- 更新派送时间 -->
+			<if test="sendTime!=null">
+				send_time=#{sendTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+		</set>
+		WHERE null=#{null}
+	</update>
+
+	<!--主键查询分佣表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtProfit">
+		SELECT id,send_no,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time FROM t_wt_profit WHERE null=#{0}
+	</select>
+
+	<!--根据条件查询分佣表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtProfit.WtProfit" resultMap="wtProfit">
+		SELECT id,send_no,user_id,waterstore_id,partner_id,send_num,profit_money,payment_time,send_time,create_time FROM t_wt_profit
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据派送编号查询 -->
+			<if test="sendNo!=null">
+				AND send_no=#{sendNo}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据水站ID查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id=#{partnerId}
+			</if>
+			<!-- 根据派送总量查询 -->
+			<if test="sendNum!=null">
+				AND send_num=#{sendNum}
+			</if>
+			<!-- 根据派单金额查询 -->
+			<if test="profitMoney!=null">
+				AND profit_money=#{profitMoney}
+			</if>
+			<!-- 根据付款时间查询 -->
+			<if test="paymentTime!=null">
+				AND payment_time=#{paymentTime}
+			</if>
+			<!-- 根据派送时间查询 -->
+			<if test="sendTime!=null">
+				AND send_time=#{sendTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByCondition" parameterType="java.util.HashMap" resultType="java.util.Map">
+		<!--派送单号 商品名称 送达时间 实际送达数量 派送单金额 分佣比例   -->
+		SELECT t1.send_no as sendNo,t3.sku_name as goodsName,t1.create_time as arriveTime,t2.order_num as arriveNum,t2.profit_money as money,
+		t2.proportion as proportion,t4.money as sendMoney
+		FROM t_wt_profit t1 LEFT JOIN t_wt_profit_partner t2 on t1.id=t2.profit_id LEFT JOIN t_wt_sku t3 on t2.sku_code=t3.sku_code
+		left join t_wt_send t4 on t1.send_no=t4.send_no
+		<where>
+			1=1 and t3.branches_id = t2.branches_id and t1.partner_id = #{partnerId}
+			<if test="goodsName != null and goodsName != ''">
+				and t3.sku_name like CONCAT(CONCAT('%',#{goodsName},'%'))
+			</if>
+			<if test="startTime != null">
+				and t1.create_time <![CDATA[ >= ]]> #{startTime}
+			</if>
+			<if test="endTime != null">
+				and t1.create_time <![CDATA[ <= ]]> #{endTime}
+			</if>
+		</where>
+	</select>
+
+</mapper>

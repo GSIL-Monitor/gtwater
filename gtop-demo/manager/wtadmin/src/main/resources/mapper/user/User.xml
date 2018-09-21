@@ -1,0 +1,131 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.ticket.repository.UserDAO">
+	<!--查询结果Map-->
+	<resultMap type="user" id="user">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="loginTime" column="login_time" jdbcType="TIMESTAMP" />
+		<result property="loginSource" column="login_source" jdbcType="INTEGER" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="nickname" column="nickname" jdbcType="VARCHAR" />
+		<result property="username" column="username" jdbcType="VARCHAR" />
+		<result property="password" column="password" jdbcType="VARCHAR" />
+		<result property="icon" column="icon" jdbcType="VARCHAR" />
+		<result property="voicePromptSwitch" column="voice_prompt_switch" jdbcType="CHAR" />
+	</resultMap>
+
+	<!--插入(杂货铺)用户信息表-->
+	<insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_user(id,create_time,login_time,login_source,phone,nickname,username,password,icon,voice_prompt_switch) VALUES(#{id},#{createTime},#{loginTime},#{loginSource},#{phone},#{nickname},#{username},#{password},#{icon},#{voicePromptSwitch})
+	</insert>
+
+	<!--删除(杂货铺)用户信息表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_user WHERE id=#{0}
+	</delete>
+
+	<!--更新(杂货铺)用户信息表-->
+	<update id="update" parameterType="user">
+		UPDATE t_user
+		<set>
+			<!-- 更新系统唯一id -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新生成时间 -->
+			<if test="createTime!=null and createTime!=''">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新登录时间 -->
+			<if test="loginTime!=null and loginTime!=''">
+				login_time=#{loginTime},
+			</if>
+			<!-- 更新登录来源 1微信 2QQ -->
+			<if test="loginSource!=null">
+				login_source=#{loginSource},
+			</if>
+			<!-- 更新电话号码 -->
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<!-- 更新昵称 -->
+			<if test="nickname!=null and nickname!=''">
+				nickname=#{nickname},
+			</if>
+			<!-- 更新用户名 -->
+			<if test="username!=null and username!=''">
+				username=#{username},
+			</if>
+			<!-- 更新密码 -->
+			<if test="password!=null and password!=''">
+				password=#{password},
+			</if>
+			<!-- 更新头像url -->
+			<if test="icon!=null and icon!=''">
+				icon=#{icon},
+			</if>
+			<!-- 更新语音提示开关 0:否  1:是 -->
+			<if test="voicePromptSwitch!=null and voicePromptSwitch!=''">
+				voice_prompt_switch=#{voicePromptSwitch},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询(杂货铺)用户信息表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="user">
+		SELECT id,create_time,login_time,login_source,phone,nickname,username,password,icon,voice_prompt_switch FROM t_user WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询(杂货铺)用户信息表列表-->
+	<select id="selectList" parameterType="user" resultMap="user">
+		SELECT id,create_time,login_time,login_source,phone,nickname,username,password,icon,voice_prompt_switch FROM t_user
+		<where>
+			1=1
+			<!-- 根据系统唯一id查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据生成时间查询 -->
+			<if test="createTime!=null and createTime!=''">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据登录时间查询 -->
+			<if test="loginTime!=null and loginTime!=''">
+				AND login_time=#{loginTime}
+			</if>
+			<!-- 根据登录来源 1微信 2QQ查询 -->
+			<if test="loginSource!=null">
+				AND login_source=#{loginSource}
+			</if>
+			<!-- 根据电话号码查询 -->
+			<if test="phone!=null and phone!=''">
+				AND phone=#{phone}
+			</if>
+			<!-- 根据昵称查询 -->
+			<if test="nickname!=null and nickname!=''">
+				AND nickname=#{nickname}
+			</if>
+			<!-- 根据用户名查询 -->
+			<if test="username!=null and username!=''">
+				AND username=#{username}
+			</if>
+			<!-- 根据密码查询 -->
+			<if test="password!=null and password!=''">
+				AND password=#{password}
+			</if>
+			<!-- 根据头像url查询 -->
+			<if test="icon!=null and icon!=''">
+				AND icon=#{icon}
+			</if>
+			<!-- 根据语音提示开关 0:否  1:是查询 -->
+			<if test="voicePromptSwitch!=null and voicePromptSwitch!=''">
+				AND voice_prompt_switch=#{voicePromptSwitch}
+			</if>
+		</where>
+	</select>
+
+
+
+</mapper>

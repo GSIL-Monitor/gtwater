@@ -1,0 +1,138 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.wtBranchesAccount.WtBranchesAccountDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtBranchesAccount.WtBranchesAccount" id="wtBranchesAccount">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="userType" column="user_type" jdbcType="INTEGER" />
+		<result property="account" column="account" jdbcType="INTEGER" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入钱包表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtBranchesAccount.WtBranchesAccount" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_branches_account(id,user_id,branches_id,user_type,account,status,create_id,create_time,update_id,update_time,del_state) VALUES(#{id},#{userId},#{branchesId},#{userType},#{account},#{status},#{createId},#{createTime},#{updateId},#{updateTime},#{delState})
+	</insert>
+
+	<!--删除钱包表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_branches_account WHERE id=#{0}
+	</delete>
+
+	<!--更新钱包表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtBranchesAccount.WtBranchesAccount">
+		UPDATE t_wt_branches_account
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新充值/提现合伙人id -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新 -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新用户类型[1平台、2城市机构、3水站、4合伙人] -->
+			<if test="userType!=null">
+				user_type=#{userType},
+			</if>
+			<!-- 更新 -->
+			<if test="account!=null">
+				account=#{account},
+			</if>
+			<!-- 更新账户状态1正常2清算3异常', -->
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<!-- 更新 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询钱包表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtBranchesAccount">
+		SELECT id,user_id,branches_id,user_type,account,status,create_id,create_time,update_id,update_time,del_state FROM t_wt_branches_account WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询钱包表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtBranchesAccount.WtBranchesAccount" resultMap="wtBranchesAccount">
+		SELECT id,user_id,branches_id,user_type,account,status,create_id,create_time,update_id,update_time,del_state FROM t_wt_branches_account
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据充值/提现合伙人id查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据用户类型[1平台、2城市机构、3水站、4合伙人]查询 -->
+			<if test="userType!=null">
+				AND user_type=#{userType}
+			</if>
+			<!-- 根据查询 -->
+			<if test="account!=null">
+				AND account=#{account}
+			</if>
+			<!-- 根据账户状态1正常2清算3异常',查询 -->
+			<if test="status!=null">
+				AND status=#{status}
+			</if>
+			<!-- 根据查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

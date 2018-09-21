@@ -1,0 +1,293 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtSku.WtSkuDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtSku.WtSku" id="wtSku">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="pId" column="p_id" jdbcType="INTEGER" />
+		<result property="goodsCode" column="goods_code" jdbcType="VARCHAR" />
+		<result property="brandId" column="brand_id" jdbcType="INTEGER" />
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="goodsBar" column="goods_bar" jdbcType="VARCHAR" />
+		<result property="typeCode" column="type_code" jdbcType="VARCHAR" />
+		<result property="goodsSpec" column="goods_spec" jdbcType="VARCHAR" />
+		<result property="goodsWeight" column="goods_weight" jdbcType="DECIMAL" />
+		<result property="goodsUtil" column="goods_util" jdbcType="INTEGER" />
+		<result property="goodsSize" column="goods_size" jdbcType="VARCHAR" />
+		<result property="goodsColor" column="goods_color" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="costPrice" column="cost_price" jdbcType="INTEGER" />
+		<result property="price" column="price" jdbcType="INTEGER" />
+		<result property="onSales" column="on_sales" jdbcType="INTEGER" />
+		<result property="sellPrice" column="sell_price" jdbcType="INTEGER" />
+		<result property="shelfOnTime" column="shelf_on_time" jdbcType="INTEGER" />
+		<result property="shellOffReason" column="shell_off_reason" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+		<result property="goodsPic" column="goods_pic" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+
+
+	<!--插入商品sku表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtSku.WtSku" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_sku(id,branches_id,p_id,goods_code,brand_id,sku_name,sku_code,goods_bar,type_code,goods_spec,goods_weight,goods_util,goods_size,goods_color,status,cost_price,price,on_sales,sell_price,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version,goods_pic) VALUES(#{id},#{branchesId},#{pId},#{goodsCode},#{brandId},#{skuName},#{skuCode},#{goodsBar},#{typeCode},#{goodsSpec},#{goodsWeight},#{goodsUtil},#{goodsSize},#{goodsColor},#{status},#{costPrice},#{price},#{onSales},#{sellPrice},#{shelfOnTime},#{shellOffReason},#{createId},#{createTime},#{updateId},#{updateTime},#{delState},#{version},#{goodsPic})
+	</insert>
+
+	<!--删除商品sku表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_sku WHERE id=#{0}
+	</delete>
+
+	<!--更新商品sku表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtSku.WtSku">
+		UPDATE t_wt_sku
+		<set>
+			<!-- 更新主键 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新机构(城市)ID -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新商品ID -->
+			<if test="pId!=null">
+				p_id=#{pId},
+			</if>
+			<!-- 更新商品编号（SPU编号） -->
+			<if test="goodsCode!=null and goodsCode!=''">
+				goods_code=#{goodsCode},
+			</if>
+			<!-- 更新品牌ID -->
+			<if test="brandId!=null">
+				brand_id=#{brandId},
+			</if>
+			<!-- 更新SKU名称（商品名称+规格） -->
+			<if test="skuName!=null and skuName!=''">
+				sku_name=#{skuName},
+			</if>
+			<!-- 更新SKU编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新商品条形码 -->
+			<if test="goodsBar!=null and goodsBar!=''">
+				goods_bar=#{goodsBar},
+			</if>
+			<!-- 更新类别编号，多级 ，‘000005000005’ 6位代表一级编号 -->
+			<if test="typeCode!=null and typeCode!=''">
+				type_code=#{typeCode},
+			</if>
+			<!-- 更新商品规格 -->
+			<if test="goodsSpec!=null and goodsSpec!=''">
+				goods_spec=#{goodsSpec},
+			</if>
+			<!-- 更新商品的重量 -->
+			<if test="goodsWeight!=null and goodsWeight!=''">
+				goods_weight=#{goodsWeight},
+			</if>
+			<!-- 更新单位值（1:g, 2:kg, 3：ml， 4:L) -->
+			<if test="goodsUtil!=null">
+				goods_util=#{goodsUtil},
+			</if>
+			<!-- 更新 -->
+			<if test="goodsSize!=null and goodsSize!=''">
+				goods_size=#{goodsSize},
+			</if>
+			<!-- 更新 -->
+			<if test="goodsColor!=null and goodsColor!=''">
+				goods_color=#{goodsColor},
+			</if>
+			<!-- 更新状态[1销售中（上架），2下架,3审核中，4审核不通过] -->
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<!-- 更新成本价格，（平台商品取自平台，自定义商品0） -->
+			<if test="costPrice!=null">
+				cost_price=#{costPrice},
+			</if>
+			<!-- 更新市场价 -->
+			<if test="price!=null">
+				price=#{price},
+			</if>
+			<!-- 更新是否为特价【1是特价、0不是】 -->
+			<if test="onSales!=null">
+				on_sales=#{onSales},
+			</if>
+			<!-- 更新水站销售价格 -->
+			<if test="sellPrice!=null">
+				sell_price=#{sellPrice},
+			</if>
+			<!-- 更新上架时间 -->
+			<if test="shelfOnTime!=null">
+				shelf_on_time=#{shelfOnTime},
+			</if>
+			<!-- 更新下架原因 -->
+			<if test="shellOffReason!=null and shellOffReason!=''">
+				shell_off_reason=#{shellOffReason},
+			</if>
+			<!-- 更新创建者 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新修改者 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除状态【1正常，0删除】 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+			<!-- 更新数据版本 -->
+			<if test="version!=null">
+				version=#{version},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询商品sku表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtSku">
+		SELECT id,branches_id,p_id,goods_code,brand_id,sku_name,sku_code,goods_bar,type_code,goods_spec,goods_weight,goods_util,goods_size,goods_color,status,cost_price,price,on_sales,sell_price,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version FROM t_wt_sku WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询商品sku表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtSku.WtSku" resultMap="wtSku">
+		SELECT id,branches_id,p_id,goods_code,brand_id,sku_name,sku_code,goods_bar,type_code,goods_spec,goods_weight,goods_util,goods_size,goods_color,status,cost_price,price,on_sales,sell_price,shelf_on_time,shell_off_reason,create_id,create_time,update_id,update_time,del_state,version,goods_pic FROM t_wt_sku
+		<where>
+			1=1
+			<!-- 根据主键查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据机构(城市)ID查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据商品ID查询 -->
+			<if test="pId!=null">
+				AND p_id=#{pId}
+			</if>
+			<!-- 根据商品编号（SPU编号）查询 -->
+			<if test="goodsCode!=null and goodsCode!=''">
+				AND goods_code=#{goodsCode}
+			</if>
+			<!-- 根据品牌ID查询 -->
+			<if test="brandId!=null">
+				AND brand_id=#{brandId}
+			</if>
+			<!-- 根据SKU名称（商品名称+规格）查询 -->
+			<if test="skuName!=null and skuName!=''">
+				AND sku_name=#{skuName}
+			</if>
+			<!-- 根据SKU编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据商品条形码查询 -->
+			<if test="goodsBar!=null and goodsBar!=''">
+				AND goods_bar=#{goodsBar}
+			</if>
+			<!-- 根据类别编号，多级 ，‘000005000005’ 6位代表一级编号查询 -->
+			<if test="typeCode!=null and typeCode!=''">
+				AND type_code=#{typeCode}
+			</if>
+			<!-- 根据商品规格查询 -->
+			<if test="goodsSpec!=null and goodsSpec!=''">
+				AND goods_spec=#{goodsSpec}
+			</if>
+			<!-- 根据商品的重量查询 -->
+			<if test="goodsWeight!=null and goodsWeight!=''">
+				AND goods_weight=#{goodsWeight}
+			</if>
+			<!-- 根据单位值（1:g, 2:kg, 3：ml， 4:L)查询 -->
+			<if test="goodsUtil!=null">
+				AND goods_util=#{goodsUtil}
+			</if>
+			<!-- 根据查询 -->
+			<if test="goodsSize!=null and goodsSize!=''">
+				AND goods_size=#{goodsSize}
+			</if>
+			<!-- 根据查询 -->
+			<if test="goodsColor!=null and goodsColor!=''">
+				AND goods_color=#{goodsColor}
+			</if>
+			<!-- 根据状态[1销售中（上架），2下架,3审核中，4审核不通过]查询 -->
+			<if test="status!=null">
+				AND status=#{status}
+			</if>
+			<!-- 根据成本价格，（平台商品取自平台，自定义商品0）查询 -->
+			<if test="costPrice!=null">
+				AND cost_price=#{costPrice}
+			</if>
+			<!-- 根据市场价查询 -->
+			<if test="price!=null">
+				AND price=#{price}
+			</if>
+			<!-- 根据是否为特价【1是特价、0不是】查询 -->
+			<if test="onSales!=null">
+				AND on_sales=#{onSales}
+			</if>
+			<!-- 根据水站销售价格查询 -->
+			<if test="sellPrice!=null">
+				AND sell_price=#{sellPrice}
+			</if>
+			<!-- 根据上架时间查询 -->
+			<if test="shelfOnTime!=null">
+				AND shelf_on_time=#{shelfOnTime}
+			</if>
+			<!-- 根据下架原因查询 -->
+			<if test="shellOffReason!=null and shellOffReason!=''">
+				AND shell_off_reason=#{shellOffReason}
+			</if>
+			<!-- 根据创建者查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据修改者查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除状态【1正常，0删除】查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+			<!-- 根据数据版本查询 -->
+			<if test="version!=null">
+				AND version=#{version}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectGoods" parameterType="java.util.HashMap" resultType="java.util.Map">
+		SELECT t1.id,t1.branches_id,t1.p_id,goods_code,t1.brand_id,t1.sku_name,t1.sku_code,t1.goods_bar,t1.type_code,t1.goods_spec,t1.goods_weight,t1.goods_util,t1.goods_size,t1.goods_color,t1.status,t1.cost_price,t1.price,t1.on_sales,t1.sell_price,t1.shelf_on_time,t1.shell_off_reason,t1.create_id,t1.create_time,t1.update_id,t1.update_time,t1.del_state,t1.version
+		,t2.goods_name,t1.goods_pic, t3.name
+		FROM t_wt_sku t1 LEFT JOIN t_wt_product t2 on t1.p_id = t2.id LEFT JOIN t_wt_brand t3 ON t1.brand_id = t3.id
+		where t1.id=#{skuId}
+	</select>
+
+</mapper>

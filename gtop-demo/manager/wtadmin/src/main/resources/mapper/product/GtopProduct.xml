@@ -1,0 +1,202 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.product.repository.GtopProductDAO">
+	<!--查询结果Map-->
+	<resultMap type="gtopProduct" id="gtopProduct">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="gtopGoodsId" column="gtop_goods_id" jdbcType="INTEGER" />
+		<result property="goodsCode" column="goods_code" jdbcType="VARCHAR" />
+		<result property="brandId" column="brand_id" jdbcType="INTEGER" />
+		<result property="typeCode" column="type_code" jdbcType="VARCHAR" />
+		<result property="goodsName" column="goods_name" jdbcType="VARCHAR" />
+		<result property="goodsPhotos" column="goods_photos" jdbcType="VARCHAR" />
+		<result property="goodsPic" column="goods_pic" jdbcType="VARCHAR" />
+		<result property="goodsSource" column="goods_source" jdbcType="INTEGER" />
+		<result property="goodsProfile" column="goods_profile" jdbcType="LONGVARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入机构_商品_价格表-->
+	<insert id="insert" parameterType="gtopProduct" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_gtop_product(id,branches_id,gtop_goods_id,goods_code,brand_id,type_code,goods_name,goods_photos,goods_pic,goods_source,goods_profile,create_id,create_time,update_id,update_time,del_state,version) VALUES(#{id},#{branchesId},#{gtopGoodsId},#{goodsCode},#{brandId},#{typeCode},#{goodsName},#{goodsPhotos},#{goodsPic},#{goodsSource},#{goodsProfile},#{createId},#{createTime},#{updateId},#{updateTime},#{delState},#{version})
+	</insert>
+
+	<!--删除机构_商品_价格表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_gtop_product WHERE id=#{0}
+	</delete>
+
+	<!--更新机构_商品_价格表-->
+	<update id="update" parameterType="gtopProduct">
+		UPDATE t_gtop_product
+		<set>
+			<!-- 更新商品id -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新机构ID -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新商品（公共）id -->
+			<if test="gtopGoodsId!=null">
+				gtop_goods_id=#{gtopGoodsId},
+			</if>
+			<!-- 更新商品编号（SPU编号） -->
+			<if test="goodsCode!=null and goodsCode!=''">
+				goods_code=#{goodsCode},
+			</if>
+			<!-- 更新品牌ID -->
+			<if test="brandId!=null">
+				brand_id=#{brandId},
+			</if>
+			<!-- 更新类别编号 -->
+			<if test="typeCode!=null and typeCode!=''">
+				type_code=#{typeCode},
+			</if>
+			<!-- 更新商品名称 -->
+			<if test="goodsName!=null and goodsName!=''">
+				goods_name=#{goodsName},
+			</if>
+			<!-- 更新商品图片（多个） -->
+			<if test="goodsPhotos!=null and goodsPhotos!=''">
+				goods_photos=#{goodsPhotos},
+			</if>
+			<!-- 更新商品购物车图片 -->
+			<if test="goodsPic!=null and goodsPic!=''">
+				goods_pic=#{goodsPic},
+			</if>
+			<!-- 更新商品来源（1：平台商品，2：店铺自定义商品） -->
+			<if test="goodsSource!=null">
+				goods_source=#{goodsSource},
+			</if>
+			<!-- 更新商品图文 -->
+			<if test="goodsProfile!=null and goodsProfile!=''">
+				goods_profile=#{goodsProfile},
+			</if>
+			<!-- 更新创建者 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新修改者 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新删除状态【1正常，0删除】 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+			<!-- 更新数据版本 -->
+			<if test="version!=null">
+				version=#{version},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询机构_商品_价格表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="gtopProduct">
+		SELECT id,branches_id,gtop_goods_id,goods_code,brand_id,type_code,goods_name,goods_photos,goods_pic,goods_source,goods_profile,create_id,create_time,update_id,update_time,del_state,version FROM t_gtop_product WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询机构_商品_价格表列表-->
+	<select id="selectList" parameterType="gtopProduct" resultMap="gtopProduct">
+		SELECT id,branches_id,gtop_goods_id,goods_code,brand_id,type_code,goods_name,goods_photos,goods_pic,goods_source,goods_profile,create_id,create_time,update_id,update_time,del_state,version FROM t_gtop_product
+		<where>
+			1=1
+			<!-- 根据商品id查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据机构ID查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据商品（公共）id查询 -->
+			<if test="gtopGoodsId!=null">
+				AND gtop_goods_id=#{gtopGoodsId}
+			</if>
+			<!-- 根据商品编号（SPU编号）查询 -->
+			<if test="goodsCode!=null and goodsCode!=''">
+				AND goods_code=#{goodsCode}
+			</if>
+			<!-- 根据品牌ID查询 -->
+			<if test="brandId!=null">
+				AND brand_id=#{brandId}
+			</if>
+			<!-- 根据类别编号查询 -->
+			<if test="typeCode!=null and typeCode!=''">
+				AND type_code=#{typeCode}
+			</if>
+			<!-- 根据商品名称查询 -->
+			<if test="goodsName!=null and goodsName!=''">
+				AND goods_name=#{goodsName}
+			</if>
+			<!-- 根据商品图片（多个）查询 -->
+			<if test="goodsPhotos!=null and goodsPhotos!=''">
+				AND goods_photos=#{goodsPhotos}
+			</if>
+			<!-- 根据商品购物车图片查询 -->
+			<if test="goodsPic!=null and goodsPic!=''">
+				AND goods_pic=#{goodsPic}
+			</if>
+			<!-- 根据商品来源（1：平台商品，2：店铺自定义商品）查询 -->
+			<if test="goodsSource!=null">
+				AND goods_source=#{goodsSource}
+			</if>
+			<!-- 根据商品图文查询 -->
+			<if test="goodsProfile!=null and goodsProfile!=''">
+				AND goods_profile=#{goodsProfile}
+			</if>
+			<!-- 根据创建者查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据修改者查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据删除状态【1正常，0删除】查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+			<!-- 根据数据版本查询 -->
+			<if test="version!=null">
+				AND version=#{version}
+			</if>
+		</where>
+	</select>
+	<!--根据品牌ID和二级分类编号查询机构_商品_价格表-->
+	<select id="getWtProductListByCategoryCodeBrandId"  resultMap="gtopProduct">
+		SELECT id,branches_id,gtop_goods_id,goods_code,
+		brand_id,type_code,goods_name,goods_photos,
+		goods_pic,goods_source,goods_profile,create_id,create_time,
+		update_id,update_time,del_state,version
+		FROM t_gtop_product
+		WHERE type_code=#{categoryCode}
+		and brand_id=#{brandId}
+	</select>
+
+</mapper>

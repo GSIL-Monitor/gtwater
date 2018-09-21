@@ -1,0 +1,39 @@
+package com.gt.manager.user.entity.area;
+
+import java.io.Serializable;
+
+/**
+ * 省
+ * @author Administrator
+ *
+ */
+public class Province implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private String name;
+	private String id;
+	public Province(String name, String id) {
+		super();
+		this.name = name;
+		this.id = id;
+	}
+	public Province() {
+		super();
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
+
+}

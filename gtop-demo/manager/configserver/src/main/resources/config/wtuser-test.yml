@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    username: root
+    password: 123
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.40.231:3306/gtwater_test?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&transformedBitIsBoolean=true&useSSL=false&serverTimezone=UTC
+#  c3p0:
+#    driverClass: com.mysql.jdbc.Driver
+#    jdbcUrl: jdbc:mysql://192.168.40.231:3306/gtwater_test?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&transformedBitIsBoolean=true&useSSL=false&serverTimezone=UTC
+#    user: root
+#    password: 123
+#    acquireIncrement: 1
+#    initialPoolSize: 2
+#    maxIdleTime: 2
+#    maxPoolSize: 2
+#    minPoolSize: 2
+#    acquireRetryDelay: 1000
+#    acquireRetryAttempts: 60
+#    minPoolSizebreakAfterAcquireFailure: false
+  redis:
+    database: 0
+    host: 192.168.40.107
+    port: 6379
+    password:
+    max-total: 5
+    max-idle: 2
+    min-idle: 2
+    max-active: 5
+    max-wait: -1
+    max-wait-millis: 1000
+    test-on-borrow: true
+    test-on-return: true
+  custom:
+    test: a
+encrypt:
+  globalKey: 661ee319dff061d4fb6532787f7b6927
+  passSalt: w1fsd2DurO0
+keyencode:
+  DESede: 68EC34C420E6CDA1511A2A40CE94897FA2089EAD6E15D62C
+
+sessionVr:
+  duration: 12 #表示小时数
+tokenVr:
+  duration:  168 #7*24表示天数
+webchat:
+  h5NetworkUrl: http://p.jinjixiadan.com
+wx:
+  appId: wx4a34a8924e582d02
+  appSecret: 2c0f8ddb03fc06ebf5522119182b4dc8
+  index_url: http://water.gyexpress.cn/index.html#/static/home/index  #商城首页url
+  partner_url: http://water.gyexpress.cn/index.html#/static/registrationPartners  #合伙人注册页面url
+  error_url: http://water.gyexpress.cn  #error页面

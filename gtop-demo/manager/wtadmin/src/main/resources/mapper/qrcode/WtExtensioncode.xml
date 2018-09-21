@@ -1,0 +1,298 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.qrcode.repository.WtExtensioncodeDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtExtensioncode.WtExtensioncode" id="wtExtensioncode">
+		<result property="id" column="id" jdbcType="BIGINT" />
+		<result property="messages" column="messages" jdbcType="VARCHAR" />
+		<result property="partnerId" column="partner_id" jdbcType="BIGINT" />
+		<result property="registerTime" column="register_time" jdbcType="BIGINT" />
+		<result property="url" column="url" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="BIGINT" />
+		<result property="createId" column="create_id" jdbcType="BIGINT" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入推广码信息表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtExtensioncode.WtExtensioncode" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_extensioncode(id,messages,partner_id,url,register_time,create_time,create_id,del_state) VALUES(#{id},#{messages},#{partnerId},#{url},#{registerTime},#{createTime},#{createId},#{delState})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gt.manager.entity.wtExtensioncode.WtExtensioncode" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_extensioncode
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<!-- 更新推广码内容 -->
+			<if test="messages!=null and messages!=''">
+				messages,
+			</if>
+			<!-- 更新绑定合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<!-- 更新绑定时间 -->
+			<if test="registerTime!=null">
+				register_time,
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time,
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id,
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<!-- 更新推广码内容 -->
+			<if test="messages!=null and messages!=''">
+				#{messages},
+			</if>
+			<!-- 更新绑定合伙人ID -->
+			<if test="partnerId!=null">
+				#{partnerId},
+			</if>
+			<if test="url != null">
+				#{url},
+			</if>
+			<!-- 更新绑定时间 -->
+			<if test="registerTime!=null">
+				#{registerTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				#{delState},
+			</if>
+		</trim>
+	</insert>
+
+	<!--删除推广码信息表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_extensioncode WHERE id=#{0}
+	</delete>
+
+	<!--更新推广码信息表-->
+	<update id="update" parameterType="com.gt.manager.entity.wtExtensioncode.WtExtensioncode">
+		UPDATE t_wt_extensioncode
+		<set>
+			<!-- 更新推广码ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新推广码内容 -->
+			<if test="messages!=null and messages!=''">
+				messages=#{messages},
+			</if>
+			<!-- 更新绑定合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id=#{partnerId},
+			</if>
+			<!-- 更新绑定时间 -->
+			<if test="registerTime!=null">
+				register_time=#{registerTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--更新推广码信息表-->
+	<update id="updateServlet" parameterType="java.util.Map">
+		UPDATE t_wt_extensioncode
+		<set>
+			<!-- 更新推广码ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新推广码内容 -->
+			<if test="messages!=null and messages!=''">
+				messages=#{messages},
+			</if>
+			<!-- 更新绑定合伙人ID -->
+			<if test="partnerId!=null">
+				partner_id=#{partnerId},
+			</if>
+			<!-- 更新绑定时间 -->
+			<if test="registerTime!=null">
+				register_time=#{registerTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		<if test="codeIdList != null">
+			where id IN
+			<foreach collection="codeIdList" open="(" close=")" separator="," item="id">
+				#{id}
+			</foreach>
+		</if>
+	</update>
+
+	<!--主键查询推广码信息表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtExtensioncode">
+		SELECT id,messages,partner_id,register_time,create_time,create_id,del_state FROM t_wt_extensioncode WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询推广码信息表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtExtensioncode.WtExtensioncode" resultMap="wtExtensioncode">
+		SELECT id,messages,url,partner_id,register_time,create_time,create_id,del_state FROM t_wt_extensioncode
+		<where>
+			1=1
+			<!-- 根据推广码ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据推广码内容查询 -->
+			<if test="messages!=null and messages!=''">
+				AND messages=#{messages}
+			</if>
+            <if test="url != null and url != ''">
+                AND url = #{url}
+            </if>
+			<!-- 根据绑定合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id=#{partnerId}
+			</if>
+			<!-- 根据绑定时间查询 -->
+			<if test="registerTime!=null">
+				AND register_time=#{registerTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectDataToMap" parameterType="java.util.Map" resultMap="wtExtensioncode">
+		SELECT id,messages,url,partner_id,register_time,create_time,create_id,del_state FROM t_wt_extensioncode
+		<where>
+			1=1
+			<!-- 根据推广码ID查询 -->
+			<if test="id!=null">
+				AND id = #{id}
+			</if>
+			<!-- 根据推广码内容查询 -->
+			<if test="messages!=null and messages!=''">
+				AND messages = #{messages}
+			</if>
+			<!-- 根据绑定合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id = #{partnerId}
+			</if>
+			<if test="url != null">
+				AND url = #{url}
+			</if>
+			<!-- 根据绑定时间查询 -->
+			<if test="registerTime!=null">
+				AND register_time = #{registerTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="startTime!=null">
+				AND create_time &gt;= #{startTime}
+			</if>
+			<if test="endTime!=null">
+				AND create_time &lt;= #{endTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id = #{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state = #{delState}
+			</if>
+			<if test="codeIdList!=null">
+				and id IN
+				<foreach collection="codeIdList" open="(" close=")" separator="," item="id">
+					${id}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteDataByMap" parameterType="java.util.Map">
+		DELETE FROM t_wt_extensioncode
+		<where>
+			<!-- 根据推广码ID查询 -->
+			<if test="id!=null">
+				AND id = #{id}
+			</if>
+			<!-- 根据推广码内容查询 -->
+			<if test="messages!=null and messages!=''">
+				AND messages = #{messages}
+			</if>
+			<!-- 根据绑定合伙人ID查询 -->
+			<if test="partnerId!=null">
+				AND partner_id = #{partnerId}
+			</if>
+			<!-- 根据绑定时间查询 -->
+			<if test="registerTime!=null">
+				AND register_time = #{registerTime}
+			</if>
+			<if test="url != null">
+				AND url = #{url}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="startTime!=null">
+				AND create_time &gt;= #{startTime}
+			</if>
+			<if test="endTime!=null">
+				AND create_time &lt;= #{endTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id = #{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state = #{delState}
+			</if>
+			<if test="ids!=null">
+				AND id in #{ids}
+			</if>
+		</where>
+	</delete>
+
+</mapper>

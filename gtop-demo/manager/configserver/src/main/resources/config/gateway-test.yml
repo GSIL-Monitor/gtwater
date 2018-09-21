@@ -1,0 +1,39 @@
+#RabbitMQ property set
+spring:
+#  rabbitmq:
+#    host: 192.168.0.108
+#    port: 5672
+#    password: zhouhe
+#    username: zhouhe
+#    virtual-host: zhouhe
+#    requested-heartbeat: 5
+#    listener:
+#      concurrency: 2
+#      max-concurrency: 5
+#      acknowledge-mode: manual
+  c3p0:
+    driverClass: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://192.168.40.231:3306/gtop?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    user: root
+    password: 123
+    acquireIncrement: 1
+    initialPoolSize: 2
+    maxIdleTime: 2
+    maxPoolSize: 2
+    minPoolSize: 2
+    acquireRetryDelay: 1000
+    acquireRetryAttempts: 60
+    minPoolSizebreakAfterAcquireFailure: false
+  redis:
+    database: 13
+    host: 192.168.40.107
+    port: 6379
+    password:
+    max-total: 5
+    max-idle: 8
+    min-idle: 2
+    max-active: 300
+    max-wait: -1
+    max-wait-millis: 1000
+    test-on-borrow: true
+    test-on-return: true

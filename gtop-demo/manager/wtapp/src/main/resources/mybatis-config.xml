@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置sql语句显示 -->
+	<settings>
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+    <typeAliases>
+        <package name="com.gt.manager.entity"/>
+        <package name="com.gt.manager.merchant.entity"/>
+    </typeAliases>
+    <mappers>
+        <!---代理商-->
+        <mapper resource="mapper/WtSend.xml"/>
+        <mapper resource="mapper/WtSendMes.xml"/>
+        <mapper resource="mapper/WtWaterstore.xml"/>
+        <mapper resource="mapper/WtWaterstoreSku.xml"/>
+
+        <mapper resource="mapper/WtOrderMes.xml"/>
+        <mapper resource="mapper/WtProfit.xml"/>
+        <mapper resource="mapper/WtBranchesAccount.xml"/>
+        <mapper resource="mapper/WtBranchesAccountStatement.xml"/>
+        <mapper resource="mapper/WtProfitPartner.xml"/>
+        <mapper resource="mapper/WtProfitSystem.xml"/>
+        <mapper resource="mapper/WtProfitWaterstore.xml"/>
+        <mapper resource="mapper/WtProfitCity.xml"/>
+        <mapper resource="mapper/WtTicketLog.xml"/>
+        <mapper resource="mapper/WtUserTicket.xml"/>
+        <mapper resource="mapper/WtWaterstopSetmeal.xml"/>
+        <mapper resource="mapper/ThirdUser.xml"/>
+    </mappers>
+
+</configuration>

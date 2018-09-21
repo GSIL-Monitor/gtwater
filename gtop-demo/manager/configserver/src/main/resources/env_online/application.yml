@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    name:
+      CONFIG
+    config:
+      server:
+        native:
+           search-locations:/opt/online/config
+#logging:
+#  level:
+#    com.netflix.discovery: 'OFF'
+#    org.springframework.cloud: 'DEBUG'    

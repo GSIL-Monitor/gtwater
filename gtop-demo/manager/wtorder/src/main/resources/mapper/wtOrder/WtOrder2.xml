@@ -1,0 +1,1132 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtOrder.WtOrder2DAO">
+	<!--查询订单结果Map-->
+	<resultMap type="com.gt.manager.entity.wtOrder.WtOrder" id="wtOrder">
+		<id property="id" column="id" jdbcType="INTEGER" />
+		<result property="orderNo" column="order_no" jdbcType="VARCHAR" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="contacts" column="contacts" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="provinceId" column="province_id" jdbcType="VARCHAR" />
+		<result property="province" column="province" jdbcType="VARCHAR" />
+		<result property="cityId" column="city_id" jdbcType="VARCHAR" />
+		<result property="city" column="city" jdbcType="VARCHAR" />
+		<result property="areaId" column="area_Id" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="money" column="money" jdbcType="INTEGER" />
+		<result property="remarks" column="remarks" jdbcType="VARCHAR" />
+		<result property="isInvoice" column="is_invoice" jdbcType="INTEGER" />
+		<result property="isSetmeal" column="is_setmeal" jdbcType="INTEGER" />
+		<result property="isTicket" column="is_ticket" jdbcType="INTEGER" />
+		<result property="ticketMoney" column="ticket_money" jdbcType="INTEGER" />
+		<result property="paymentMoney" column="payment_money" jdbcType="INTEGER" />
+		<result property="paymentType" column="payment_type" jdbcType="INTEGER" />
+		<result property="orderState" column="order_state" jdbcType="INTEGER" />
+		<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+		<result property="paymentTime" column="payment_time" jdbcType="INTEGER" />
+		<result property="paymentCode" column="payment_code" jdbcType="INTEGER" />
+		<result property="extensioncodeId" column="extensioncode_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="appointmentTime" column="appointment_time" jdbcType="INTEGER" />
+		<!--查询订单详情结果Map-->
+		<collection property="wtOrderMes"  column="order_no" select="selectByOrderId"/>
+		<!--查询订单详情结果Map-->
+		<collection property="wtInvoice" column="order_no" select="selectInvoice"/>
+	</resultMap>
+
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtOrderMes.WtOrderMes" id="wtOrderMes">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="orderNo" column="order_no" jdbcType="VARCHAR" />
+		<result property="orderMesNo" column="order_mes_no" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" />
+		<result property="type" column="type" jdbcType="INTEGER" />
+		<result property="pType" column="p_type" jdbcType="INTEGER" />
+		<result property="price" column="price" jdbcType="INTEGER" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="totalPrice" column="total_price" jdbcType="INTEGER" />
+		<result property="sequence" column="sequence" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<!--查询订单详情结果Map-->
+		<collection property="wtGift" column="sku_code" select="selectwtGift"/>
+	</resultMap>
+	<resultMap type="com.gt.manager.entity.wtInvoice.WtInvoice" id="wtInvoice">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="money" column="money" jdbcType="INTEGER" />
+		<result property="invoiceDate" column="invoice_date" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="state" column="state" jdbcType="INTEGER" />
+		<result property="signDate" column="sign_date" jdbcType="INTEGER" />
+		<result property="signName" column="sign_name" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="dutyNo" column="duty_no" jdbcType="VARCHAR" />
+		<result property="sendName" column="send_name" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="com.gt.manager.entity.wtGift.WtGift" id="wtGift">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="productId" column="product_id" jdbcType="INTEGER" />
+		<result property="seriesSkuCode" column="series_sku_code" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="pick" column="pick" jdbcType="INTEGER" />
+		<result property="mes" column="mes" jdbcType="VARCHAR" />
+		<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="sigenName" column="sigen_name" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="giftType" column="type" jdbcType="INTEGER" />
+		<!--<association property="wtProduct" column="product_id" select="selsectProductById"/>-->
+	</resultMap>
+	<resultMap type="com.gt.manager.entity.wtProduct.WtProduct" id="wtProduct">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="gtopGoodsId" column="gtop_goods_id" jdbcType="INTEGER" />
+		<result property="spuCode" column="spu_code" jdbcType="VARCHAR" />
+		<result property="brandId" column="brand_id" jdbcType="INTEGER" />
+		<result property="typeCode" column="type_code" jdbcType="VARCHAR" />
+		<result property="goodsName" column="goods_name" jdbcType="VARCHAR" />
+		<result property="goodsPhotos" column="goods_photos" jdbcType="VARCHAR" />
+		<result property="goodsPic" column="goods_pic" jdbcType="VARCHAR" />
+		<result property="goodsSource" column="goods_source" jdbcType="INTEGER" />
+		<result property="goodsProfile" column="goods_profile" jdbcType="VARCHAR" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="version" column="version" jdbcType="INTEGER" />
+	</resultMap>
+		<!--查询结果Map-->
+		<resultMap type="com.gt.manager.entity.wtUserTicket.WtUserTicket" id="wtUserTicket">
+			<result property="id" column="id" jdbcType="INTEGER" />
+			<result property="userId" column="user_id" jdbcType="INTEGER" />
+			<result property="num" column="num" jdbcType="INTEGER" />
+			<result property="surplusNum" column="surplus_num" jdbcType="INTEGER" />
+			<result property="ticketPrice" column="ticket_price" jdbcType="INTEGER" />
+			<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+			<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+			<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+			<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+			<result property="createTime" column="create_time" jdbcType="INTEGER" />
+			<result property="createId" column="create_id" jdbcType="INTEGER" />
+			<result property="delState" column="del_state" jdbcType="INTEGER" />
+		</resultMap>
+	<!--插入订单-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtOrder.WtOrder" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_order(order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,extensioncode_id,create_time,create_id,del_state,appointment_time)
+		VALUES(#{orderNo},#{waterstoreId},#{userId},#{contacts},#{phone},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{address},#{money},#{remarks},#{isInvoice},#{isSetmeal},#{isTicket},#{ticketMoney},#{paymentMoney},#{paymentType},#{orderState},#{orderTime},#{paymentTime},#{extensioncodeId},#{createTime},#{createId},#{delState},#{appointmentTime})
+	</insert>
+
+	<!--插入订单详情-->
+	<insert id="insertMes" parameterType="com.gt.manager.entity.wtOrderMes.WtOrderMes" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_order_mes(order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state)
+		VALUES(#{orderNo},#{orderMesNo},#{skuCode},#{skuName},#{type},#{pType},#{price},#{num},#{totalPrice},#{sequence},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除订单-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_order WHERE null=#{0}
+	</delete>
+
+	<!--主键查询订单-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtOrder">
+		SELECT id,order_no,waterstore_id,user_id,province_id,province,city_id,city,area_Id,area,address,money,remarks,is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,extensioncode_id,create_time,create_id,del_state,appointment_time FROM t_wt_order WHERE null=#{0}
+	</select>
+	<!-- 根据用户查询所有订单-->
+	<select id="queryAllOrder" resultType="java.util.Map" parameterType="java.util.Map" >
+		SELECT
+			t1.user_id AS userId,
+			"" AS sendNo,
+			t1.order_no AS orderNo ,
+			t1.waterstore_id AS waterstoreId,
+			t1.address,
+			t1.order_state AS STATUS,
+			"" AS sendTime,
+			"" AS appointmentTime,
+			t2.sku_code AS skuCode,
+			t2.sku_name AS skuName,
+			t2.num,
+			t2.type,
+			t2.total_price AS totalPrice,
+			t1.money,
+			t3.goods_pic AS goodsPic,
+			order_time AS orderTime
+		FROM
+			t_wt_order t1
+		LEFT JOIN t_wt_order_mes t2 ON t1.order_no = t2.order_no
+		LEFT JOIN t_wt_product t3 ON t3.spu_code = t2.sku_code
+		WHERE 1=1
+			AND t1.user_id=#{userId}
+		UNION ALL
+		SELECT
+			t1.user_id AS userId,
+			t1.send_no AS sendNo,
+			"" AS orderNo,
+			t1.waterstore_id AS waterstoreId,
+			t1.address,
+			t1. STATUS,
+			t1.send_time AS sendTime,
+			t1.appointment_time AS appointmentTime,
+			t2.sku_code AS skuCode,
+			t2.sku_name AS skuName,
+			t2.num,
+			t2.type,
+			"" AS totalPrice,
+			"" AS money,
+			t3.goods_pic AS goodsPic,
+			"" AS orderTime
+		FROM
+			t_wt_send t1
+		LEFT JOIN t_wt_send_mes t2 ON t1.send_no = t2.send_code
+		LEFT JOIN t_wt_product t3 ON t3.spu_code = t2.sku_code
+		WHERE 1=1
+		AND t1.user_id=#{userId}
+	</select>
+	<!--根据水站ID和SKU 查询水站商品是否下架 1上架 2下架-->
+	<select id="queryProductStatus" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			status
+		FROM
+			t_wt_waterstore_sku
+		WHERE 1=1
+		AND waterstore_id=#{waterstoreId}
+		AND sku_code=#{skuCode}
+		AND  del_state = 1
+	</select>
+	<!--根据水站ID和SKU 查询水站套餐是否下架 1上架 0下架-->
+	<select id="querySetmealStatus" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		onshelf_state  AS onshelfState
+		FROM
+		t_wt_waterstop_setmeal
+		WHERE 1=1
+		AND waterstore_id=#{waterstoreId}
+		AND series_sku_code=#{skuCode}
+		AND  del_state = 1
+	</select>
+	<!--根据用户ID和SKU 查询剩余水票-->
+	<select id="queryWaterStatus" parameterType="java.util.Map" resultType="java.util.List">
+		SELECT
+			id,
+			user_id AS userId,
+			surplus_num AS surplusNum,
+			ticket_price AS ticketPrice,
+			sku_code AS skuCode,
+			order_code AS orderCode,
+			order_time AS orderTime,
+			create_time AS createTime
+		FROM
+			t_wt_user_ticket
+		WHERE 1=1
+		AND sku_code = #{skuCode}
+		AND user_id = #{userId}
+		AND surplus_num != 0
+		ORDER BY order_time ASC
+	</select>
+	<!-- 修改用户水票 -->
+	<update id="updateUserTicket" parameterType="com.gt.manager.entity.wtOrder.WtOrder">
+		  UPDATE t_wt_user_ticket
+			<set>
+				surplus_num  = #{surplusNum},
+				update_time = #{updateTime}
+			</set>
+		  WHERE
+			1=1
+			AND sku_code = #{skuCode}
+			AND user_id = #{userId}
+			AND order_code = #{orderCode}
+			AND create_time = #{createTime}
+	</update>
+
+	<!--插入用户水票表-->
+	<insert id="insertUserTicket" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_user_ticket(user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state )
+		VALUES(#{userId},#{num},#{surplusNum},#{ticketPrice},#{skuCode},#{orderCode},#{orderTime},#{updateTime},#{createTime},#{createid},#{delState})
+	</insert>
+	<!--插入水票消费记录表-->
+	<insert id="insertTicketLog" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_ticket_log(ticket_id,sku_name,sku_code,num,operation,type,user_id,user_name,address,ticket_price,send_mes_code,order_mes_code,log_time,create_time,create_id,del_state )
+		VALUES(#{ticketId},#{skuName},#{skuCode},#{num},#{operation},#{type},#{userId},#{userName},#{address},#{ticketPrice},#{sendMesCode},#{orderMesCode},#{logtime},#{createTime},#{createid},#{delState})
+	</insert>
+	<!--查询订单详情-->
+	<select id="queryOrderMes" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		 id,
+		  order_no AS orderNo,
+		  order_mes_no  AS orderMesNo,
+		  sku_code AS skuCode,
+		  sku_name AS skuName,
+		  type  ,
+		  p_type AS pType,
+		   price ,
+		   num,
+		   total_price AS totalPrice,
+		   sequence ,
+		   create_time AS createTime,
+		   create_id AS createId,
+		   del_state AS delState
+		FROM
+			t_wt_order_mes
+		WHERE 1=1
+		AND order_no = #{orderNo}
+	</select>
+
+	<!--根据订单编号查询订单列表-->
+	<select id="selectOrderList" parameterType="java.util.Map" resultMap="wtOrder">
+		SELECT
+			id,
+			order_no,
+			waterstore_id ,
+			user_id ,
+			province_id ,
+			province,
+			city_id,
+			city,
+			area_Id ,
+			area,
+			address,
+			money,
+			remarks,
+			is_invoice ,
+			is_setmeal ,
+			is_ticket ,
+			ticket_money ,
+			payment_money ,
+			payment_type ,
+			order_state ,
+			order_time ,
+			payment_time ,
+			extensioncode_id ,
+			create_time ,
+			create_id ,
+			del_state ,
+			update_time ,
+			appointment_time
+		FROM
+			t_wt_order
+		WHERE 1=1
+			AND order_no = #{orderNo}
+	</select>
+
+	<!--根据订单编号查询用户水票ID-->
+	<select id="queryOneUserId" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id
+		FROM
+			t_wt_user_ticket
+		WHERE 1=1
+		AND order_code = #{orderCode}
+		AND sku_code = #{skuCode}
+	</select>
+	<!--根据用户id查看用户发票-->
+	<select id="queryUserDetailed" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			id,
+			user_id AS userId,
+			title,
+			duty_no AS dutyNo,
+			remarks,
+			is_default AS isDefault
+		FROM
+			t_wt_user_detailed
+		WHERE 1=1
+		AND user_id = #{userId}
+	</select>
+	<!--根据订单详情code 修改水票消费记录的派单编号 -->
+	<update id="updateticketLogMes" parameterType="java.util.Map">
+		UPDATE t_wt_ticket_log
+		<set>
+			send_mes_code  =  #{sendMesCode}
+		</set>
+		WHERE
+		1=1
+		AND order_mes_code = #{orderMesCode}
+	</update>
+
+	<!-- 查询是否为混合支付 如果 sku_code =2 则为混和支付 -->
+	<select id="querySkuCodeNum" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			COUNT(sku_code) AS skuCode,
+			p_type AS pType
+		FROM
+			t_wt_order_mes
+		WHERE 1=1
+		AND order_no = #{orderNo}
+		AND sku_code = #{skuCode}
+		GROUP BY p_type
+	</select>
+
+	<!-- 查询商品规格和商品名称 -->
+	<select id="queryNameSpece" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			c.name AS brandName,
+			b.goods_spec AS goodsSpec
+		FROM
+			t_wt_waterstore_sku a
+		left join
+			t_wt_sku b
+		ON
+			a.sku_id = b.id
+		LEFT JOIN
+			t_wt_brand	c
+		ON
+			b.brand_id = c.id
+		WHERE 1=1
+		AND a.waterstore_id = #{waterstoreId}
+		AND a.sku_code = #{skuCode}
+		AND a.del_state = 1
+		AND a.status = 1
+	</select>
+
+	<!-- 通过订单状态为未付款和 付款方式为水票 查出订单编号，订单明细编号，商品编号，商品明细编号，下单时间 -->
+	<select id="queryTimeOut"   resultType="java.util.Map">
+		SELECT
+			a.order_no AS orderNo,
+			a.order_mes_no AS orderMesNo ,
+			a.sku_code AS skuCode,
+			a.sku_name AS skuName,
+			b.order_time AS orderTime
+		FROM
+			t_wt_order_mes a
+		LEFT JOIN
+			t_wt_order b
+		ON
+			a.order_no = b.order_no
+		WHERE 1=1
+		AND b.order_state=1
+	</select>
+
+	<!-- 通过订单明细查询 水票ID 和数量  -->
+	<select id="queryTicketId" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+			ticket_id as ticketId,
+			num
+		FROM
+			t_wt_ticket_log
+		WHERE 1=1
+		AND order_mes_code =#{orderMesCode}
+	</select>
+
+	<!--修改订单完成状态-->
+	<update id="updateOrder" parameterType="com.gt.manager.entity.wtOrder.WtOrder">
+		UPDATE t_wt_order
+		<set>
+			<if test="orderState != null">
+				order_state  =  #{orderState},
+			</if>
+			<if test="paymentTime != null">
+				payment_time = #{paymentTime},
+			</if>
+		</set>
+		WHERE
+		1=1
+		AND order_no = #{orderNo}
+	</update>
+	<!--根据水票ID修改 用户水票余量 -->
+	<update id="updateUserSurplusNum" parameterType="java.util.Map">
+		UPDATE t_wt_user_ticket
+		<set>
+			surplus_num = surplus_num + ${num}
+		</set>
+		WHERE
+		1=1
+		AND id = #{ticketId}
+	</update>
+
+	<!-- 通过订单 查询订单明细  -->
+	<select id="queryOrderMesNo" parameterType="java.util.Map"   resultType="java.util.HashMap">
+		SELECT
+		order_mes_no as orderMesCode
+		FROM
+		t_wt_order_mes
+		WHERE 1=1
+		AND order_no =#{orderNo}
+		AND type=1
+	</select>
+
+	<!-- 通过用户ID 查看二维码ID -->
+	<select id="queryCodeId" parameterType="java.util.Map"   resultType="java.util.Map">
+		SELECT
+		code_id as codeId
+		FROM
+		t_wt_user_extensioncode
+		WHERE 1=1
+		AND user_id =#{userId}
+	</select>
+
+	<!-- 水管家开关 -->
+	<select id="queryFunction"    resultType="java.util.Map">
+		SELECT
+		id ,
+		type,
+		state,
+		create_time AS createTime ,
+		create_id AS createId,
+		update_time AS updateTime,
+		update_id AS updateId
+		FROM
+		t_wt_function
+	</select>
+
+	<!-- 查询套系数量和赠品数量 -->
+	<select id="querySetmealNum"   parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+			t1.waterstore_id AS waterstoreId,t2.num AS taoxinum,t2.is_gift AS isGift,t3.num AS zengpinnum,t4.sku_code AS skuCode,t4.sku_name AS skuName,t3.type,t4.price
+		FROM
+			t_wt_waterstop_setmeal t1
+		LEFT JOIN
+			t_wt_org_setmeal t2
+		ON
+			t1.setmeal_id=t2.id
+		LEFT JOIN
+			t_wt_gift t3
+		ON
+			t2.series_sku_code = t3.series_sku_code
+		LEFT JOIN
+			t_wt_sku t4
+		ON
+			t3.product_id=t4.p_id AND t3.sku_code=t4.sku_code AND t1.branches_id=t4.branches_id
+		WHERE 1=1
+		AND t1.waterstore_id=#{waterstoreId}
+		AND t1.onshelf_state=1
+		AND t1.del_state = 1
+		AND t2.onshelf_state = 1
+		AND t2.del_state = 1
+		AND t3.del_state = 1
+		AND t4.del_state = 1
+		AND t4.status = 1
+		AND t1.series_sku_code=#{seriesSkuCode}
+	</select>
+
+	<!-- 订单查询 -->
+	<select id="queryOrders"    resultType="java.util.Map">
+		SELECT
+		  id ,
+		  order_no AS orderNo,
+		  waterstore_id AS waterstoreId,
+		  user_id AS userId,
+		  contacts ,
+		  phone ,
+		  province_id AS provinceId,
+		  province ,
+		  city_id AS cityId,
+		  city ,
+		  area_Id AS areaId,
+		  area ,
+		  address ,
+		  money ,
+		  remarks ,
+		  is_invoice AS isInvoice,
+		  is_setmeal AS isSetmeal,
+		  is_ticket AS isTicket,
+		  ticket_money AS ticketMoney,
+		  payment_money AS paymentMoney,
+		  payment_type AS paymentType,
+		  order_state AS orderState,
+		  order_time AS orderTime,
+		  payment_time AS paymentTime,
+		  extensioncode_id AS extensioncodeId,
+		  create_time AS  createTime,
+		  create_id AS createId,
+		  del_state AS delState,
+		appointment_time AS  appointmentTime,
+		update_time AS updateTime
+		FROM
+			t_wt_order
+		WHERE 1=1
+		AND	user_id = #{userId}
+		<if test="state!=null">
+			AND order_state = #{orderState}
+		</if>
+
+		ORDER BY create_time DESC
+	</select>
+	<!-- 派单查询 -->
+	<select id="queryDistributeLeaflets" resultType="java.util.Map">
+		SELECT
+			send_no AS sendNo,
+			waterstore_id AS waterstoreId,
+			province_id AS provinceId,
+			province,
+			city_id AS cityId,
+			city,
+			area_Id AS areaId,
+			area,
+			address,
+			user_id AS userId,
+			contacts,
+			phone,
+			appointment_time AS appointmentTime,
+			send_time AS sendTime,
+			send_user AS sendUser,
+			sigen_user AS sigenUser,
+			STATUS,
+			change_send_no AS changeSendNo,
+			remarks,
+			create_time AS createTime,
+			create_id AS createId,
+			del_status AS delStatus,
+			waterstore_tel	AS waterstoreTel
+		FROM
+			t_wt_send
+		<where>
+			1=1
+			<!-- 根据用户（客户）ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据状态【0未接单、1确认接单 （待收货）、5送达（完成）、6改派、-1取消】查询 -->
+			<if test="status!=null">
+				AND status=#{status}
+			</if>
+		</where>
+		ORDER BY create_time DESC
+	</select>
+	<!-- 订单根据用户ID查找状态条数 -->
+	<select id="queryOrdersNums"    resultType="java.util.Map">
+		SELECT
+		order_state AS stauts,
+		count(order_state)nums
+		FROM
+		t_wt_order
+		WHERE 1=1
+		AND	user_id = #{userId}
+		group by order_state
+	</select>
+	<!-- 派单根据用户ID查找状态条数 -->
+	<select id="queryDistributeLeafletsNums"    resultType="java.util.Map">
+		SELECT
+		status AS stauts,
+		count(status)nums
+		FROM
+		t_wt_send
+		WHERE 1=1
+		AND	user_id = #{userId}
+		group by status
+	</select>
+	<!-- 根据订单编号查询订单详情-->
+	<select id="selectByOrderId" parameterType="java.lang.String" resultMap="wtOrderMes">
+		SELECT
+			id,order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state
+		FROM
+			t_wt_order_mes
+		WHERE  order_no = #{orderNo}
+		ORDER BY create_time DESC
+	</select>
+	<!-- 根据订单编号和skuCode查询订单详情 -->
+	<select id="queryOrderMesNoTick" parameterType="com.gt.manager.entity.wtOrderMes.WtOrderMes" resultMap="wtOrderMes">
+		SELECT
+		id,order_no,order_mes_no,sku_code,sku_name,type,p_type,price,num,total_price,sequence,create_time,create_id,del_state
+		FROM
+		t_wt_order_mes
+		WHERE  order_no = #{orderNo}
+			AND sku_code=#{skuCode}
+			AND type = 1
+		ORDER BY create_time DESC
+	</select>
+	<!-- 根据订单编号查询订单-->
+	<select id="selectByOrderUserId" parameterType="java.util.Map" resultMap="wtOrder">
+		SELECT
+			  id,order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,
+			  is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,
+			  extensioncode_id,create_time,create_id,del_state,update_time,appointment_time
+		FROM t_wt_order
+		WHERE  user_id = #{userId}
+		<if test="orderState!=null">
+			AND order_state = #{orderState}
+		</if>
+		ORDER BY order_time DESC
+	</select>
+	<!-- 查询用户水票剩余量 -->
+	<select id="queryUserTickets"    resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT sum(t1.surplus_num) as surplusNum , t1.sku_code  skuCode
+		from t_wt_user_ticket t1
+		LEFT JOIN t_wt_waterstore t2
+		ON t1.branches_id = t2.city_branches_id
+		WHERE 1=1
+			AND t1.user_id = #{userId}
+			AND t2.id = #{waterstoreId}
+		group by t1.sku_code;
+	</select>
+
+	<!-- 根据订单编号查询订单-->
+	<select id="selectByOrders" parameterType="java.util.Map" resultMap="wtOrder">
+		SELECT
+		id,order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,
+		is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,
+		extensioncode_id,create_time,create_id,del_state,update_time,appointment_time
+		FROM t_wt_order
+		WHERE  order_no = #{orderNo}
+	</select>
+
+
+	<!--修改订单完成状态-->
+	<update id="updateOrders" parameterType="java.util.Map" >
+		UPDATE t_wt_order
+		<set>
+			<if  test="orderState!=null">
+			  order_state  =  #{orderState},
+			</if>
+			<if  test="paymentCode!=null and  paymentCode != ''">
+			  payment_code = #{paymentCode},
+			</if>
+			<if  test="paymentTime!=null ">
+				payment_time = #{paymentTime},
+			</if>
+			<if  test="updateTime!=null ">
+			  update_time = #{updateTime},
+			</if>
+		</set>
+		WHERE
+		1=1
+		AND order_no = #{orderNo}
+	</update>
+	<!-- 查询gtpay生成的订单号 -->
+	<select id="weChatPayment" parameterType="java.util.Map" resultMap="wtOrder">
+		SELECT
+			id,
+			order_no ,
+			waterstore_id,
+			user_id ,
+			province_id ,
+			province,
+			city_id ,
+			city,
+			area_Id ,
+			area,
+			address,
+			contacts,
+			phone,
+			money,
+			remarks,
+			is_invoice ,
+			is_setmeal ,
+			is_ticket ,
+			ticket_money ,
+			payment_money ,
+			payment_type ,
+			order_state ,
+			order_time ,
+			payment_time ,
+			extensioncode_id ,
+			create_time ,
+			create_id ,
+			del_state ,
+			update_time ,
+			appointment_time
+		FROM
+			t_wt_order
+		WHERE 1=1
+		AND  payment_code = #{payCode}
+	</select>
+
+	<!-- 查询gtpay生成的订单号 -->
+	<select id="selectInvoice" parameterType="java.util.Map" resultMap="wtInvoice">
+		SELECT
+			id,order_code,user_id,money,invoice_date,waterstore_id,state,sign_date,sign_name,title,duty_no,
+			send_name,create_time,create_id,del_state
+		FROM t_wt_invoice
+		WHERE order_code=#{orderNo}
+	</select>
+
+	<!--插入发票-->
+	<insert id="insertWtInvoice" parameterType="com.gt.manager.entity.wtInvoice.WtInvoice" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_invoice(
+		order_code,user_id,money,invoice_date,waterstore_id,state,sign_date,sign_name,title,duty_no,send_name,create_time,create_id,del_state
+		) VALUES(
+		#{orderCode},#{userId},#{money},#{invoiceDate},#{waterstoreId},#{state},#{signDate},#{signName},#{title},#{dutyNo},#{sendName},
+		#{createTime},#{createId},#{delState}
+		)
+	</insert>
+
+	<!-- 查询商品信息生成商品序列 -->
+	<select id="selectProducts" parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+			t1.id,t1.branches_id,t1.p_id,goods_code,t1.brand_id,t1.sku_name,t1.sku_code,t1.goods_bar,t1.type_code,
+			t1.goods_spec,t1.goods_weight,t1.goods_util,t1.goods_size,t1.goods_color,t1.status,t1.cost_price,t1.price,
+			t1.on_sales,t1.sell_price,t1.shelf_on_time,t1.shell_off_reason,t1.create_id,t1.create_time,t1.update_id,
+			t1.update_time,t1.del_state,t1.version,t2.goods_name,t1.goods_pic, t3.name
+		FROM
+			t_wt_waterstore_sku s1
+		LEFT JOIN
+			t_wt_sku t1 ON s1.sku_id = t1.id
+		LEFT JOIN
+			t_wt_product t2 ON t1.p_id = t2.id
+		LEFT JOIN t_wt_brand t3 ON t1.brand_id = t3.id
+		WHERE s1.waterstore_id=#{waterstoreId}
+		AND t1.sku_code = #{skuCode}
+		AND s1.del_state = 1
+		AND s1.status = 1
+		AND t1.del_state = 1
+		AND t1.status = 1
+		AND t2.del_state = 1
+	</select>
+	<!--通过订单编号查找金额-->
+	<select id="queryPrices" parameterType="java.lang.String"  resultType="java.util.Map" >
+		SELECT
+			order_state AS orderState,
+			payment_money AS paymentMoney
+		FROM
+			t_wt_order
+		WHERE 1=1
+		AND order_no = #{orderNo}
+	</select>
+	<!-- 通过series_sku_code 查看赠品 -->
+	<select id="selectwtGift" parameterType="com.gt.manager.entity.wtGift.WtGift"  resultMap="wtGift">
+		SELECT
+		id,type,product_id,series_sku_code,sku_code,pick,mes,order_code,user_id,sigen_name,create_time,create_id,del_state
+		FROM t_wt_gift
+		WHERE series_sku_code = #{skuCode} AND del_state = 1
+	</select>
+	<!-- 通过id查找商品 -->
+	<select id="selsectProductById" parameterType="com.gt.manager.entity.wtProduct.WtProduct"  resultMap="wtProduct">
+		SELECT
+			id,branches_id,gtop_goods_id,spu_code,brand_id,type_code,goods_name,goods_photos,goods_pic,goods_source,goods_profile,create_id,
+			create_time,update_id,update_time,del_state,version FROM t_wt_product
+			WHERE id=#{productId} AND  del_state = 1
+	</select>
+	<!-- 通过订单编号查找 订单 订单详情  赠品  赠品商品图文 -->
+	<select id="selsectMesByNo" parameterType="java.lang.String"  resultType="java.util.Map">
+		SELECT
+		  t1.order_no AS orderNo,
+		  t1.waterstore_id AS waterstoreId,
+		  t1.user_id  AS userId,
+		  t1.contacts,
+		  t1.phone,
+		  t1.province_id AS provinceId,
+		  t1.province,
+		  t1.city_id   cityId,
+		  t1.city,
+		  t1.area_Id  AS areaId,
+		  t1.area,
+		  t1.address,
+		  t1.money,
+		  t1.remarks,
+		  t1.order_time AS orderTime,
+		  t1.is_invoice  AS isInvoice,
+		  t1.is_setmeal  AS isSetmeal,
+		  t1.is_ticket AS isTicket,
+		  t1.ticket_money  AS ticketMoney,
+		  t1.payment_money  AS paymentMoney,
+		  t1.order_state,
+		  t1.order_time  AS orderTime,
+		  t1.extensioncode_id  AS extensioncodeId,
+		  t1.appointment_time AS appointmentTime,
+		  t2.order_mes_no AS orderMesNo,
+		  t2.sku_code  AS skuCode,
+		  t2.sku_name  AS skuName,
+		  t2.type,
+		  t2.p_type AS pType,
+		  t2.price,
+		  t2.num,
+		  t2.total_price AS totalPrice,
+		  t2.sequence,
+		  t3.series_sku_code AS ZseriesSkuCode,
+		  t3.product_id AS ZproductId ,
+		  t3.sku_code AS ZskuCode,
+		  t3.pick AS Zpick,
+		  t3.num AS Znum ,
+		  t3.mes AS Zmes,
+		  t3.type AS Ztype,
+		  t4.goods_name AS goodsName,
+		  t4.goods_photos AS goodsPhotos,
+		  t4.goods_pic AS goodsPic,
+		  t4.goods_source AS goodsSource,
+		  t4.goods_profile AS goodsProfile
+		FROM
+			t_wt_order t1
+		LEFT JOIN
+			t_wt_order_mes t2
+		on t1.order_no = t2.order_no
+		LEFT JOIN
+			t_wt_gift t3
+		ON t2.sku_code =t3.series_sku_code
+		LEFT JOIN
+			t_wt_product t4
+		ON t3.product_id = t4.id
+		WHERE 1=1
+		AND t1.order_no = #{orderNo}
+		 AND  t4.del_state = 1
+		ORDER BY t1.cres
+	</select>
+	<!-- 通过订单编号查找发票 -->
+	<select id="selsectInvoiceByNo"  parameterType="java.lang.String"  resultType="java.util.Map">
+		SELECT
+			  id,
+			  order_code AS orderCode,
+			  user_id AS userId,
+			  money,
+			  invoice_date AS invoiceDate,
+			  waterstore_id AS waterstoreId,
+			  state,
+			  sign_date AS signDate,
+			  sign_name AS signName,
+			  title,
+			  duty_no AS dutyNo,
+			  send_name AS sendName,
+			  create_time AS createTime,
+			  create_id AS createId,
+			  del_state AS delState
+		 FROM t_wt_invoice
+		WHERE order_code=#{orderNo}
+	</select>
+	<!-- 查找店铺营业时间 -->
+	<select id="selsectOpenTimes" parameterType="java.lang.String"  resultType="java.util.Map">
+		SELECT
+			send_time AS sendTime,
+			operate_end_time AS operateEndTime,
+			operate_start_time AS operateStartTime,
+			operate_week AS operateWeek
+		FROM t_wt_waterstore
+		WHERE id=#{waterstoreId}
+	</select>
+	<!--  通过USERID查找openid -->
+	<select id="selsectOpenId" parameterType="java.lang.String"  resultType="java.util.Map">
+		SELECT
+		open_id AS openId
+		FROM t_third_user
+		WHERE user_id=#{userId}
+	</select>
+	<!--  通过skucode 水站ID 查找套餐详情 -->
+	<select id="querySetmealJson" parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+			  t2.branches_id AS branchesId,
+			  t2.brand_id AS  brandId,
+			  t2.sku_code AS skuCode,
+			  t2.setmeal_code AS setmealCode,
+			  t2.series_sku_code AS seriesSkuCode,
+			  t2.name,
+			  t2.type_code AS typeCode,
+			  t2.series_name AS seriesName,
+			  t2.setmeal_img AS setmealImg,
+			  t2.shopcart_img AS shopcartImg,
+			  t2.goods_profile AS goodsProfile ,
+			  t2.num,
+			  t2.introduce,
+			  t2.price,
+			  t2.is_gift AS isGift,
+			  t2.remark,
+			  t2.onshelf_state AS onshelfState,
+			  t2.goods_spec AS goodsSpec
+		FROM
+			t_wt_waterstop_setmeal t1
+		LEFT JOIN
+			t_wt_org_setmeal t2
+		ON t1.setmeal_id = t2.id
+		WHERE 1=1
+		AND t1.series_sku_code = #{skuCode}
+		AND t1.waterstore_id = #{waterstoreId}
+		AND t1.onshelf_state = 1
+		AND t2.onshelf_state = 1
+		AND t1.del_state = 1
+		AND t2.del_state = 1
+	</select>
+	<!--  通过skucode 机构id 查找套餐商品 -->
+	<select id="querySetmealProJson" parameterType="java.util.Map"  resultType="java.util.Map">
+		SELECT
+		  p_id AS pId,
+		  goods_code AS goodsCode,
+		  brand_id AS brandId,
+		  sku_name AS skuName,
+		  sku_code AS skuCode,
+		  goods_bar AS goodsBar,
+		  type_code AS typeCode,
+		  goods_pic AS goodsPic,
+		  goods_spec AS goodsSpec,
+		  goods_weight AS goodsWeight,
+		  goods_util  AS goodsUtil,
+		  goods_size AS goodsSize,
+		  goods_color AS goodsColor,
+		  status,
+		  cost_price AS costPrice,
+		  price ,
+		  on_sales AS onSales,
+		  sell_price  AS sellPrice
+		FROM
+			t_wt_sku
+		WHERE 1=1
+		AND branches_id = #{branchesId}
+		AND del_state = 1
+		AND status = 1
+		AND sku_code = #{skuCode}
+	</select>
+	<!--  通过套系code 机构id 查找赠品和赠品商品信息 -->
+	<select id="queryGiftProJson" parameterType="java.util.Map"  resultType="java.util.Map">
+			SELECT
+				  t1.series_sku_code AS seriesSkuCode,
+				  t1.pick,
+				  t1.num,
+				  t1.mes,
+				  t1.type,
+				  t2.goods_code AS goodsCode,
+				  t2.brand_id AS brandId,
+				  t2.sku_name AS skuName,
+				  t2.sku_code AS skuCode,
+				  t2.goods_bar AS goodsBar,
+				  t2.goods_pic AS goodsPic,
+				  t2.goods_spec AS goodsSpec,
+				  t2.goods_weight AS goodsWeight,
+				  t2.goods_util AS goodsUtil,
+				  t2.sell_price AS sellPrice
+			FROM
+				t_wt_gift t1
+			LEFT JOIN
+				t_wt_sku t2
+			ON t1.sku_code = t2.sku_code
+			WHERE 1=1
+			AND t1.series_sku_code=#{seriesSkuCode}
+			AND t2.branches_id =#{branchesId}
+			AND t1.del_state=1
+			AND t2.del_state=1
+			AND t2.status = 1
+	</select>
+
+
+	<!--  通过套系code 水站ID查找套餐与套餐商品 -->
+	<select id="queryetmealsSMes" parameterType="java.util.Map"  resultType="java.util.Map">
+			SELECT
+			  t2.branches_id AS branchesId,
+			  t2.brand_id AS brandId,
+			  t2.setmeal_code AS setmealCode,
+			  t2.series_sku_code seriesSkuCode,
+			  t2.name ,
+			  t2.type_code AS typeCode,
+			  t2.series_name AS seriesName,
+			  t2.setmeal_img AS setmealImg,
+			  t2.shopcart_img AS shopcartImg,
+			  t2.goods_profile AS goodsProfile,
+			  t2.num ,
+			  t2.introduce ,
+			  t2.price ,
+			  t2.is_gift AS isGift,
+			  t2.remark ,
+			  t2.onshelf_state AS onshelfState,
+			  t2.goods_spec  AS goodsSpec,
+			  t3.sku_name  AS skuName,
+			  t3.sku_code AS skuCode,
+			  t3.goods_bar AS goodsBar,
+			  t3.goods_pic AS goodsPic,
+			  t3.goods_spec  AS goodsSpec,
+			  t3.goods_weight AS goodsWeight,
+			  t3.goods_util  AS goodsUtil,
+			  t3.sell_price AS sellPrice
+			FROM
+				t_wt_waterstop_setmeal t1
+			LEFT JOIN
+				t_wt_org_setmeal t2
+			ON t1.setmeal_id = t2.id
+			LEFT JOIN
+				t_wt_sku t3
+			ON
+			t2.branches_id = t3.branches_id AND t2.sku_code= t3.sku_code
+			WHERE 1=1
+			AND t1.waterstore_id =#{waterstoreId}
+			AND t1.series_sku_code = #{seriesSkuCode}
+			AND t1.onshelf_state = 1
+			AND t2.onshelf_state = 1
+			AND t3.status = 1
+			AND t2.del_state=1
+			AND t1.del_state=1
+			AND t3.del_state=1
+	</select>
+
+	<!--修改用户水票数量-->
+	<update id="updateUTickList" parameterType="java.util.Map" >
+		UPDATE t_wt_user_ticket
+		<set>
+			num  =  #{num},
+			surplus_num = #{surplusNum},
+			update_time = #{updateTime}
+		</set>
+		WHERE
+		1=1
+		AND id =#{id}
+	</update>
+	<!-- 批量添加用户水票表 -->
+	<insert id="insertTickList" parameterType="com.gt.manager.entity.wtUserTicket.WtUserTicket" useGeneratedKeys="true" keyProperty="id">
+		insert into t_wt_user_ticket
+		   (
+		   	  id,user_id, num, surplus_num, ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state,branches_id
+		   	)
+		values
+		   (
+		  	 #{id},#{userId}, #{num}, #{surplusNum},#{ticketPrice},#{skuCode}, #{orderCode}, #{orderTime}, #{updateTime}, #{createTime}, #{createId}, #{delState}, #{branchesId}
+			)
+	</insert>
+
+	<!-- 批量添加水票日志表 -->
+	<insert id="insertTickLogLost" parameterType="java.util.List">
+		insert into t_wt_ticket_log
+		(ticket_id,sku_name,sku_code,num,ticket_price,operation,type,user_id,user_name,address,send_mes_code,order_mes_code,log_time,create_time,create_id,del_state )
+		values
+		<foreach collection ="list" item="res" index= "index" separator =",">
+			(
+			#{res.ticketId}, #{res.skuName}, #{res.skuCode},#{res.num},#{res.ticketPrice}, #{res.operation}, #{res.type}, #{res.userId}, #{res.userName}, #{res.address}, #{res.sendMesCode}, #{res.orderMesCode}, #{res.logTime}, #{res.createTime}, #{res.createId}, #{res.delState}
+			)
+		</foreach >
+	</insert>
+
+	<!-- 批量添加派单表 -->
+	<insert id="insertSendList" parameterType="java.util.List">
+		insert into t_wt_send
+		(send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,money,update_time,update_id,waterstore_tel )
+		values
+		<foreach collection ="list" item="res" index= "index" separator =",">
+			(
+			#{res.sendNo}, #{res.waterstoreId}, #{res.provinceId},#{res.province},#{res.cityId}, #{res.city}, #{res.areaId}, #{res.area}, #{res.address}, #{res.userId}, #{res.contacts}, #{res.phone}, #{res.appointmentTime}, #{res.sendTime}
+			, #{res.sendUser}, #{res.sigenUser}, #{res.status}, #{res.changeSendNo}, #{res.remarks}, #{res.createTime}, #{res.createId}, #{res.delStatus}, #{res.money}, #{res.updateTime}, #{res.updateId},#{res.waterstoreTel}
+			)
+		</foreach >
+	</insert>
+
+	<!-- 批量添加派单详情表 -->
+	<insert id="insertSendMesList" parameterType="java.util.List">
+		insert into t_wt_send_mes
+		(send_code, send_mes_code, sku_code, sku_name,num,delivery_num,order_mes_code,type,sequence,create_time,create_id,del_state,goods_spec,brand_name,send_mes_money )
+		values
+		<foreach collection ="list" item="res" index= "index" separator =",">
+			(
+			#{res.sendCode}, #{res.sendMesCode}, #{res.skuCode},#{res.skuName},#{res.num}, #{res.deliveryNum}, #{res.orderMesCode}, #{res.type}, #{res.sequence}, #{res.createTime}, #{res.createId}, #{res.delState}, #{res.goodsSpec}, #{res.brandName}, #{res.sendMesMoney}
+			)
+		</foreach >
+	</insert>
+	<!-- 通过 skucode 和  订单编号 查询用户数水票ID 和 水票数量  -->
+	<select id="selsectTicketByCode" parameterType="java.util.Map"  resultMap="wtUserTicket">
+		SELECT
+			id,
+			user_id,
+			num,
+			surplus_num,
+			ticket_price,
+			sku_code,
+			order_code,
+			order_time,
+			update_time,
+			create_time,
+			create_id,
+			del_state,
+			branches_id
+		FROM
+			t_wt_user_ticket
+		WHERE 1=1
+		AND sku_code = #{skuCode}
+		AND order_code = #{orderCode}
+		AND del_state=1
+	</select>
+</mapper>

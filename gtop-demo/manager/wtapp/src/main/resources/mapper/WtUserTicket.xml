@@ -1,0 +1,151 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.merchant.repository.WtUserTicketDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtUserTicket" id="wtUserTicket">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="surplusNum" column="surplus_num" jdbcType="INTEGER" />
+		<result property="ticketPrice" column="ticket_price" jdbcType="INTEGER" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="orderCode" column="order_code" jdbcType="VARCHAR" />
+		<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入用户水票表-->
+	<insert id="insert" parameterType="wtUserTicket" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_user_ticket(id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state) VALUES(#{id},#{userId},#{num},#{surplusNum},#{ticketPrice},#{skuCode},#{orderCode},#{orderTime},#{updateTime},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除用户水票表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_user_ticket WHERE id=#{0}
+	</delete>
+
+	<!--更新用户水票表-->
+	<update id="update" parameterType="wtUserTicket">
+		UPDATE t_wt_user_ticket
+		<set>
+			<!-- 更新用户水票ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新用户ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新水票数量 -->
+			<if test="num!=null">
+				num=#{num},
+			</if>
+			<!-- 更新 -->
+			<if test="surplusNum!=null">
+				surplus_num=#{surplusNum},
+			</if>
+			<!-- 更新水票单价 -->
+			<if test="ticketPrice!=null">
+				ticket_price=#{ticketPrice},
+			</if>
+			<!-- 更新商品ID -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新 -->
+			<if test="orderCode!=null and orderCode!=''">
+				order_code=#{orderCode},
+			</if>
+			<!-- 更新 -->
+			<if test="orderTime!=null">
+				order_time=#{orderTime},
+			</if>
+			<!-- 更新 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询用户水票表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtUserTicket">
+		SELECT id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state FROM t_wt_user_ticket WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询用户水票表列表-->
+	<select id="selectList" parameterType="wtUserTicket" resultMap="wtUserTicket">
+		SELECT id,user_id,num,surplus_num,ticket_price,sku_code,order_code,order_time,update_time,create_time,create_id,del_state FROM t_wt_user_ticket
+		<where>
+			1=1
+			<!-- 根据用户水票ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据用户ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据水票数量查询 -->
+			<if test="num!=null">
+				AND num=#{num}
+			</if>
+			<!-- 根据查询 -->
+			<if test="surplusNum!=null">
+				AND surplus_num=#{surplusNum}
+			</if>
+			<!-- 根据水票单价查询 -->
+			<if test="ticketPrice!=null">
+				AND ticket_price=#{ticketPrice}
+			</if>
+			<!-- 根据商品ID查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据查询 -->
+			<if test="orderCode!=null and orderCode!=''">
+				AND order_code=#{orderCode}
+			</if>
+			<!-- 根据查询 -->
+			<if test="orderTime!=null">
+				AND order_time=#{orderTime}
+			</if>
+			<!-- 根据查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+	<!--更新用户水票余量在原基础上累加-->
+	<update id="updateSurplusNum">
+		update t_wt_user_ticket set surplus_num=surplus_num + #{num},update_time=#{updateTime} where id=#{ticketId}
+	</update>
+</mapper>

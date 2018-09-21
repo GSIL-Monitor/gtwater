@@ -1,0 +1,183 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.ticket.repository.WtTicketLogDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtTicketLog" id="wtTicketLog">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="ticketId" column="ticket_id" jdbcType="INTEGER" />
+		<result property="skuName" column="sku_name" jdbcType="VARCHAR" />
+		<result property="skuCode" column="sku_code" jdbcType="VARCHAR" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="operation" column="operation" jdbcType="INTEGER" />
+		<result property="type" column="type" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="userName" column="user_name" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="sendMesCode" column="send_mes_code" jdbcType="VARCHAR" />
+		<result property="orderMesCode" column="order_mes_code" jdbcType="VARCHAR" />
+		<result property="logTime" column="log_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入水票消费记录表-->
+	<insert id="insert" parameterType="wtTicketLog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_ticket_log(id,ticket_id,sku_name,sku_code,num,operation,type,user_id,user_name,address,send_mes_code,order_mes_code,log_time,create_time,create_id,del_state) VALUES(#{id},#{ticketId},#{skuName},#{skuCode},#{num},#{operation},#{type},#{userId},#{userName},#{address},#{sendMesCode},#{orderMesCode},#{logTime},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除水票消费记录表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_ticket_log WHERE id=#{0}
+	</delete>
+
+	<!--更新水票消费记录表-->
+	<update id="update" parameterType="wtTicketLog">
+		UPDATE t_wt_ticket_log
+		<set>
+			<!-- 更新记录ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新水票ID -->
+			<if test="ticketId!=null">
+				ticket_id=#{ticketId},
+			</if>
+			<!-- 更新SKU名称（商品名称+规格） -->
+			<if test="skuName!=null and skuName!=''">
+				sku_name=#{skuName},
+			</if>
+			<!-- 更新SKU编号 -->
+			<if test="skuCode!=null and skuCode!=''">
+				sku_code=#{skuCode},
+			</if>
+			<!-- 更新数量 -->
+			<if test="num!=null">
+				num=#{num},
+			</if>
+			<!-- 更新增/减 【1增、-1减】 -->
+			<if test="operation!=null">
+				operation=#{operation},
+			</if>
+			<!-- 更新订单1/派送单2 -->
+			<if test="type!=null">
+				type=#{type},
+			</if>
+			<!-- 更新用户(客户)ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新用户（客户）名称 -->
+			<if test="userName!=null and userName!=''">
+				user_name=#{userName},
+			</if>
+			<!-- 更新地址 -->
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<!-- 更新派送单明细code -->
+			<if test="sendMesCode!=null and sendMesCode!=''">
+				send_mes_code=#{sendMesCode},
+			</if>
+			<!-- 更新订单明细code -->
+			<if test="orderMesCode!=null and orderMesCode!=''">
+				order_mes_code=#{orderMesCode},
+			</if>
+			<!-- 更新消费时间 -->
+			<if test="logTime!=null">
+				log_time=#{logTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询水票消费记录表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtTicketLog">
+		SELECT id,ticket_id,sku_name,sku_code,num,operation,type,user_id,user_name,address,send_mes_code,order_mes_code,log_time,create_time,create_id,del_state FROM t_wt_ticket_log WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询水票消费记录表列表-->
+	<select id="selectList" parameterType="wtTicketLog" resultMap="wtTicketLog">
+		SELECT id,ticket_id,sku_name,sku_code,num,operation,type,user_id,user_name,address,send_mes_code,order_mes_code,log_time,create_time,create_id,del_state FROM t_wt_ticket_log
+		<where>
+			1=1
+			<!-- 根据记录ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据水票ID查询 -->
+			<if test="ticketId!=null">
+				AND ticket_id=#{ticketId}
+			</if>
+			<!-- 根据SKU名称（商品名称+规格）查询 -->
+			<if test="skuName!=null and skuName!=''">
+				AND sku_name=#{skuName}
+			</if>
+			<!-- 根据SKU编号查询 -->
+			<if test="skuCode!=null and skuCode!=''">
+				AND sku_code=#{skuCode}
+			</if>
+			<!-- 根据数量查询 -->
+			<if test="num!=null">
+				AND num=#{num}
+			</if>
+			<!-- 根据增/减 【1增、-1减】查询 -->
+			<if test="operation!=null">
+				AND operation=#{operation}
+			</if>
+			<!-- 根据订单1/派送单2查询 -->
+			<if test="type!=null">
+				AND type=#{type}
+			</if>
+			<!-- 根据用户(客户)ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据用户（客户）名称查询 -->
+			<if test="userName!=null and userName!=''">
+				AND user_name=#{userName}
+			</if>
+			<!-- 根据地址查询 -->
+			<if test="address!=null and address!=''">
+				AND address=#{address}
+			</if>
+			<!-- 根据派送单明细code查询 -->
+			<if test="sendMesCode!=null and sendMesCode!=''">
+				AND send_mes_code=#{sendMesCode}
+			</if>
+			<!-- 根据订单明细code查询 -->
+			<if test="orderMesCode!=null and orderMesCode!=''">
+				AND order_mes_code=#{orderMesCode}
+			</if>
+			<!-- 根据消费时间查询 -->
+			<if test="logTime!=null">
+				AND log_time=#{logTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

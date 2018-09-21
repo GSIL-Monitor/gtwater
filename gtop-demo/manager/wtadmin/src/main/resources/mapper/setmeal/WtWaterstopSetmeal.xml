@@ -1,0 +1,120 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.dao.wtWaterstopSetmeal.WtWaterstopSetmealDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtWaterstopSetmeal" id="wtWaterstopSetmeal">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="setmealId" column="setmeal_id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="onshelfState" column="onshelf_state" jdbcType="INTEGER" />
+		<result property="onshelfTime" column="onshelf_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入水站套餐-->
+	<insert id="insert" parameterType="wtWaterstopSetmeal" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_waterstop_setmeal(id,setmeal_id,branches_id,waterstore_id,onshelf_state,onshelf_time,create_time,create_id,del_state) VALUES(#{id},#{setmealId},#{branchesId},#{waterstoreId},#{onshelfState},#{onshelfTime},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除水站套餐-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_waterstop_setmeal WHERE id=#{0}
+	</delete>
+
+	<!--更新水站套餐-->
+	<update id="update" parameterType="wtWaterstopSetmeal">
+		UPDATE t_wt_waterstop_setmeal
+		<set>
+			<!-- 更新主键 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新机构套餐ID -->
+			<if test="setmealId!=null">
+				setmeal_id=#{setmealId},
+			</if>
+			<!-- 更新机构(水站)ID -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新 -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新上架状态【1上架、0下架】 -->
+			<if test="onshelfState!=null">
+				onshelf_state=#{onshelfState},
+			</if>
+			<!-- 更新上架时间 -->
+			<if test="onshelfTime!=null">
+				onshelf_time=#{onshelfTime},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询水站套餐-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtWaterstopSetmeal">
+		SELECT id,setmeal_id,branches_id,waterstore_id,onshelf_state,onshelf_time,create_time,create_id,del_state FROM t_wt_waterstop_setmeal WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询水站套餐列表-->
+	<select id="selectList" parameterType="wtWaterstopSetmeal" resultMap="wtWaterstopSetmeal">
+		SELECT id,setmeal_id,branches_id,waterstore_id,onshelf_state,onshelf_time,create_time,create_id,del_state FROM t_wt_waterstop_setmeal
+		<where>
+			1=1
+			<!-- 根据主键查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据机构套餐ID查询 -->
+			<if test="setmealId!=null">
+				AND setmeal_id=#{setmealId}
+			</if>
+			<!-- 根据机构(水站)ID查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据上架状态【1上架、0下架】查询 -->
+			<if test="onshelfState!=null">
+				AND onshelf_state=#{onshelfState}
+			</if>
+			<!-- 根据上架时间查询 -->
+			<if test="onshelfTime!=null">
+				AND onshelf_time=#{onshelfTime}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.function.repository.WtFunctionDAO">
+    <!--查询结果Map-->
+    <resultMap type="wtFunction" id="wtFunction">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="BIGINT"/>
+        <result property="createId" column="create_id" jdbcType="BIGINT"/>
+        <result property="updateTime" column="update_time" jdbcType="BIGINT"/>
+        <result property="updateId" column="update_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <!--插入水管家功能开关表-->
+    <insert id="insert" parameterType="wtFunction" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_wt_function (id, type, state, create_time, create_id, update_time, update_id)
+        VALUES (#{id}, #{type}, #{state}, #{createTime}, #{createId}, #{updateTime}, #{updateId})
+    </insert>
+
+    <!--删除水管家功能开关表-->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM t_wt_function
+        WHERE id = #{0}
+    </delete>
+
+    <!--更新水管家功能开关表-->
+    <update id="update" parameterType="wtFunction">
+        UPDATE t_wt_function
+        <set>
+            <!-- 更新主键 -->
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <!-- 更新1：发票 2：待定 -->
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            <!-- 更新1：开 0：关 -->
+            <if test="state!=null">
+                state=#{state},
+            </if>
+            <!-- 更新创建时间 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新创建人id -->
+            <if test="createId!=null">
+                create_id=#{createId},
+            </if>
+            <!-- 更新修改时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新修改人id -->
+            <if test="updateId!=null">
+                update_id=#{updateId},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--主键查询水管家功能开关表-->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="wtFunction">
+        SELECT
+            id,
+            type,
+            state,
+            create_time,
+            create_id,
+            update_time,
+            update_id
+        FROM t_wt_function
+        WHERE id = #{0}
+    </select>
+
+    <!--根据条件查询水管家功能开关表列表-->
+    <select id="selectList" parameterType="wtFunction" resultMap="wtFunction">
+        SELECT id,type,state,create_time,create_id,update_time,update_id FROM t_wt_function
+        <where>
+            1=1
+            <!-- 根据主键查询 -->
+            <if test="id!=null">
+                AND id=#{id}
+            </if>
+            <!-- 根据1：发票 2：待定查询 -->
+            <if test="type!=null">
+                AND type=#{type}
+            </if>
+            <!-- 根据1：开 0：关查询 -->
+            <if test="state!=null">
+                AND state=#{state}
+            </if>
+            <!-- 根据创建时间查询 -->
+            <if test="createTime!=null">
+                AND create_time=#{createTime}
+            </if>
+            <!-- 根据创建人id查询 -->
+            <if test="createId!=null">
+                AND create_id=#{createId}
+            </if>
+            <!-- 根据修改时间查询 -->
+            <if test="updateTime!=null">
+                AND update_time=#{updateTime}
+            </if>
+            <!-- 根据修改人id查询 -->
+            <if test="updateId!=null">
+                AND update_id=#{updateId}
+            </if>
+        </where>
+    </select>
+
+
+    <!--查询水管家功能开关表-->
+    <select id="getFunctionlist" parameterType="java.lang.Long" resultMap="wtFunction">
+        SELECT
+            id,
+            type,
+            state,
+            create_time,
+            create_id,
+            update_time,
+            update_id
+        FROM t_wt_function
+
+    </select>
+
+
+    <!--更新水管家功能开关表-->
+    <update id="updateFunctionStata" parameterType="wtFunction">
+        UPDATE t_wt_function
+        <set>
+
+            <!-- 更新1：开 0：关 -->
+            <if test="state!=null">
+                state=#{state},
+            </if>
+
+            <!-- 更新修改时间 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新修改人id -->
+            <if test="updateId!=null">
+                update_id=#{updateId},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+</mapper>

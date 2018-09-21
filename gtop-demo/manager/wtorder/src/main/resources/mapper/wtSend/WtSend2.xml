@@ -1,0 +1,385 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtSend.WtSend2DAO">
+	<!--查询派单结果Map-->
+	<resultMap type="com.gt.manager.entity.wtSend.WtSend" id="wtSend">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="sendNo" column="send_no" jdbcType="VARCHAR" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="provinceId" column="province_id" jdbcType="VARCHAR" />
+		<result property="province" column="province" jdbcType="VARCHAR" />
+		<result property="cityId" column="city_id" jdbcType="VARCHAR" />
+		<result property="city" column="city" jdbcType="VARCHAR" />
+		<result property="areaId" column="area_Id" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="contacts" column="contacts" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="appointmentTime" column="appointment_time" jdbcType="INTEGER" />
+		<result property="sendTime" column="send_time" jdbcType="INTEGER" />
+		<result property="sendUser" column="send_user" jdbcType="VARCHAR" />
+		<result property="sigenUser" column="sigen_user" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="changeSendNo" column="change_send_no" jdbcType="VARCHAR" />
+		<result property="remarks" column="remarks" jdbcType="VARCHAR" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delStatus" column="del_status" jdbcType="INTEGER" />
+		<result property="waterstoreTel" column="waterstore_tel" jdbcType="VARCHAR" />
+		<!--查询派单详情结果Map-->
+		<collection property="wtSendMes"  column="send_no" select="selectBySendId"/>
+	</resultMap>
+
+	<!--查询派单详情结果Map-->
+	<resultMap type="com.gt.manager.entity.wtSendMes.WtSendMes" id="wtSendMes">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="sendCode" column="send_code" jdbcType="VARCHAR" />
+		<result property="sendMesCode" column="send_mes_code" jdbcType="VARCHAR" />
+		<result property="productId" column="product_Id" jdbcType="INTEGER" />
+		<result property="spuCode" column="spu_code" jdbcType="VARCHAR" />
+		<result property="productName" column="product_name" jdbcType="VARCHAR" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+		<result property="sendMesMoney" column="send_mes_money" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入派送订单-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtSend.WtSend" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_send(
+			id,send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,
+			send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,money,update_time,waterstore_tel
+		) VALUES(
+			#{id},#{sendNo},#{waterstoreId},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{address},#{userId},#{contacts},#{phone},
+			#{appointmentTime},#{sendTime},#{sendUser},#{sigenUser},#{status},#{changeSendNo},#{remarks},#{createTime},#{createId},#{delStatus},#{money},#{updateTime},#{waterstoreTel}
+		)
+	</insert>
+
+	<!--插入派送订单详情-->
+	<insert id="insertMes" parameterType="com.gt.manager.entity.wtSendMes.WtSendMes" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_send_mes(
+			send_code,send_mes_code,sku_code,sku_name,num,type,sequence,create_time,create_id,del_state
+		) VALUES(
+			#{sendCode},#{sendMesCode},#{skuCode},#{skuName},#{num},#{type},#{sequence},#{createTime},#{createId},#{delState}
+		)
+	</insert>
+
+	<!--删除派送订单-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_send WHERE id=#{0}
+	</delete>
+
+	<!--更新派送订单-->
+	<update id="update" parameterType="com.gt.manager.entity.wtSend.WtSend">
+		UPDATE t_wt_send
+		<set>
+			<!-- 更新派送ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新派送单编号 -->
+			<if test="sendNo!=null and sendNo!=''">
+				send_no=#{sendNo},
+			</if>
+			<!-- 更新水站ID -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新省ID -->
+			<if test="provinceId!=null and provinceId!=''">
+				province_id=#{provinceId},
+			</if>
+			<!-- 更新省 -->
+			<if test="province!=null and province!=''">
+				province=#{province},
+			</if>
+			<!-- 更新市ID -->
+			<if test="cityId!=null and cityId!=''">
+				city_id=#{cityId},
+			</if>
+			<!-- 更新市 -->
+			<if test="city!=null and city!=''">
+				city=#{city},
+			</if>
+			<!-- 更新区ID -->
+			<if test="areaId!=null and areaId!=''">
+				area_Id=#{areaId},
+			</if>
+			<!-- 更新区 -->
+			<if test="area!=null and area!=''">
+				area=#{area},
+			</if>
+			<!-- 更新详细地址 -->
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<!-- 更新用户（客户）ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新联系人 -->
+			<if test="contacts!=null and contacts!=''">
+				contacts=#{contacts},
+			</if>
+			<!-- 更新联系电话 -->
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<!-- 更新预约时间 -->
+			<if test="appointmentTime!=null">
+				appointment_time=#{appointmentTime},
+			</if>
+			<!-- 更新实际派送时间 -->
+			<if test="sendTime!=null">
+				send_time=#{sendTime},
+			</if>
+			<!-- 更新派送人 -->
+			<if test="sendUser!=null and sendUser!=''">
+				send_user=#{sendUser},
+			</if>
+			<!-- 更新签收人 -->
+			<if test="sigenUser!=null and sigenUser!=''">
+				sigen_user=#{sigenUser},
+			</if>
+			<!-- 更新状态【0未接单、1确认接单 （待收货）、5送达（完成）、6改派、-1取消】 -->
+			<if test="status!=null">
+				status=#{status},
+			</if>
+			<!-- 更新改派后单号 -->
+			<if test="changeSendNo!=null and changeSendNo!=''">
+				change_send_no=#{changeSendNo},
+			</if>
+			<!-- 更新备注 -->
+			<if test="remarks!=null and remarks!=''">
+				remarks=#{remarks},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 -->
+			<if test="delStatus!=null">
+				del_status=#{delStatus},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询派送订单-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtSend">
+		SELECT id,send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,update_time,waterstore_tel  FROM t_wt_send WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询派送订单列表-->
+	<select id="selectList" parameterType="com.gt.manager.order.entity.wtSend.WtSend" resultMap="wtSend">
+		SELECT id,send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,update_time FROM t_wt_send
+		<where>
+			1=1
+			<!-- 根据派送ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据派送单编号查询 -->
+			<if test="sendNo!=null and sendNo!=''">
+				AND send_no=#{sendNo}
+			</if>
+			<!-- 根据水站ID查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据省ID查询 -->
+			<if test="provinceId!=null and provinceId!=''">
+				AND province_id=#{provinceId}
+			</if>
+			<!-- 根据省查询 -->
+			<if test="province!=null and province!=''">
+				AND province=#{province}
+			</if>
+			<!-- 根据市ID查询 -->
+			<if test="cityId!=null and cityId!=''">
+				AND city_id=#{cityId}
+			</if>
+			<!-- 根据市查询 -->
+			<if test="city!=null and city!=''">
+				AND city=#{city}
+			</if>
+			<!-- 根据区ID查询 -->
+			<if test="areaId!=null and areaId!=''">
+				AND area_Id=#{areaId}
+			</if>
+			<!-- 根据区查询 -->
+			<if test="area!=null and area!=''">
+				AND area=#{area}
+			</if>
+			<!-- 根据详细地址查询 -->
+			<if test="address!=null and address!=''">
+				AND address=#{address}
+			</if>
+			<!-- 根据用户（客户）ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据联系人查询 -->
+			<if test="contacts!=null and contacts!=''">
+				AND contacts=#{contacts}
+			</if>
+			<!-- 根据联系电话查询 -->
+			<if test="phone!=null and phone!=''">
+				AND phone=#{phone}
+			</if>
+			<!-- 根据预约时间查询 -->
+			<if test="appointmentTime!=null">
+				AND appointment_time=#{appointmentTime}
+			</if>
+			<!-- 根据实际派送时间查询 -->
+			<if test="sendTime!=null">
+				AND send_time=#{sendTime}
+			</if>
+			<!-- 根据派送人查询 -->
+			<if test="sendUser!=null and sendUser!=''">
+				AND send_user=#{sendUser}
+			</if>
+			<!-- 根据签收人查询 -->
+			<if test="sigenUser!=null and sigenUser!=''">
+				AND sigen_user=#{sigenUser}
+			</if>
+			<!-- 根据状态【0未接单、1确认接单 （待收货）、5送达（完成）、6改派、-1取消】查询 -->
+			<if test="status!=null">
+				AND status=#{status}
+			</if>
+			<!-- 根据改派后单号查询 -->
+			<if test="changeSendNo!=null and changeSendNo!=''">
+				AND change_send_no=#{changeSendNo}
+			</if>
+			<!-- 根据备注查询 -->
+			<if test="remarks!=null and remarks!=''">
+				AND remarks=#{remarks}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态查询 -->
+			<if test="delStatus!=null">
+				AND del_status=#{delStatus}
+			</if>
+		</where>
+	</select>
+	<!--根据订单编号查询订单信息-->
+	<select id="selectOrderMes" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			t1.id,
+			t1.order_no AS orderNo,
+			t1.order_mes_no AS orderMesNo,
+			t1.sku_code AS skuCode,
+			t1.sku_name AS skuName,
+			t1.type,
+			t1.p_type AS pType,
+			t1.price,
+			sum(t1.num) as num,
+			t1.total_price AS totalPrice,
+			t2.waterstore_id AS waterstoreId,
+			t2.user_id AS userId,
+			t2.contacts,
+			t2.phone,
+			t2.province_id AS provinceId,
+			t2.province,
+			t2.city_id  AS cityId,
+			t2.city,
+			t2.area_Id AS areaId,
+			t2.area,
+			t2.address,
+			sum(t2.money) as money,
+			t2.remarks,
+			t2.is_invoice AS isInvoice,
+			t2.is_setmeal AS isSetmeal,
+			t2.is_ticket AS isTicket,
+			sum(t2.ticket_money) AS ticketMoney,
+			sum(t2.payment_money) AS paymentMoney,
+			t2.payment_type AS paymentType,
+			t2.order_state AS orderState,
+			t2.extensioncode_id AS extensioncodeId
+		FROM
+			t_wt_order_mes t1
+		LEFT JOIN
+			t_wt_order t2
+		ON
+			t1.order_no = t2.order_no
+		WHERE 1=1
+		and t1.order_no = #{orderNo}
+		and t1.p_type=2
+	</select>
+	<!--插入一键催单-->
+	<insert id="insertUrge" parameterType="java.util.Map" >
+		INSERT INTO t_wt_urge(
+		user_id,user_name,send_id,remarks,create_time,create_id,del_state
+		) VALUES(
+		#{userId},#{userName},#{sendId},#{remarks},#{createTime},#{createId},#{delState}
+		)
+	</insert>
+
+	<!-- 根据派单编号查询派单详情-->
+	<select id="selectBySendId" parameterType="java.lang.String" resultMap="wtSendMes">
+		SELECT
+			 id,send_code,send_mes_code,sku_code,sku_name,num,delivery_num,type,sequence,
+			 create_time,create_id,del_state,goods_spec,brand_name
+		FROM
+			t_wt_send_mes
+		WHERE  send_code = #{sendCode}
+
+	</select>
+
+	<!-- 根据派单编号查询派单-->
+	<select id="selectBySendUserId" parameterType="java.util.Map" resultMap="wtSend">
+		SELECT
+		id,send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,
+		send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,waterstore_tel,update_time
+		FROM
+		t_wt_send
+		WHERE 1=1
+		AND	user_id = #{userId}
+		AND	 status != 6
+		<!-- 根据状态【0未接单、1确认接单 （待收货）、5送达（完成）、6改派、-1取消】查询 -->
+		<if test="status!= null">
+			<if test="state==3">
+				AND (status = 0
+				OR	 status = 1)
+			</if>
+			<if test="state!=3">
+				AND status = #{status}
+			</if>
+		</if>
+		ORDER BY send_time DESC ,create_time DESC
+	</select>
+	<!--更新派送状态-->
+	<update id="updateSendStatus" parameterType="com.gt.manager.entity.wtSend.WtSend">
+			UPDATE t_wt_send
+				<set>
+					status = -1,
+					update_time = #{updateTime}
+				</set>
+			WHERE  send_no = #{sendNo}
+	</update>
+
+	<!-- 根据派单编号查询派单详情-->
+	<select id="cancelSend" parameterType="java.lang.String" resultMap="wtSend">
+		SELECT
+		id,send_no,waterstore_id,province_id,province,city_id,city,area_Id,area,address,user_id,contacts,phone,appointment_time,
+		send_time,send_user,sigen_user,status,change_send_no,remarks,create_time,create_id,del_status,waterstore_tel,update_time
+		FROM
+		t_wt_send
+		WHERE  send_no = #{sendNo}
+	</select>
+</mapper>

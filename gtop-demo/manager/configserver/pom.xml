@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>manager</artifactId>
+        <groupId>gt</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>configserver</artifactId>
+    <packaging>jar</packaging>
+
+    <name>configserver</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <start-class>com.gt.manager.ConfigServerApplication</start-class>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>1.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>configserver</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <!-- 打包时需要特殊处理的文件 -->
+                <directory>src/main/resources</directory>
+                <!-- 需要进行变量替换 -->
+                <filtering>true</filtering>
+                <!-- 打包时不包含的文件 -->
+                <excludes>
+                    <exclude>config/*</exclude>
+                    <exclude>env_dev/*</exclude>
+                    <exclude>env_test/*</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/env_${profileActive}</directory>
+            </resource>
+        </resources>
+
+    </build>
+
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+                <eurekaHost>localhost</eurekaHost>
+                <eurekaPort>8761</eurekaPort>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profileActive>test</profileActive>
+                <eurekaHost>localhost</eurekaHost>
+                <eurekaPort>8761</eurekaPort>
+            </properties>
+        </profile>
+        <!-- 正式环境 -->
+        <profile>
+            <id>online</id>
+            <properties>
+                <profileActive>online</profileActive>
+                <eurekaHost>localhost</eurekaHost>
+                <eurekaPort>8761</eurekaPort>
+            </properties>
+        </profile>
+    </profiles>
+</project>

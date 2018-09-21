@@ -1,0 +1,46 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.setMeal.SetMeal2DAO">
+	<!--查询机构套餐结果Map-->
+	<resultMap type="com.gt.manager.entity.wtOrgSetmeal.WtOrgSetmeal" id="wtOrgSetmeal">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="brandId" column="brand_id" jdbcType="INTEGER" />
+		<result property="goodsCode" column="goods_code" jdbcType="VARCHAR" />
+		<result property="skuId" column="sku_id" jdbcType="INTEGER" />
+		<result property="setmealCode" column="setmeal_code" jdbcType="VARCHAR" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="seriesName" column="series_name" jdbcType="VARCHAR" />
+		<result property="setmealImg" column="setmeal_img" jdbcType="VARCHAR" />
+		<result property="shopcartImg" column="shopcart_img" jdbcType="VARCHAR" />
+		<result property="goodsProfile" column="goods_profile" jdbcType="VARCHAR" />
+		<result property="num" column="num" jdbcType="INTEGER" />
+		<result property="introduce" column="introduce" jdbcType="VARCHAR" />
+		<result property="price" column="price" jdbcType="INTEGER" />
+		<result property="isGift" column="is_gift" jdbcType="INTEGER" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="onshelfState" column="onshelf_state" jdbcType="INTEGER" />
+		<result property="onshelfTime" column="onshelf_time" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+
+
+	<sql id="SetMeal">
+		  id ,  branches_id ,  brand_id ,  sku_code ,  setmeal_code ,  series_sku_code ,  name ,  series_name,  setmeal_img ,  shopcart_img,  goods_profile,
+		  num ,  introduce,  price ,  is_gift ,  remark,  onshelf_state ,  onshelf_time ,  create_time,  create_id ,  del_state
+	</sql>
+	<!-- 根据套餐ID查询套餐信息 -->
+	<select id="selectSetMeal" parameterType="com.gt.manager.entity.wtOrgSetmeal.WtOrgSetmeal" resultMap="wtOrgSetmeal">
+			SELECT
+				<include refid="SetMeal">
+				</include>
+			FROM
+				t_wt_org_setmeal
+			WHERE
+				setmeal_code=#{setmealCode}
+			ORDER BY price ASC
+	</select>
+</mapper>

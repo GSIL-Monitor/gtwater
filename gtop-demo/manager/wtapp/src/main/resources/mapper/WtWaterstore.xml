@@ -1,0 +1,471 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.merchant.repository.WtWaterstoreDAO">
+	<!--查询结果Map-->
+	<resultMap type="wtWaterstore" id="wtWaterstore">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="branchesId" column="branches_id" jdbcType="INTEGER" />
+		<result property="cityBranchesId" column="city_branches_id" jdbcType="INTEGER" />
+		<result property="waterName" column="water_name" jdbcType="VARCHAR" />
+		<result property="showName" column="show_name" jdbcType="VARCHAR" />
+		<result property="orgId" column="org_id" jdbcType="INTEGER" />
+		<result property="waterstoreNo" column="waterstore_no" jdbcType="VARCHAR" />
+		<result property="tel" column="tel" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delStatus" column="del_status" jdbcType="INTEGER" />
+		<result property="orgCode" column="org_code" jdbcType="VARCHAR" />
+		<result property="parentId" column="parent_id" jdbcType="INTEGER" />
+		<result property="orgState" column="org_state" jdbcType="INTEGER" />
+		<result property="auditRequestTime" column="audit_request_time" jdbcType="INTEGER" />
+		<result property="auditTime" column="audit_time" jdbcType="INTEGER" />
+		<result property="auditorId" column="auditor_id" jdbcType="INTEGER" />
+		<result property="auditState" column="audit_state" jdbcType="INTEGER" />
+		<result property="approveCode" column="approve_code" jdbcType="VARCHAR" />
+		<result property="createId2" column="create_id2" jdbcType="INTEGER" />
+		<result property="updateId" column="update_id" jdbcType="INTEGER" />
+		<result property="updateTime" column="update_time" jdbcType="INTEGER" />
+		<result property="isDelete" column="is_delete" jdbcType="INTEGER" />
+		<result property="selfLifeState" column="self_life_state" jdbcType="INTEGER" />
+		<result property="selfLifeAddress" column="self_life_address" jdbcType="VARCHAR" />
+		<result property="selfLifePhone" column="self_life_phone" jdbcType="VARCHAR" />
+		<result property="selfLifeTime" column="self_life_time" jdbcType="VARCHAR" />
+		<result property="serviceRange" column="service_range" jdbcType="VARCHAR" />
+		<result property="serviceRangeMark" column="service_range_mark" jdbcType="VARCHAR" />
+		<result property="bankAccountName" column="bank_account_name" jdbcType="VARCHAR" />
+		<result property="openBank" column="open_bank" jdbcType="VARCHAR" />
+		<result property="bankAccount" column="bank_account" jdbcType="VARCHAR" />
+		<result property="bankName" column="bank_name" jdbcType="VARCHAR" />
+		<result property="serviceStationLocation" column="service_station_location" jdbcType="VARCHAR" />
+		<result property="serviceStationArea" column="service_station_area" jdbcType="VARCHAR" />
+		<result property="serviceStationType" column="service_station_type" jdbcType="INTEGER" />
+		<result property="branchesType" column="branches_type" jdbcType="INTEGER" />
+		<result property="branchesImg" column="branches_img" jdbcType="VARCHAR" />
+		<result property="branchesSort" column="branches_sort" jdbcType="INTEGER" />
+		<result property="isShow" column="is_show" jdbcType="INTEGER" />
+		<result property="linkPhone" column="link_phone" jdbcType="VARCHAR" />
+		<result property="linkName" column="link_name" jdbcType="VARCHAR" />
+		<result property="sendTime" column="send_time" jdbcType="VARCHAR" />
+		<result property="operateEndTime" column="operate_end_time" jdbcType="VARCHAR" />
+		<result property="operateStartTime" column="operate_start_time" jdbcType="VARCHAR" />
+		<result property="operateWeek" column="operate_week" jdbcType="VARCHAR" />
+		<result property="mail" column="mail" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--插入水站表-->
+	<insert id="insert" parameterType="wtWaterstore" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_wt_waterstore(branches_id,city_branches_id,water_name,show_name,org_id,waterstore_no,tel,create_time,create_id,del_status,org_code,parent_id,org_state,audit_request_time,audit_time,auditor_id,audit_state,approve_code,create_id2,update_id,update_time,is_delete,self_life_state,self_life_address,self_life_phone,self_life_time,service_range,service_range_mark,bank_account_name,open_bank,bank_account,bank_name,service_station_location,service_station_area,service_station_type,branches_type,branches_img,branches_sort,is_show,link_phone,link_name,send_time,operate_end_time,operate_start_time,operate_week,mail) VALUES(#{branchesId},#{cityBranchesId},#{waterName},#{showName},#{orgId},#{waterstoreNo},#{tel},#{createTime},#{createId},#{delStatus},#{orgCode},#{parentId},#{orgState},#{auditRequestTime},#{auditTime},#{auditorId},#{auditState},#{approveCode},#{createId2},#{updateId},#{updateTime},#{isDelete},#{selfLifeState},#{selfLifeAddress},#{selfLifePhone},#{selfLifeTime},#{serviceRange},#{serviceRangeMark},#{bankAccountName},#{openBank},#{bankAccount},#{bankName},#{serviceStationLocation},#{serviceStationArea},#{serviceStationType},#{branchesType},#{branchesImg},#{branchesSort},#{isShow},#{linkPhone},#{linkName},#{sendTime},#{operateEndTime},#{operateStartTime},#{operateWeek},#{mail})
+	</insert>
+
+	<!--删除水站表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_waterstore WHERE id=#{0}
+	</delete>
+
+	<!--更新水站表-->
+	<update id="update" parameterType="wtWaterstore">
+		UPDATE t_wt_waterstore
+		<set>
+			<!-- 更新ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新开放平台机构编号 -->
+			<if test="branchesId!=null">
+				branches_id=#{branchesId},
+			</if>
+			<!-- 更新城市 -->
+			<if test="cityBranchesId!=null">
+				city_branches_id=#{cityBranchesId},
+			</if>
+			<!-- 更新水站名称 -->
+			<if test="waterName!=null and waterName!=''">
+				water_name=#{waterName},
+			</if>
+			<!-- 更新水站显示名称 -->
+			<if test="showName!=null and showName!=''">
+				show_name=#{showName},
+			</if>
+			<!-- 更新组织机构ID -->
+			<if test="orgId!=null">
+				org_id=#{orgId},
+			</if>
+			<!-- 更新水站编号 -->
+			<if test="waterstoreNo!=null and waterstoreNo!=''">
+				waterstore_no=#{waterstoreNo},
+			</if>
+			<!-- 更新站点电话 -->
+			<if test="tel!=null and tel!=''">
+				tel=#{tel},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 -->
+			<if test="delStatus!=null">
+				del_status=#{delStatus},
+			</if>
+			<!-- 更新组织机构编号 -->
+			<if test="orgCode!=null and orgCode!=''">
+				org_code=#{orgCode},
+			</if>
+			<!-- 更新父级ID -->
+			<if test="parentId!=null">
+				parent_id=#{parentId},
+			</if>
+			<!-- 更新状态 0待运营、1运营中、2已关闭 -->
+			<if test="orgState!=null">
+				org_state=#{orgState},
+			</if>
+			<!-- 更新提交审核时间 -->
+			<if test="auditRequestTime!=null">
+				audit_request_time=#{auditRequestTime},
+			</if>
+			<!-- 更新审核时间 -->
+			<if test="auditTime!=null">
+				audit_time=#{auditTime},
+			</if>
+			<!-- 更新审核人 -->
+			<if test="auditorId!=null">
+				auditor_id=#{auditorId},
+			</if>
+			<!-- 更新审核状态 ：-1审核中、0审核失败、1审核成功 -->
+			<if test="auditState!=null">
+				audit_state=#{auditState},
+			</if>
+			<!-- 更新审批编号 -->
+			<if test="approveCode!=null and approveCode!=''">
+				approve_code=#{approveCode},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId2!=null">
+				create_id2=#{createId2},
+			</if>
+			<!-- 更新修改人 -->
+			<if test="updateId!=null">
+				update_id=#{updateId},
+			</if>
+			<!-- 更新修改时间 -->
+			<if test="updateTime!=null">
+				update_time=#{updateTime},
+			</if>
+			<!-- 更新是否删除0删除，1正常 -->
+			<if test="isDelete!=null">
+				is_delete=#{isDelete},
+			</if>
+			<!-- 更新是否可以自提，1是自提，0与null非自提 -->
+			<if test="selfLifeState!=null">
+				self_life_state=#{selfLifeState},
+			</if>
+			<!-- 更新自提地址 -->
+			<if test="selfLifeAddress!=null and selfLifeAddress!=''">
+				self_life_address=#{selfLifeAddress},
+			</if>
+			<!-- 更新自提手机号,多个手机号用","号分割 -->
+			<if test="selfLifePhone!=null and selfLifePhone!=''">
+				self_life_phone=#{selfLifePhone},
+			</if>
+			<!-- 更新自提时间格式hh:mm-hh:mm -->
+			<if test="selfLifeTime!=null and selfLifeTime!=''">
+				self_life_time=#{selfLifeTime},
+			</if>
+			<!-- 更新服务范围(派送范围的经纬度) -->
+			<if test="serviceRange!=null and serviceRange!=''">
+				service_range=#{serviceRange},
+			</if>
+			<!-- 更新服务范围备注信息 -->
+			<if test="serviceRangeMark!=null and serviceRangeMark!=''">
+				service_range_mark=#{serviceRangeMark},
+			</if>
+			<!-- 更新银行账号姓名（户名） -->
+			<if test="bankAccountName!=null and bankAccountName!=''">
+				bank_account_name=#{bankAccountName},
+			</if>
+			<!-- 更新开户行 -->
+			<if test="openBank!=null and openBank!=''">
+				open_bank=#{openBank},
+			</if>
+			<!-- 更新银行账号 -->
+			<if test="bankAccount!=null and bankAccount!=''">
+				bank_account=#{bankAccount},
+			</if>
+			<!-- 更新银行名称 -->
+			<if test="bankName!=null and bankName!=''">
+				bank_name=#{bankName},
+			</if>
+			<!-- 更新服务站位置 -->
+			<if test="serviceStationLocation!=null and serviceStationLocation!=''">
+				service_station_location=#{serviceStationLocation},
+			</if>
+			<!-- 更新服务站面积 -->
+			<if test="serviceStationArea!=null and serviceStationArea!=''">
+				service_station_area=#{serviceStationArea},
+			</if>
+			<!-- 更新服务站类型1-居民楼，2-办公楼，3-社区，4-校园 -->
+			<if test="serviceStationType!=null">
+				service_station_type=#{serviceStationType},
+			</if>
+			<!-- 更新门店类型：1直营，2加盟商 -->
+			<if test="branchesType!=null">
+				branches_type=#{branchesType},
+			</if>
+			<!-- 更新门店照片 -->
+			<if test="branchesImg!=null and branchesImg!=''">
+				branches_img=#{branchesImg},
+			</if>
+			<!-- 更新门店排序 -->
+			<if test="branchesSort!=null">
+				branches_sort=#{branchesSort},
+			</if>
+			<!-- 更新是否展示1展示，0不展示 -->
+			<if test="isShow!=null">
+				is_show=#{isShow},
+			</if>
+			<!-- 更新联系电话 -->
+			<if test="linkPhone!=null and linkPhone!=''">
+				link_phone=#{linkPhone},
+			</if>
+			<!-- 更新 -->
+			<if test="linkName!=null and linkName!=''">
+				link_name=#{linkName},
+			</if>
+			<!-- 更新配送时间 -->
+			<if test="sendTime!=null and sendTime!=''">
+				send_time=#{sendTime},
+			</if>
+			<!-- 更新每天运营结束时间 -->
+			<if test="operateEndTime!=null and operateEndTime!=''">
+				operate_end_time=#{operateEndTime},
+			</if>
+			<!-- 更新每天运营开始时间 -->
+			<if test="operateStartTime!=null and operateStartTime!=''">
+				operate_start_time=#{operateStartTime},
+			</if>
+			<!-- 更新运营时间周 【0,0,0,0,0,0,0】7位字符串，从周一至周日每一位代表一天，1代表上班，0代表休息，以英文逗号分隔 -->
+			<if test="operateWeek!=null and operateWeek!=''">
+				operate_week=#{operateWeek},
+			</if>
+			<!-- 更新Mail -->
+			<if test="mail!=null and mail!=''">
+				mail=#{mail},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询水站表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtWaterstore">
+		SELECT id,branches_id,water_name,show_name,org_id,waterstore_no,tel,create_time,create_id,del_status,org_code,parent_id,org_state,audit_request_time,audit_time,auditor_id,audit_state,approve_code,create_id2,update_id,update_time,is_delete,self_life_state,self_life_address,self_life_phone,self_life_time,service_range,service_range_mark,bank_account_name,open_bank,bank_account,bank_name,service_station_location,service_station_area,service_station_type,branches_type,branches_img,branches_sort,is_show,link_phone,link_name,send_time,operate_end_time,operate_start_time,operate_week,mail FROM t_wt_waterstore WHERE id=#{0}
+	</select>
+
+	<!--根据条件查询水站表列表-->
+	<select id="selectList" parameterType="wtWaterstore" resultMap="wtWaterstore">
+		SELECT id,branches_id,water_name,show_name,org_id,waterstore_no,tel,create_time,create_id,del_status,org_code,parent_id,org_state,audit_request_time,audit_time,auditor_id,audit_state,approve_code,create_id2,update_id,update_time,is_delete,self_life_state,self_life_address,self_life_phone,self_life_time,service_range,service_range_mark,bank_account_name,open_bank,bank_account,bank_name,service_station_location,service_station_area,service_station_type,branches_type,branches_img,branches_sort,is_show,link_phone,link_name,send_time,operate_end_time,operate_start_time,operate_week,mail FROM t_wt_waterstore
+		<where>
+			1=1
+			<!-- 根据ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据开放平台机构编号查询 -->
+			<if test="branchesId!=null">
+				AND branches_id=#{branchesId}
+			</if>
+			<!-- 根据水站名称查询 -->
+			<if test="waterName!=null and waterName!=''">
+				AND water_name=#{waterName}
+			</if>
+			<!-- 根据水站显示名称查询 -->
+			<if test="showName!=null and showName!=''">
+				AND show_name=#{showName}
+			</if>
+			<!-- 根据组织机构ID查询 -->
+			<if test="orgId!=null">
+				AND org_id=#{orgId}
+			</if>
+			<!-- 根据水站编号查询 -->
+			<if test="waterstoreNo!=null and waterstoreNo!=''">
+				AND waterstore_no=#{waterstoreNo}
+			</if>
+			<!-- 根据站点电话查询 -->
+			<if test="tel!=null and tel!=''">
+				AND tel=#{tel}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态查询 -->
+			<if test="delStatus!=null">
+				AND del_status=#{delStatus}
+			</if>
+			<!-- 根据组织机构编号查询 -->
+			<if test="orgCode!=null and orgCode!=''">
+				AND org_code=#{orgCode}
+			</if>
+			<!-- 根据父级ID查询 -->
+			<if test="parentId!=null">
+				AND parent_id=#{parentId}
+			</if>
+			<!-- 根据状态 0待运营、1运营中、2已关闭查询 -->
+			<if test="orgState!=null">
+				AND org_state=#{orgState}
+			</if>
+			<!-- 根据提交审核时间查询 -->
+			<if test="auditRequestTime!=null">
+				AND audit_request_time=#{auditRequestTime}
+			</if>
+			<!-- 根据审核时间查询 -->
+			<if test="auditTime!=null">
+				AND audit_time=#{auditTime}
+			</if>
+			<!-- 根据审核人查询 -->
+			<if test="auditorId!=null">
+				AND auditor_id=#{auditorId}
+			</if>
+			<!-- 根据审核状态 ：-1审核中、0审核失败、1审核成功查询 -->
+			<if test="auditState!=null">
+				AND audit_state=#{auditState}
+			</if>
+			<!-- 根据审批编号查询 -->
+			<if test="approveCode!=null and approveCode!=''">
+				AND approve_code=#{approveCode}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId2!=null">
+				AND create_id2=#{createId2}
+			</if>
+			<!-- 根据修改人查询 -->
+			<if test="updateId!=null">
+				AND update_id=#{updateId}
+			</if>
+			<!-- 根据修改时间查询 -->
+			<if test="updateTime!=null">
+				AND update_time=#{updateTime}
+			</if>
+			<!-- 根据是否删除0删除，1正常查询 -->
+			<if test="isDelete!=null">
+				AND is_delete=#{isDelete}
+			</if>
+			<!-- 根据是否可以自提，1是自提，0与null非自提查询 -->
+			<if test="selfLifeState!=null">
+				AND self_life_state=#{selfLifeState}
+			</if>
+			<!-- 根据自提地址查询 -->
+			<if test="selfLifeAddress!=null and selfLifeAddress!=''">
+				AND self_life_address=#{selfLifeAddress}
+			</if>
+			<!-- 根据自提手机号,多个手机号用","号分割查询 -->
+			<if test="selfLifePhone!=null and selfLifePhone!=''">
+				AND self_life_phone=#{selfLifePhone}
+			</if>
+			<!-- 根据自提时间格式hh:mm-hh:mm查询 -->
+			<if test="selfLifeTime!=null and selfLifeTime!=''">
+				AND self_life_time=#{selfLifeTime}
+			</if>
+			<!-- 根据服务范围(派送范围的经纬度)查询 -->
+			<if test="serviceRange!=null and serviceRange!=''">
+				AND service_range=#{serviceRange}
+			</if>
+			<!-- 根据服务范围备注信息查询 -->
+			<if test="serviceRangeMark!=null and serviceRangeMark!=''">
+				AND service_range_mark=#{serviceRangeMark}
+			</if>
+			<!-- 根据银行账号姓名（户名）查询 -->
+			<if test="bankAccountName!=null and bankAccountName!=''">
+				AND bank_account_name=#{bankAccountName}
+			</if>
+			<!-- 根据开户行查询 -->
+			<if test="openBank!=null and openBank!=''">
+				AND open_bank=#{openBank}
+			</if>
+			<!-- 根据银行账号查询 -->
+			<if test="bankAccount!=null and bankAccount!=''">
+				AND bank_account=#{bankAccount}
+			</if>
+			<!-- 根据银行名称查询 -->
+			<if test="bankName!=null and bankName!=''">
+				AND bank_name=#{bankName}
+			</if>
+			<!-- 根据服务站位置查询 -->
+			<if test="serviceStationLocation!=null and serviceStationLocation!=''">
+				AND service_station_location=#{serviceStationLocation}
+			</if>
+			<!-- 根据服务站面积查询 -->
+			<if test="serviceStationArea!=null and serviceStationArea!=''">
+				AND service_station_area=#{serviceStationArea}
+			</if>
+			<!-- 根据服务站类型1-居民楼，2-办公楼，3-社区，4-校园查询 -->
+			<if test="serviceStationType!=null">
+				AND service_station_type=#{serviceStationType}
+			</if>
+			<!-- 根据门店类型：1直营，2加盟商查询 -->
+			<if test="branchesType!=null">
+				AND branches_type=#{branchesType}
+			</if>
+			<!-- 根据门店照片查询 -->
+			<if test="branchesImg!=null and branchesImg!=''">
+				AND branches_img=#{branchesImg}
+			</if>
+			<!-- 根据门店排序查询 -->
+			<if test="branchesSort!=null">
+				AND branches_sort=#{branchesSort}
+			</if>
+			<!-- 根据是否展示1展示，0不展示查询 -->
+			<if test="isShow!=null">
+				AND is_show=#{isShow}
+			</if>
+			<!-- 根据联系电话查询 -->
+			<if test="linkPhone!=null and linkPhone!=''">
+				AND link_phone=#{linkPhone}
+			</if>
+			<!-- 根据查询 -->
+			<if test="linkName!=null and linkName!=''">
+				AND link_name=#{linkName}
+			</if>
+			<!-- 根据配送时间查询 -->
+			<if test="sendTime!=null and sendTime!=''">
+				AND send_time=#{sendTime}
+			</if>
+			<!-- 根据每天运营结束时间查询 -->
+			<if test="operateEndTime!=null and operateEndTime!=''">
+				AND operate_end_time=#{operateEndTime}
+			</if>
+			<!-- 根据每天运营开始时间查询 -->
+			<if test="operateStartTime!=null and operateStartTime!=''">
+				AND operate_start_time=#{operateStartTime}
+			</if>
+			<!-- 根据运营时间周 【0,0,0,0,0,0,0】7位字符串，从周一至周日每一位代表一天，1代表上班，0代表休息，以英文逗号分隔查询 -->
+			<if test="operateWeek!=null and operateWeek!=''">
+				AND operate_week=#{operateWeek}
+			</if>
+			<!-- 根据Mail查询 -->
+			<if test="mail!=null and mail!=''">
+				AND mail=#{mail}
+			</if>
+		</where>
+	</select>
+
+	<!--根据水站平台机构编号得到水站-->
+	<select id="selectByBranchesId" resultMap="wtWaterstore">
+		SELECT id,branches_id,water_name,show_name,org_id,waterstore_no,tel,create_time,create_id,del_status,org_code,parent_id,org_state,audit_request_time,audit_time,auditor_id,audit_state,approve_code,create_id2,update_id,update_time,is_delete,self_life_state,self_life_address,self_life_phone,self_life_time,service_range,service_range_mark,bank_account_name,open_bank,bank_account,bank_name,service_station_location,service_station_area,service_station_type,branches_type,branches_img,branches_sort,is_show,link_phone,link_name,send_time,operate_end_time,operate_start_time,operate_week,mail
+		from t_wt_waterstore where branches_id=#{branchesId}
+	</select>
+	<!--根据水站机构id得到水站id-->
+	<select id="selectIdsByBranchesIds" resultType="java.lang.Long">
+		select id from t_wt_waterstore where branches_id IN 
+		<foreach collection="ids" separator="," open="(" close=")"  item="id">
+			#{id}
+		</foreach>
+
+	</select>
+</mapper>

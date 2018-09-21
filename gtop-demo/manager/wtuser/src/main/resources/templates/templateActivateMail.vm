@@ -1,0 +1,169 @@
+<!DOCTYPE>
+<html lang="cn">
+<head>
+    <meta charset="utf-8"/>
+    <title>激活认证</title>
+</head>
+<style>
+    *{margin:0; padding:0; border:0;}
+    body{font-family: "Microsoft yahei";}
+    body, html{margin:0 auto; width:800px;}
+    ul, ol {list-style-type:none; margin:0;}
+    a{text-decoration:none;}
+    .cle{width:0; height:0; clear:both;}
+
+    .header{
+        padding:20px 10px;
+        border-bottom:3px solid #999;
+    }
+    .header span{
+        font-size:25px;
+        font-weight:bold;
+        float:right;
+    }
+    .foot{
+        height: auto;
+        overflow: hidden;
+        background: #f2f2f2;
+        height:346px;
+        margin: 0 auto;
+        padding:0 25px;
+    }
+    .foot .footer dl{
+        float:left;
+        font-size:14px;
+        margin-top:20px;
+        width:150px;
+        padding:0 50px;
+    }
+    .foot .footer dl dt{
+        color:#858585;
+        font-weight:bold;
+        margin-top:20px;
+    }
+    .foot .footer dl dd{
+        color:#333;
+        margin-top:12px;
+    }
+    .foot .footer .phone{
+        float:right;
+        color:#fff;
+        margin-top:40px;
+        text-align:right;
+    }
+    .foot .foot-2{
+        height: auto;
+        overflow: hidden;
+        color:#999;
+        font-size:14px;
+        margin-top:18px;
+        padding-left:50px;
+    }
+    .foot .footer .foot-2 .footT{
+        margin-top:12px;
+    }
+    .foot-1{
+        border-bottom:1px solid #ccc;
+        padding-bottom:30px;
+    }
+    .foot-2l{
+        float:left;
+        width:50%;
+    }
+    .foot-2r{
+        float:right;
+        text-align:right;
+    }
+    .footphone{
+        font-size:18px;
+        font-weight:bold;
+        text-align:right;
+
+    }
+    .content{
+        padding:20px 0;
+    }
+    .content_p{
+        font-size:18px;
+        line-height:36px;
+        padding:10px 3px;
+    }
+    .content_font{
+        font-size:24px;
+        font-weight:bold;
+        padding-left:20px;
+    }
+</style>
+<body>
+<div class="header">
+##    <img src="../static/img/logo-1.png" width="217" height="34" alt="logo" />
+    <img src="cid:VRImage" width="217" height="34" alt="logo"/>
+    <span>Email Verification</span>
+</div>
+<div class="content" >
+    <p class="content_p" >
+        To finish verifying your email with Immerex, Verification code valid for two hours，please enter the following
+        security code:
+
+    </p>
+    <p class="content_font">
+    <h2>        ${content}</h2>
+    </p>
+    <p class="content_p" >
+
+        Immerex takes your account security very seriously. Immerex will never email you and ask you to disclose or
+        verify your Immerex password, credit card, or banking account number. If you receive a suspicious email with
+        a link to update your account information, do not click on the link—instead,thanks.
+
+        We hope to see you again soon.
+
+        <b>Immerex.com</b>
+    </p>
+</div>
+<div class="foot" >
+    <div class="footer">
+        <div class="foot-1">
+            <dl>
+                <dt>商品选购</dt>
+                <dd>fatbaby全景相机</dd>
+                <dd>immerex一体机</dd>
+                <dd>软件下载</dd>
+                <dd>安卓APP下载</dd>
+                <dd>商品选购</dd>
+            </dl>
+            <dl>
+                <dt>用户账户</dt>
+                <dd>登录immerex</dd>
+                <dd>查看我的订单</dd>
+                <dd>appstore.immerex.com</dd>
+                <dd>content.immerex.com</dd>
+            </dl>
+            <dl>
+                <dt>关于我们</dt>
+                <dd>关于immerex</dd>
+                <dd>媒体资讯</dd>
+                <dd>加入我们</dd>
+                <dd>联系我们</dd>
+                <dd>意见反馈</dd>
+            </dl>
+            <div class="cle"></div>
+        </div>
+        <div class="foot-2">
+            <div class="foot-2l">
+                <p>&copy 2016-immerex.All right reserved</p>
+                <p class="footT">隐私政策 | 使用条款 | 销售政策 | 法律信息 | 网站地图</p>
+            </div>
+            <div class="foot-2r">
+                <p>
+                    24小时服务热线
+                </p>
+                <p class="footphone footT">
+                    400-XXX-XXXX
+                </p>
+            </div>
+            <div class="cle"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

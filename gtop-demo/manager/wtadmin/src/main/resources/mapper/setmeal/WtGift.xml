@@ -1,0 +1,274 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.setmeal.repository.WtGiftDAO">
+    <!--查询结果Map-->
+    <resultMap type="wtGift" id="wtGift">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="productId" column="product_id" jdbcType="INTEGER"/>
+        <result property="seriesSkuCode" column="series_sku_code" jdbcType="VARCHAR"/>
+        <result property="skuCode" column="sku_code" jdbcType="VARCHAR"/>
+        <result property="pick" column="pick" jdbcType="INTEGER"/>
+        <result property="mes" column="mes" jdbcType="VARCHAR"/>
+        <result property="orderCode" column="order_code" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="sigenName" column="sigen_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="INTEGER"/>
+        <result property="createId" column="create_id" jdbcType="INTEGER"/>
+        <result property="delState" column="del_state" jdbcType="INTEGER"/>
+        <result property="giftType" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--插入赠品记录-->
+    <insert id="insert" parameterType="wtGift" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_wt_gift (id, gift_name, product_id, series_sku_code, sku_code, pick, mes, order_code, user_id, sigen_name, create_time, create_id, del_state)
+        VALUES
+            (#{id}, #{giftName}, #{productId}, #{seriesSkuCode}, #{skuCode}, #{pick}, #{mes}, #{orderCode}, #{userId},
+                    #{sigenName}, #{createTime}, #{createId}, #{delState})
+    </insert>
+
+    <!--删除赠品记录-->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM t_wt_gift
+        WHERE id = #{0}
+    </delete>
+
+    <!--更新赠品记录-->
+    <update id="update" parameterType="wtGift">
+        UPDATE t_wt_gift
+        <set>
+            <!-- 更新赠送ID -->
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <!-- 更新赠品名称 -->
+            <if test="giftName!=null">
+                gift_name=#{giftName},
+            </if>
+            <!-- 更新赠品ID -->
+            <if test="productId!=null">
+                product_id=#{productId},
+            </if>
+            <!-- 更新套系编号（sku） -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                series_sku_code=#{seriesSkuCode},
+            </if>
+            <!-- 更新赠品SKU -->
+            <if test="skuCode!=null and skuCode!=''">
+                sku_code=#{skuCode},
+            </if>
+            <!-- 更新赠品当前价格 -->
+            <if test="pick!=null">
+                pick=#{pick},
+            </if>
+            <!-- 更新赠品描述 -->
+            <if test="mes!=null and mes!=''">
+                mes=#{mes},
+            </if>
+            <!-- 更新订单ID -->
+            <if test="orderCode!=null and orderCode!=''">
+                order_code=#{orderCode},
+            </if>
+            <!-- 更新客户 -->
+            <if test="userId!=null">
+                user_id=#{userId},
+            </if>
+            <!-- 更新签收人 -->
+            <if test="sigenName!=null and sigenName!=''">
+                sigen_name=#{sigenName},
+            </if>
+            <!-- 更新创建时间 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新创建人 -->
+            <if test="createId!=null">
+                create_id=#{createId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--主键查询赠品记录-->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="wtGift">
+        SELECT
+            id,
+            gift_name,
+            product_id,
+            series_sku_code,
+            sku_code,
+            pick,
+            mes,
+            order_code,
+            user_id,
+            sigen_name,
+            create_time,
+            create_id,
+            del_state
+        FROM t_wt_gift
+        WHERE id = #{0}
+    </select>
+
+    <!--根据条件查询赠品记录列表-->
+    <select id="selectList" parameterType="wtGift" resultMap="wtGift">
+        SELECT
+        id,gift_name,product_id,series_sku_code,sku_code,pick,mes,order_code,user_id,sigen_name,create_time,create_id,del_state
+        FROM t_wt_gift
+        <where>
+            1=1
+            <!-- 根据赠送ID查询 -->
+            <if test="id!=null">
+                AND id=#{id}
+            </if>
+            <!-- 根据赠品名称查询 -->
+            <if test="giftName!=null">
+                AND gift_name=#{giftName}
+            </if>
+            <!-- 根据赠品ID查询 -->
+            <if test="productId!=null">
+                AND product_id=#{productId}
+            </if>
+            <!-- 根据套系编号（sku）查询 -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                AND series_sku_code=#{seriesSkuCode}
+            </if>
+            <!-- 根据赠品SKU查询 -->
+            <if test="skuCode!=null and skuCode!=''">
+                AND sku_code=#{skuCode}
+            </if>
+            <!-- 根据赠品当前价格查询 -->
+            <if test="pick!=null">
+                AND pick=#{pick}
+            </if>
+            <!-- 根据赠品描述查询 -->
+            <if test="mes!=null and mes!=''">
+                AND mes=#{mes}
+            </if>
+            <!-- 根据订单ID查询 -->
+            <if test="orderCode!=null and orderCode!=''">
+                AND order_code=#{orderCode}
+            </if>
+            <!-- 根据客户查询 -->
+            <if test="userId!=null">
+                AND user_id=#{userId}
+            </if>
+            <!-- 根据签收人查询 -->
+            <if test="sigenName!=null and sigenName!=''">
+                AND sigen_name=#{sigenName}
+            </if>
+            <!-- 根据创建时间查询 -->
+            <if test="createTime!=null">
+                AND create_time=#{createTime}
+            </if>
+            <!-- 根据创建人查询 -->
+            <if test="createId!=null">
+                AND create_id=#{createId}
+            </if>
+            <!-- 根据删除状态 1正常、0删除查询 -->
+            <if test="delState!=null">
+                AND del_state=#{delState}
+            </if>
+        </where>
+    </select>
+
+    <!--更新赠品记录-->
+    <update id="updateGiftBySeriesSkuCode" parameterType="wtGift">
+        UPDATE t_wt_gift
+        <set>
+            <!-- 更新赠送ID -->
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <!-- 更新赠品名称 -->
+            <if test="giftName!=null">
+                gift_name=#{giftName},
+            </if>
+            <!-- 更新赠品ID -->
+            <if test="productId!=null">
+                product_id=#{productId},
+            </if>
+            <!-- 更新套系编号（sku） -->
+            <if test="seriesSkuCode!=null and seriesSkuCode!=''">
+                series_sku_code=#{seriesSkuCode},
+            </if>
+            <!-- 更新赠品SKU -->
+            <if test="skuCode!=null and skuCode!=''">
+                sku_code=#{skuCode},
+            </if>
+            <!-- 更新赠品当前价格 -->
+            <if test="pick!=null">
+                pick=#{pick},
+            </if>
+            <!-- 更新赠品描述 -->
+            <if test="mes!=null and mes!=''">
+                mes=#{mes},
+            </if>
+            <!-- 更新订单ID -->
+            <if test="orderCode!=null and orderCode!=''">
+                order_code=#{orderCode},
+            </if>
+            <!-- 更新客户 -->
+            <if test="userId!=null">
+                user_id=#{userId},
+            </if>
+            <!-- 更新签收人 -->
+            <if test="sigenName!=null and sigenName!=''">
+                sigen_name=#{sigenName},
+            </if>
+            <!-- 更新创建时间 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新创建人 -->
+            <if test="createId!=null">
+                create_id=#{createId},
+            </if>
+            <!-- 更新删除状态 1正常、0删除 -->
+            <if test="delState!=null">
+                del_state=#{delState},
+            </if>
+        </set>
+        WHERE series_sku_code=#{seriesSkuCode}
+    </update>
+
+
+    <!--批量插入赠品记录-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO t_wt_gift(id,num,product_id,
+        series_sku_code,sku_code,pick,mes,order_code,
+        user_id,sigen_name,create_time,create_id,type)
+        VALUES
+        <foreach collection="wtGifts" separator="," item="item" index="index">
+            (#{item.id},#{item.num},#{item.productId},#{item.seriesSkuCode},#{item.skuCode},
+            #{item.pick},#{item.mes},#{item.orderCode},#{item.userId},#{item.sigenName},
+            #{item.createTime},#{item.createId},#{item.giftType})
+        </foreach>
+    </insert>
+
+
+    <!--套系编号查询赠品信息-->
+    <select id="getGiftProductMsgBySeriesSkuCode" parameterType="java.lang.String"
+            resultType="com.gt.manager.entity.wtadmin.ProductMsgEntity">
+        SELECT
+            b.name         brandName,
+            p.goods_name   productName,
+            p.goods_photos productPic,
+            s.goods_spec   productSpec,
+            om.sku_code    skuCode,
+            om.type        type,
+            s.sell_price   price,
+            om.num         `count`
+        FROM t_wt_gift om, t_wt_sku s, t_wt_product p, t_wt_brand b
+        WHERE
+            om.sku_code = s.sku_code
+            and s.brand_id = b.id
+            and s.p_id = p.id
+            and om.series_sku_code = #{seriesSkuCode}
+        group by om.sku_code
+    </select>
+
+</mapper>

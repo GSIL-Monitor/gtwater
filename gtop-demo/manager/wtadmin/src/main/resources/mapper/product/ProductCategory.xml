@@ -1,0 +1,266 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.product.repository.ProductCategoryDAO">
+    <!--查询结果Map-->
+    <resultMap type="productCategory" id="productCategory">
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="gtopCategoryId" column="gtop_category_id" jdbcType="INTEGER"/>
+        <result property="platformId" column="platform_id" jdbcType="INTEGER"/>
+        <result property="categoryCode" column="category_code" jdbcType="VARCHAR"/>
+        <result property="categoryStatus" column="category_status" jdbcType="INTEGER"/>
+        <result property="categoryType" column="category_type" jdbcType="INTEGER"/>
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <result property="parentCategoryId" column="parent_category_id" jdbcType="INTEGER"/>
+        <result property="categoryLevel" column="category_level" jdbcType="INTEGER"/>
+        <result property="categoryDesc" column="category_desc" jdbcType="VARCHAR"/>
+        <result property="customOrderby" column="custom_orderby" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--插入商品类别-->
+    <insert id="insert" parameterType="productCategory" useGeneratedKeys="true" keyProperty="categoryId">
+        INSERT INTO t_wt_category (category_id, gtop_category_id, platform_id, category_code, category_status, category_type, category_name, parent_category_id, category_level, category_desc, custom_orderby, create_time, update_time, create_by, update_by, version)
+        VALUES (#{categoryId}, #{gtopCategoryId}, #{platformId}, #{categoryCode}, #{categoryStatus}, #{categoryType},
+                               #{categoryName}, #{parentCategoryId}, #{categoryLevel}, #{categoryDesc},
+                               #{customOrderby}, #{createTime}, #{updateTime}, #{createBy}, #{updateBy}, #{version})
+    </insert>
+
+    <!--删除商品类别-->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM t_wt_category
+        WHERE category_id = #{0}
+    </delete>
+
+    <!--更新商品类别-->
+    <update id="update" parameterType="productCategory">
+        UPDATE t_wt_category
+        <set>
+            <!-- 更新类别ID[主键值] -->
+            <if test="categoryId!=null">
+                category_id=#{categoryId},
+            </if>
+            <!-- 根据gtop类别ID[主键值]查询 -->
+            <if test="gtopCategoryId!=null">
+                gtop_category_id=#{gtopCategoryId}
+            </if>
+            <!-- 更新平台id -->
+            <if test="platformId!=null">
+                platform_id=#{platformId},
+            </if>
+            <!-- 更新类别编号 -->
+            <if test="categoryCode!=null and categoryCode!=''">
+                category_code=#{categoryCode},
+            </if>
+            <!-- 更新类别状态[1-可用 2-不可用] -->
+            <if test="categoryStatus!=null">
+                category_status=#{categoryStatus},
+            </if>
+            <!-- 更新品类类型[1-普通商品品类 2-预售商品品类 3-预置商品品类 4-预置套餐品类] -->
+            <if test="categoryType!=null">
+                category_type=#{categoryType},
+            </if>
+            <!-- 更新类别名称 -->
+            <if test="categoryName!=null and categoryName!=''">
+                category_name=#{categoryName},
+            </if>
+            <!-- 更新父类别ID -->
+            <if test="parentCategoryId!=null">
+                parent_category_id=#{parentCategoryId},
+            </if>
+            <!-- 更新类别级别[类别的级别1...2...3...] -->
+            <if test="categoryLevel!=null">
+                category_level=#{categoryLevel},
+            </if>
+            <!-- 更新类别描述 -->
+            <if test="categoryDesc!=null and categoryDesc!=''">
+                category_desc=#{categoryDesc},
+            </if>
+            <!-- 更新排序字段[自定义显示顺序] -->
+            <if test="customOrderby!=null">
+                custom_orderby=#{customOrderby},
+            </if>
+            <!-- 更新 -->
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <!-- 更新 -->
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <!-- 更新创建者 -->
+            <if test="createBy!=null and createBy!=''">
+                create_by=#{createBy},
+            </if>
+            <!-- 更新修改者 -->
+            <if test="updateBy!=null and updateBy!=''">
+                update_by=#{updateBy},
+            </if>
+            <!-- 更新数据版本 -->
+            <if test="version!=null">
+                version=#{version},
+            </if>
+        </set>
+        WHERE category_id=#{categoryId}
+    </update>
+
+    <!--主键查询商品类别-->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="productCategory">
+        SELECT
+            category_id,
+            gtop_category_id,
+            platform_id,
+            category_code,
+            category_status,
+            category_type,
+            category_name,
+            parent_category_id,
+            category_level,
+            category_desc,
+            custom_orderby,
+            create_time,
+            update_time,
+            create_by,
+            update_by,
+            version
+        FROM t_wt_category
+        WHERE category_id = #{0}
+    </select>
+
+    <!--根据条件查询商品类别列表-->
+    <select id="selectList" parameterType="productCategory" resultMap="productCategory">
+        SELECT
+        category_id,gtop_category_id,platform_id,category_code,category_status,category_type,category_name,parent_category_id,category_level,category_desc,custom_orderby,create_time,update_time,create_by,update_by,version
+        FROM t_wt_category
+        <where>
+            1=1
+            <!-- 根据类别ID[主键值]查询 -->
+            <if test="categoryId!=null">
+                AND category_id=#{categoryId}
+            </if>
+            <!-- 根据gtop类别ID[主键值]查询 -->
+            <if test="gtopCategoryId!=null">
+                AND gtop_category_id=#{gtopCategoryId}
+            </if>
+            <!-- 根据平台id查询 -->
+            <if test="platformId!=null">
+                AND platform_id=#{platformId}
+            </if>
+            <!-- 根据类别编号查询 -->
+            <if test="categoryCode!=null and categoryCode!=''">
+                AND category_code=#{categoryCode}
+            </if>
+            <!-- 根据类别状态[1-可用 2-不可用]查询 -->
+            <if test="categoryStatus!=null">
+                AND category_status=#{categoryStatus}
+            </if>
+            <!-- 根据品类类型[1-普通商品品类 2-预售商品品类 3-预置商品品类 4-预置套餐品类]查询 -->
+            <if test="categoryType!=null">
+                AND category_type=#{categoryType}
+            </if>
+            <!-- 根据类别名称查询 -->
+            <if test="categoryName!=null and categoryName!=''">
+                AND category_name=#{categoryName}
+            </if>
+            <!-- 根据父类别ID查询 -->
+            <if test="parentCategoryId!=null">
+                AND parent_category_id=#{parentCategoryId}
+            </if>
+            <!-- 根据类别级别[类别的级别1...2...3...]查询 -->
+            <if test="categoryLevel!=null">
+                AND category_level=#{categoryLevel}
+            </if>
+            <!-- 根据类别描述查询 -->
+            <if test="categoryDesc!=null and categoryDesc!=''">
+                AND category_desc=#{categoryDesc}
+            </if>
+            <!-- 根据排序字段[自定义显示顺序]查询 -->
+            <if test="customOrderby!=null">
+                AND custom_orderby=#{customOrderby}
+            </if>
+            <!-- 根据查询 -->
+            <if test="createTime!=null">
+                AND create_time=#{createTime}
+            </if>
+            <!-- 根据查询 -->
+            <if test="updateTime!=null">
+                AND update_time=#{updateTime}
+            </if>
+            <!-- 根据创建者查询 -->
+            <if test="createBy!=null and createBy!=''">
+                AND create_by=#{createBy}
+            </if>
+            <!-- 根据修改者查询 -->
+            <if test="updateBy!=null and updateBy!=''">
+                AND update_by=#{updateBy}
+            </if>
+            <!-- 根据数据版本查询 -->
+            <if test="version!=null">
+                AND version=#{version}
+            </if>
+        </where>
+    </select>
+
+
+    <!--gtop主键查询商品类别-->
+    <select id="getProductCategoryByGtopCategoryId" parameterType="java.lang.Long" resultMap="productCategory">
+        SELECT
+            category_id,
+            gtop_category_id,
+            category_code,
+            category_name,
+            parent_category_id,
+            category_level
+
+        FROM t_wt_category
+        WHERE gtop_category_id = #{gtopCategoryId}
+    </select>
+
+    <!--分类级别查询商品类别-->
+    <select id="getCategoriesListByLevel" parameterType="java.lang.Integer" resultMap="productCategory">
+        SELECT
+            category_id,
+            category_code,
+            category_name,
+            parent_category_id,
+            category_level
+        FROM t_wt_category
+        WHERE category_level = #{level}
+    </select>
+
+    <!--根据平台ID查询商品类别-->
+    <select id="getParentCategoryListByPlatformId" parameterType="java.lang.Long" resultMap="productCategory">
+        SELECT category_id,
+        category_code,
+        category_name
+        FROM t_wt_category
+
+        <where>
+            1=1
+            <!-- 根据平台id查询 -->
+            <if test="platformId!=null">
+                AND platform_id=#{platformId}
+            </if>
+            and category_level=1
+
+        </where>
+    </select>
+
+
+    <!--根据上级分类ID查询商品类别-->
+    <select id="getCategoryListByParentCategoryId" parameterType="java.lang.Long" resultMap="productCategory">
+        SELECT
+            category_id,
+            category_code,
+            category_status,
+            category_name,
+            parent_category_id,
+            category_level
+        FROM t_wt_category
+        WHERE parent_category_id = #{categoryId}
+    </select>
+
+</mapper>

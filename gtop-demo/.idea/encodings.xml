@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/manager" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/configserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/discovery" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/wtadmin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/wtapp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/wtorder" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/wtuser" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/manager/wtwx" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

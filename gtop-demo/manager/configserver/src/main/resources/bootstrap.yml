@@ -1,0 +1,49 @@
+﻿server:
+  port: 8888
+  profile: @profileActive@
+#  context-path: /spring-configserver
+
+spring:
+  application:
+    name: CONFIG
+  profiles:
+    active: native
+  jackson:
+    serialization:
+      indent_output: true
+
+eureka:
+  instance:
+#    leaseRenewalIntervalInSeconds: 5  #心跳间隔
+#    lease-expiration-duration-in-seconds: 20
+    preferIpAddress: true
+#    secure-port: 443
+    non-secure-port: ${server.port:8888}
+#    statusPageUrlPath: ${server.context-path}/info
+#    healthCheckUrlPath: ${server.context-path}/health
+#    homePageUrlPath: ${server.context-path}
+    metadata-map:
+      instanceId: ${spring.application.name}:${random.value}
+#      configPath: ${server.context-path}
+  client:
+    enabled: true
+    service-url:
+      defaultZone: http://${eureka.host}:${eureka.port}/eureka/
+#    registry-fetch-interval-seconds: 6
+#    instance-info-replication-interval-seconds: 6
+#    heartbeat-executor-thread-pool-size: 5
+#    eureka-service-url-poll-interval-seconds: 10
+#    initial-instance-info-replication-interval-seconds: 0
+  host:  @eurekaHost@
+  port:  @eurekaPort@
+
+endpoints:
+  enabled: true
+  shutdown:
+    enabled: true
+  info:
+    enabled: true
+  health:
+    enabled: true
+  metrics:
+    enabled: true

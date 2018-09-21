@@ -1,0 +1,204 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.receiveAddress.ReceiveAddressDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.receiveAddress.ReceiveAddress" id="receiveAddress">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userid" column="userid" jdbcType="INTEGER" />
+		<result property="name" column="name" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="isDefault" column="is_default" />
+		<result property="provinceId" column="province_id" jdbcType="INTEGER" />
+		<result property="provinceName" column="province_name" jdbcType="VARCHAR" />
+		<result property="cityId" column="city_id" jdbcType="INTEGER" />
+		<result property="cityName" column="city_name" jdbcType="VARCHAR" />
+		<result property="districtId" column="district_id" jdbcType="INTEGER" />
+		<result property="districtName" column="district_name" jdbcType="VARCHAR" />
+		<result property="longitude" column="longitude" jdbcType="VARCHAR" />
+		<result property="latitude" column="latitude" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="isDelete" column="is_delete" />
+		<result property="houseNumber" column="house_number" jdbcType="VARCHAR" />
+		<result property="addressType" column="address_type" />
+	</resultMap>
+
+	<!--插入买家收货地址表-->
+	<insert id="insert" parameterType="com.gt.manager.entity.receiveAddress.ReceiveAddress" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_receive_address(id,userid,name,phone,address,is_default,province_id,province_name,city_id,city_name,district_id,district_name,longitude,latitude,create_time,is_delete,house_number,address_type) VALUES(#{id},#{userid},#{name},#{phone},#{address},#{isDefault},#{provinceId},#{provinceName},#{cityId},#{cityName},#{districtId},#{districtName},#{longitude},#{latitude},#{createTime},#{isDelete},#{houseNumber},#{addressType})
+	</insert>
+
+	<!--删除买家收货地址表-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_receive_address WHERE id=#{0}
+	</delete>
+
+	<!--更新买家收货地址表-->
+	<update id="update" parameterType="com.gt.manager.entity.receiveAddress.ReceiveAddress">
+		UPDATE t_receive_address
+		<set>
+			<!-- 更新 -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新系统唯一id -->
+			<if test="userid!=null">
+				userid=#{userid},
+			</if>
+			<!-- 更新收货人姓名 -->
+			<if test="name!=null and name!=''">
+				name=#{name},
+			</if>
+			<!-- 更新收货人电话 -->
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<!-- 更新收货地址 -->
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<!-- 更新是否是默认收货地址（1 是 2否） -->
+			<if test="isDefault!=null and isDefault!=''">
+				is_default=#{isDefault},
+			</if>
+			<!-- 更新省id -->
+			<if test="provinceId!=null">
+				province_id=#{provinceId},
+			</if>
+			<!-- 更新省名称 -->
+			<if test="provinceName!=null and provinceName!=''">
+				province_name=#{provinceName},
+			</if>
+			<!-- 更新市id -->
+			<if test="cityId!=null">
+				city_id=#{cityId},
+			</if>
+			<!-- 更新市名称 -->
+			<if test="cityName!=null and cityName!=''">
+				city_name=#{cityName},
+			</if>
+			<!-- 更新区id -->
+			<if test="districtId!=null">
+				district_id=#{districtId},
+			</if>
+			<!-- 更新区名称 -->
+			<if test="districtName!=null and districtName!=''">
+				district_name=#{districtName},
+			</if>
+			<!-- 更新经度 -->
+			<if test="longitude!=null and longitude!=''">
+				longitude=#{longitude},
+			</if>
+			<!-- 更新纬度 -->
+			<if test="latitude!=null and latitude!=''">
+				latitude=#{latitude},
+			</if>
+			<!-- 更新 -->
+			<if test="createTime!=null and createTime!=''">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新删除标记位 1是删除 2是未删除 -->
+			<if test="isDelete!=null and isDelete!=''">
+				is_delete=#{isDelete},
+			</if>
+			<!-- 更新门牌号 -->
+			<if test="houseNumber!=null and houseNumber!=''">
+				house_number=#{houseNumber},
+			</if>
+			<!-- 更新地址类型  1:杂货铺  2:指尖快递  3:水管家 -->
+			<if test="addressType!=null and addressType!=''">
+				address_type=#{addressType},
+			</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<!--主键查询买家收货地址表-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="receiveAddress">
+		SELECT id,userid,name,phone,address,is_default,province_id,province_name,city_id,city_name,district_id,district_name,longitude,latitude,create_time,is_delete,house_number,address_type FROM t_receive_address
+		WHERE id=#{0} and is_delete=2
+	</select>
+
+
+	<!--根据条件查询买家收货地址表列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.receiveAddress.ReceiveAddress" resultMap="receiveAddress">
+		SELECT id,userid,name,phone,address,is_default,province_id,province_name,city_id,city_name,district_id,district_name,longitude,latitude,create_time,is_delete,house_number,address_type FROM t_receive_address
+		<where>
+			1=1
+			<!-- 根据查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据系统唯一id查询 -->
+			<if test="userid!=null">
+				AND userid=#{userid}
+			</if>
+			<!-- 根据收货人姓名查询 -->
+			<if test="name!=null and name!=''">
+				AND name=#{name}
+			</if>
+			<!-- 根据收货人电话查询 -->
+			<if test="phone!=null and phone!=''">
+				AND phone=#{phone}
+			</if>
+			<!-- 根据收货地址查询 -->
+			<if test="address!=null and address!=''">
+				AND address=#{address}
+			</if>
+			<!-- 根据是否是默认收货地址（1 是 2否）查询 -->
+			<if test="isDefault!=null and isDefault!=''">
+				AND is_default=#{isDefault}
+			</if>
+			<!-- 根据省id查询 -->
+			<if test="provinceId!=null">
+				AND province_id=#{provinceId}
+			</if>
+			<!-- 根据省名称查询 -->
+			<if test="provinceName!=null and provinceName!=''">
+				AND province_name=#{provinceName}
+			</if>
+			<!-- 根据市id查询 -->
+			<if test="cityId!=null">
+				AND city_id=#{cityId}
+			</if>
+			<!-- 根据市名称查询 -->
+			<if test="cityName!=null and cityName!=''">
+				AND city_name=#{cityName}
+			</if>
+			<!-- 根据区id查询 -->
+			<if test="districtId!=null">
+				AND district_id=#{districtId}
+			</if>
+			<!-- 根据区名称查询 -->
+			<if test="districtName!=null and districtName!=''">
+				AND district_name=#{districtName}
+			</if>
+			<!-- 根据经度查询 -->
+			<if test="longitude!=null and longitude!=''">
+				AND longitude=#{longitude}
+			</if>
+			<!-- 根据纬度查询 -->
+			<if test="latitude!=null and latitude!=''">
+				AND latitude=#{latitude}
+			</if>
+			<!-- 根据查询 -->
+			<if test="createTime!=null and createTime!=''">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据删除标记位 1是删除 2是未删除查询 -->
+			<if test="isDelete!=null and isDelete!=''">
+				AND is_delete=#{isDelete}
+			</if>
+			<!-- 根据门牌号查询 -->
+			<if test="houseNumber!=null and houseNumber!=''">
+				AND house_number=#{houseNumber}
+			</if>
+			<!-- 根据地址类型  1:杂货铺  2:指尖快递  3:水管家查询 -->
+			<if test="addressType!=null and addressType!=''">
+				AND address_type=#{addressType}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

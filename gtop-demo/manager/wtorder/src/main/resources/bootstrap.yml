@@ -1,0 +1,110 @@
+server:
+  port: 12001
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  profiles:
+    active: @profileActive@
+  application:
+    name: wtorder
+  jackson:
+    serialization:
+      indent_output: true
+
+  cloud:
+    config:
+      profile: ${spring.profiles.active}
+      uri: http://@eurekaHost@:@eurekaPort@
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: CONFIG
+  mail:
+    host: smtp.qiye.163.com
+    username: zhouhe@kokozu.net
+    password: 12!@#$Ab
+  properties:
+    mail:
+      smtp:
+       auth: true
+  jersey:
+    application-path: /api
+
+  jmx:
+    default-domain: ${spring.application.name}
+  dubbo:
+     application:
+       id: 9
+       name: wtorder
+     base-package: com.gt.manager.order.service
+endpoints:
+  enabled: false
+  info:
+    enabled: true
+  health:
+    enabled: true
+  metrics:
+    enabled: true
+
+info:
+  app:
+    name: @project.artifactId@
+  build:
+    version: @project.version@
+
+
+ # 静态文件请求匹配方式
+  mvc:
+    static-path-pattern: /**
+
+# 修改默认的静态寻址资源目录
+  resources:
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+
+#mybatis
+#mybatis:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  boot:
+#    admin:
+#      url: http://localhost:8000
+#  output:
+#    ansi:
+#      enabled: DETECT
+# 自动配置属性
+# org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+# org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5  #心跳间隔
+    preferIpAddress: true
+    non-secure-port: ${server.port:8181}
+#    statusPageUrlPath: ${server.context-path}/info
+#    healthCheckUrlPath: ${server.context-path}/health
+#    homePageUrlPath: ${server.context-path}
+    metadata-map:
+      instanceId: ${spring.application.name}:${random.value}
+#      configPath: ${server.context-path}
+  client:
+#    healthcheck:
+#      enabled: true
+    registerWithEureka: true #注册本工程为服务
+    fetchRegistry: true
+    enabled: true
+    heartbeatExecutorThreadPoolSize: 10
+    cacheRefreshExecutorThreadPoolSize: 10
+    service-url:
+      defaultZone: http://${eureka.host}:${eureka.port}/eureka/
+  host: @eurekaHost@
+  port: @eurekaPort@

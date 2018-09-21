@@ -1,0 +1,304 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.order.repository.wtOrder.WtOrderDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.wtOrder.WtOrder" id="wtOrder">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="orderNo" column="order_no" jdbcType="VARCHAR" />
+		<result property="waterstoreId" column="waterstore_id" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" jdbcType="INTEGER" />
+		<result property="contacts" column="contacts" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" jdbcType="VARCHAR" />
+		<result property="provinceId" column="province_id" jdbcType="VARCHAR" />
+		<result property="province" column="province" jdbcType="VARCHAR" />
+		<result property="cityId" column="city_id" jdbcType="VARCHAR" />
+		<result property="city" column="city" jdbcType="VARCHAR" />
+		<result property="areaId" column="area_Id" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="money" column="money" jdbcType="INTEGER" />
+		<result property="remarks" column="remarks" jdbcType="VARCHAR" />
+		<result property="isInvoice" column="is_invoice" jdbcType="INTEGER" />
+		<result property="isSetmeal" column="is_setmeal" jdbcType="INTEGER" />
+		<result property="isTicket" column="is_ticket" jdbcType="INTEGER" />
+		<result property="ticketMoney" column="ticket_money" jdbcType="INTEGER" />
+		<result property="paymentMoney" column="payment_money" jdbcType="INTEGER" />
+		<result property="paymentType" column="payment_type" jdbcType="INTEGER" />
+		<result property="orderState" column="order_state" jdbcType="INTEGER" />
+		<result property="orderTime" column="order_time" jdbcType="INTEGER" />
+		<result property="paymentTime" column="payment_time" jdbcType="INTEGER" />
+		<result property="extensioncodeId" column="extensioncode_id" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="INTEGER" />
+		<result property="createId" column="create_id" jdbcType="INTEGER" />
+		<result property="delState" column="del_state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!--插入订单-->
+	<insert id="insert" parameterType="com.gt.manager.entity.wtOrder.WtOrder" useGeneratedKeys="true" keyProperty="null">
+		INSERT INTO t_wt_order(id,order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,extensioncode_id,create_time,create_id,del_state) VALUES(#{id},#{orderNo},#{waterstoreId},#{userId},#{contacts},#{phone},#{provinceId},#{province},#{cityId},#{city},#{areaId},#{area},#{address},#{money},#{remarks},#{isInvoice},#{isSetmeal},#{isTicket},#{ticketMoney},#{paymentMoney},#{paymentType},#{orderState},#{orderTime},#{paymentTime},#{extensioncodeId},#{createTime},#{createId},#{delState})
+	</insert>
+
+	<!--删除订单-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_wt_order WHERE null=#{0}
+	</delete>
+
+	<!--更新订单-->
+	<update id="update" parameterType="com.gt.manager.entity.wtOrder.WtOrder">
+		UPDATE t_wt_order
+		<set>
+			<!-- 更新订单ID -->
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<!-- 更新订单编号 -->
+			<if test="orderNo!=null and orderNo!=''">
+				order_no=#{orderNo},
+			</if>
+			<!-- 更新水站ID -->
+			<if test="waterstoreId!=null">
+				waterstore_id=#{waterstoreId},
+			</if>
+			<!-- 更新用户（客户）ID -->
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<!-- 更新联系人 -->
+			<if test="contacts!=null and contacts!=''">
+				contacts=#{contacts},
+			</if>
+			<!-- 更新联系电话 -->
+			<if test="phone!=null and phone!=''">
+				phone=#{phone},
+			</if>
+			<!-- 更新省ID -->
+			<if test="provinceId!=null and provinceId!=''">
+				province_id=#{provinceId},
+			</if>
+			<!-- 更新省 -->
+			<if test="province!=null and province!=''">
+				province=#{province},
+			</if>
+			<!-- 更新市ID -->
+			<if test="cityId!=null and cityId!=''">
+				city_id=#{cityId},
+			</if>
+			<!-- 更新市 -->
+			<if test="city!=null and city!=''">
+				city=#{city},
+			</if>
+			<!-- 更新区ID -->
+			<if test="areaId!=null and areaId!=''">
+				area_Id=#{areaId},
+			</if>
+			<!-- 更新区 -->
+			<if test="area!=null and area!=''">
+				area=#{area},
+			</if>
+			<!-- 更新详细地址 -->
+			<if test="address!=null and address!=''">
+				address=#{address},
+			</if>
+			<!-- 更新订单金额 -->
+			<if test="money!=null">
+				money=#{money},
+			</if>
+			<!-- 更新买家留言 -->
+			<if test="remarks!=null and remarks!=''">
+				remarks=#{remarks},
+			</if>
+			<!-- 更新是否发票 -->
+			<if test="isInvoice!=null">
+				is_invoice=#{isInvoice},
+			</if>
+			<!-- 更新是否有套餐 -->
+			<if test="isSetmeal!=null">
+				is_setmeal=#{isSetmeal},
+			</if>
+			<!-- 更新是否水票抵扣 -->
+			<if test="isTicket!=null">
+				is_ticket=#{isTicket},
+			</if>
+			<!-- 更新水票抵扣金额 -->
+			<if test="ticketMoney!=null">
+				ticket_money=#{ticketMoney},
+			</if>
+			<!-- 更新付款金额 -->
+			<if test="paymentMoney!=null">
+				payment_money=#{paymentMoney},
+			</if>
+			<!-- 更新付款方式【1微信】 -->
+			<if test="paymentType!=null">
+				payment_type=#{paymentType},
+			</if>
+			<!-- 更新订单状态【1订单确认（代付款）、3完成、-1取消】 -->
+			<if test="orderState!=null">
+				order_state=#{orderState},
+			</if>
+			<!-- 更新下单时间 -->
+			<if test="orderTime!=null">
+				order_time=#{orderTime},
+			</if>
+			<!-- 更新付款时间 -->
+			<if test="paymentTime!=null">
+				payment_time=#{paymentTime},
+			</if>
+			<!-- 更新推广码ID -->
+			<if test="extensioncodeId!=null">
+				extensioncode_id=#{extensioncodeId},
+			</if>
+			<!-- 更新创建时间 -->
+			<if test="createTime!=null">
+				create_time=#{createTime},
+			</if>
+			<!-- 更新创建人 -->
+			<if test="createId!=null">
+				create_id=#{createId},
+			</if>
+			<!-- 更新删除状态 1正常、0删除 -->
+			<if test="delState!=null">
+				del_state=#{delState},
+			</if>
+		</set>
+		WHERE null=#{null}
+	</update>
+
+	<!--主键查询订单-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="wtOrder">
+		SELECT id,order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,extensioncode_id,create_time,create_id,del_state FROM t_wt_order WHERE null=#{0}
+	</select>
+
+	<!--根据条件查询订单列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.wtOrder.WtOrder" resultMap="wtOrder">
+		SELECT id,order_no,waterstore_id,user_id,contacts,phone,province_id,province,city_id,city,area_Id,area,address,money,remarks,is_invoice,is_setmeal,is_ticket,ticket_money,payment_money,payment_type,order_state,order_time,payment_time,extensioncode_id,create_time,create_id,del_state FROM t_wt_order
+		<where>
+			1=1
+			<!-- 根据订单ID查询 -->
+			<if test="id!=null">
+				AND id=#{id}
+			</if>
+			<!-- 根据订单编号查询 -->
+			<if test="orderNo!=null and orderNo!=''">
+				AND order_no=#{orderNo}
+			</if>
+			<!-- 根据水站ID查询 -->
+			<if test="waterstoreId!=null">
+				AND waterstore_id=#{waterstoreId}
+			</if>
+			<!-- 根据用户（客户）ID查询 -->
+			<if test="userId!=null">
+				AND user_id=#{userId}
+			</if>
+			<!-- 根据联系人查询 -->
+			<if test="contacts!=null and contacts!=''">
+				AND contacts=#{contacts}
+			</if>
+			<!-- 根据联系电话查询 -->
+			<if test="phone!=null and phone!=''">
+				AND phone=#{phone}
+			</if>
+			<!-- 根据省ID查询 -->
+			<if test="provinceId!=null and provinceId!=''">
+				AND province_id=#{provinceId}
+			</if>
+			<!-- 根据省查询 -->
+			<if test="province!=null and province!=''">
+				AND province=#{province}
+			</if>
+			<!-- 根据市ID查询 -->
+			<if test="cityId!=null and cityId!=''">
+				AND city_id=#{cityId}
+			</if>
+			<!-- 根据市查询 -->
+			<if test="city!=null and city!=''">
+				AND city=#{city}
+			</if>
+			<!-- 根据区ID查询 -->
+			<if test="areaId!=null and areaId!=''">
+				AND area_Id=#{areaId}
+			</if>
+			<!-- 根据区查询 -->
+			<if test="area!=null and area!=''">
+				AND area=#{area}
+			</if>
+			<!-- 根据详细地址查询 -->
+			<if test="address!=null and address!=''">
+				AND address=#{address}
+			</if>
+			<!-- 根据订单金额查询 -->
+			<if test="money!=null">
+				AND money=#{money}
+			</if>
+			<!-- 根据买家留言查询 -->
+			<if test="remarks!=null and remarks!=''">
+				AND remarks=#{remarks}
+			</if>
+			<!-- 根据是否发票查询 -->
+			<if test="isInvoice!=null">
+				AND is_invoice=#{isInvoice}
+			</if>
+			<!-- 根据是否有套餐查询 -->
+			<if test="isSetmeal!=null">
+				AND is_setmeal=#{isSetmeal}
+			</if>
+			<!-- 根据是否水票抵扣查询 -->
+			<if test="isTicket!=null">
+				AND is_ticket=#{isTicket}
+			</if>
+			<!-- 根据水票抵扣金额查询 -->
+			<if test="ticketMoney!=null">
+				AND ticket_money=#{ticketMoney}
+			</if>
+			<!-- 根据付款金额查询 -->
+			<if test="paymentMoney!=null">
+				AND payment_money=#{paymentMoney}
+			</if>
+			<!-- 根据付款方式【1微信】查询 -->
+			<if test="paymentType!=null">
+				AND payment_type=#{paymentType}
+			</if>
+			<!-- 根据订单状态【1订单确认（代付款）、3完成、-1取消】查询 -->
+			<if test="orderState!=null">
+				AND order_state=#{orderState}
+			</if>
+			<!-- 根据下单时间查询 -->
+			<if test="orderTime!=null">
+				AND order_time=#{orderTime}
+			</if>
+			<!-- 根据付款时间查询 -->
+			<if test="paymentTime!=null">
+				AND payment_time=#{paymentTime}
+			</if>
+			<!-- 根据推广码ID查询 -->
+			<if test="extensioncodeId!=null">
+				AND extensioncode_id=#{extensioncodeId}
+			</if>
+			<!-- 根据创建时间查询 -->
+			<if test="createTime!=null">
+				AND create_time=#{createTime}
+			</if>
+			<!-- 根据创建人查询 -->
+			<if test="createId!=null">
+				AND create_id=#{createId}
+			</if>
+			<!-- 根据删除状态 1正常、0删除查询 -->
+			<if test="delState!=null">
+				AND del_state=#{delState}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectBySkuCode" parameterType="java.util.HashMap" resultMap="wtOrder">
+		SELECT t1.id,t1.order_no,t1.waterstore_id,t1.user_id,t1.contacts,t1.phone,t1.province_id,t1.province,t1.city_id,
+		t1.city,t1.area_Id,t1.area,t1.address,t1.money,t1.remarks,t1.is_invoice,t1.is_setmeal,t1.is_ticket,t1.ticket_money,
+		t1.payment_money,t1.payment_type,t1.order_state,t1.order_time,t1.payment_time,t1.extensioncode_id,t1.create_time,t1.create_id,t1.del_state
+		FROM t_wt_order t1
+		left join t_wt_user_ticket t2
+		on t1.order_no=t2.order_code
+		where t2.sku_code=#{skuCode}
+		and t1.user_id=#{userId}
+		order by t1.create_time
+		desc limit 1
+	</select>
+
+</mapper>

@@ -1,0 +1,35 @@
+#RabbitMQ property set
+spring:
+#  rabbitmq:
+#    host: 192.168.0.108
+#    port: 5672
+#    password: zhouhe
+#    username: zhouhe
+#    virtual-host: zhouhe
+#    requested-heartbeat: 5
+#    listener:
+#      concurrency: 2
+#      max-concurrency: 5
+#      acknowledge-mode: manual
+
+    # 数据源
+  datasource:
+    username: root
+    password: 123
+    driverClassName: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.40.231:3306/gtop_alliance_20180507?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&transformedBitIsBoolean=true&useSSL=false&serverTimezone=UTC
+
+  redis:
+    database: 2
+    host: 192.168.40.107
+    port: 6379
+    password:
+    max-total: 5
+    max-idle: 8
+    min-idle: 2
+    max-active: 300
+    max-wait: -1
+    max-wait-millis: 1000
+    test-on-borrow: true
+    test-on-return: true

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/api/pom.xml" />
+        <option value="$PROJECT_DIR$/manager/pom.xml" />
+        <option value="$PROJECT_DIR$/manager/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/manager/discovery/pom.xml" />
+        <option value="$PROJECT_DIR$/manager/configserver/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/DesignPatterns" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/GT_Interface" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/branches" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/delete" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/document" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/goola" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/gt-mangaer" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/gtop" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/gtop-watershop" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/gtop_mall" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/gtwatermanager" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/matchingCode" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/scheduler" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/scheduler_2016_11_11_first-period" />
+                  <option value="https://192.168.40.253:444/svn/gtexpress/java/tags" />
+                  <option value="https://192.168.40.253:444/svn/projects/yf/gtwater" />
+                  <option value="https://192.168.40.253:444/svn/projects/yf/gtwater/trunk" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://192.168.40.253:444/svn/gtexpress/java/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+</project>

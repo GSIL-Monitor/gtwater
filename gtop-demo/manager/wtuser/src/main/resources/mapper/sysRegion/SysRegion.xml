@@ -1,0 +1,80 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.manager.user.repository.sysRegion.SysRegionDAO">
+	<!--查询结果Map-->
+	<resultMap type="com.gt.manager.entity.sysRegion.SysRegion" id="sysRegion">
+		<result property="regionId" column="region_id" jdbcType="VARCHAR" />
+		<result property="regionName" column="region_name" jdbcType="VARCHAR" />
+		<result property="regionCode" column="region_code" jdbcType="VARCHAR" />
+		<result property="isParent" column="is_parent" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--插入省市区-->
+	<insert id="insert" parameterType="com.gt.manager.entity.sysRegion.SysRegion" useGeneratedKeys="true" keyProperty="regionId">
+		INSERT INTO t_sys_region(region_id,region_name,region_code,is_parent) VALUES(#{regionId},#{regionName},#{regionCode},#{isParent})
+	</insert>
+
+	<!--删除省市区-->
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_sys_region WHERE region_id=#{0}
+	</delete>
+
+	<!--更新省市区-->
+	<update id="update" parameterType="com.gt.manager.entity.sysRegion.SysRegion">
+		UPDATE t_sys_region
+		<set>
+			<!-- 更新主键值 -->
+			<if test="regionId!=null and regionId!=''">
+				region_id=#{regionId},
+			</if>
+			<!-- 更新区域名称 -->
+			<if test="regionName!=null and regionName!=''">
+				region_name=#{regionName},
+			</if>
+			<!-- 更新区域code -->
+			<if test="regionCode!=null and regionCode!=''">
+				region_code=#{regionCode},
+			</if>
+			<!-- 更新是否为父级区域 -->
+			<if test="isParent!=null and isParent!=''">
+				is_parent=#{isParent},
+			</if>
+		</set>
+		WHERE region_id=#{regionId}
+	</update>
+
+	<!--主键查询省市区-->
+	<select id="selectById" parameterType="java.lang.Long" resultMap="sysRegion">
+		SELECT region_id,region_name,region_code,is_parent FROM t_sys_region WHERE region_id=#{0}
+	</select>
+
+	<!--根据条件查询省市区列表-->
+	<select id="selectList" parameterType="com.gt.manager.entity.sysRegion.SysRegion" resultMap="sysRegion">
+		SELECT region_id,region_name,region_code,is_parent FROM t_sys_region
+		<where>
+			1=1
+			<!-- 根据主键值查询 -->
+			<if test="regionId!=null and regionId!=''">
+				AND region_id=#{regionId}
+			</if>
+			<!-- 根据区域名称查询 -->
+			<if test="regionName!=null and regionName!=''">
+				AND region_name=#{regionName}
+			</if>
+			<!-- 根据区域code查询 -->
+			<if test="regionCode!=null and regionCode!=''">
+				AND region_code=#{regionCode}
+			</if>
+			<!-- 根据是否为父级区域查询 -->
+			<if test="isParent!=null and isParent!=''">
+				AND is_parent=#{isParent}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectProvince" resultMap="sysRegion">
+		SELECT region_id,region_name,region_code,is_parent FROM t_sys_region
+		where LENGTH(region_id) =4
+	</select>
+
+</mapper>
